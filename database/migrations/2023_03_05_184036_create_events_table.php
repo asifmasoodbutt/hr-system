@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name', 100);
             $table->timestamp('from_date');
             $table->timestamp('to_date');
             $table->unsignedBigInteger('manager_id');

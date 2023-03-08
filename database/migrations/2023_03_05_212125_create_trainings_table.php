@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('trainings', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name', 30);
             $table->enum('status', ['scheduled', 'in-progress', 'completed', 'cancelled', 'postponed'])->default('scheduled');
             $table->timestamp('starting_time');
             $table->timestamp('ending_time')->nullable();

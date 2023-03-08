@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('leave_types', function (Blueprint $table) {
             $table->id();
-            $table->string('leave_type');
+            $table->string('leave_type', 30);
             $table->string('description');
             $table->timestamps();
         });
