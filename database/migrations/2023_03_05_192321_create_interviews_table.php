@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('interviews', function (Blueprint $table) {
             $table->id();
             $table->string('candidate_name', 50);
-            $table->email('candidate_email', 70);
+            $table->string('candidate_email', 70);
             $table->string('candidate_phone', 15);
             $table->string('candidate_cnic', 13)->nullable();
             $table->string('candidate_passport_no', 20)->nullable();
