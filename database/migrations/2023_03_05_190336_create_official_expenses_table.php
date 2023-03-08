@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('official_expenses', function (Blueprint $table) {
             $table->id();
-            $table->string('item');
+            $table->string('item', 50);
             $table->date('date_of_purchase');
-            $table->string('quantity');
+            $table->string('quantity', 30);
             $table->decimal('price', 10, 2);
             $table->timestamps();
         });

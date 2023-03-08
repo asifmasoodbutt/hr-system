@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('member_id');
             $table->unsignedBigInteger('training_id');
-            $table->string('role');
+            $table->string('role', 20);
             $table->string('score')->nullable();
             $table->enum('result', ['passed', 'satisfactory', 'failed', 'incomplete'])->nullable();
             $table->timestamps();

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('resume');
             $table->unsignedBigInteger('hr_id')->nullable();
             $table->enum('status', ['scheduled', 'completed', 'cancelled', 'no_show', 'in_progress', 'rescheduled', 'pending', 'declined']);
-            $table->decimal('expected_joining_date', );
+            $table->date('expected_joining_date');
             $table->decimal('expected_salary', 10, 2);
             $table->enum('results', ['selected', 'not_selected', 'pending', 'second_round', 'job_offered', 'offer_accepted', 'offer_rejected']);
             $table->timestamps();

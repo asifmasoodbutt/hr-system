@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('job_histories', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('employee_id');
-            $table->string('position');
+            $table->string('position', 30);
             $table->date('from_date');
             $table->date('to_date');
             $table->string('description');
