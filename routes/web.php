@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\auth\ForgotpasswordController;
+use App\Http\Controllers\auth\LoginController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +19,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('login', [LoginController::class, 'login'])->name('login');
+Route::get('forget-password', [ForgotpasswordController::class, 'forgotPassword'])->name('forgotPassword');
+Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
