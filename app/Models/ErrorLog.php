@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class ErrorLog extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['method_name','line_no','error', 'status_code', 'api_request_id'];
 }

@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class ApiRequestLog extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['ip_address', 'browser', 'os', 'device_type', 'agent', 'api_request_id'];
 }

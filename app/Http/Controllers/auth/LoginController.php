@@ -4,9 +4,10 @@ namespace App\Http\Controllers\auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginApiRequest;
+use App\Models\ApiRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Symfony\Component\ErrorHandler\Exception\FlattenException;
 
 class LoginController extends Controller
 {
@@ -22,12 +23,15 @@ class LoginController extends Controller
             if (Hash::check($request->password, $user->password)) {
                 $token = $user->createToken('Laravel Password Grant Client')->accessToken;
                 $response = ['token' => $token];
-                return response()->json(['response' => $response], 200);
+                $response_data = ['errors' => false, 'data' => []];
+                ApiRequest::where('id', $request->api_request_id)->update(['response_data' => $response_data]);
+                return response()->success($response);
             } else {
                 $response = ["message" => "Password mismatch"];
-                return response()->json(['response' => $response], 200);
+                return response()->error('Credentials mismatched!', 401);
             }
-        } catch (\Exception) {
+        } catch (\Exception $e) {
+            return throwException($e, $request->api_request_id);
         }
     }
 }

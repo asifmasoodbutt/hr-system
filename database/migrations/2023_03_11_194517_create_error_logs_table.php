@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('method_name');
             $table->string('line_no');
             $table->string('error');
+            $table->integer('status_code');
             $table->unsignedBigInteger('api_request_id')->nullable();
             $table->timestamps();
             $table->foreign('api_request_id')->references('id')->on('api_requests')->onUpdate('cascade')->onDelete('cascade');

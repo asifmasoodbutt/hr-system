@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('api_requests', function (Blueprint $table) {
             $table->id();
-            $table->longText('request_data')->nullable();
+            $table->string('endpoint');
+            $table->longText('request_data');
             $table->longText('response_data')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
