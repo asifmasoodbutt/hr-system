@@ -22,10 +22,10 @@ class LoginController extends Controller
             if (Hash::check($request->password, $user->password)) {
                 $token = $user->createToken('Laravel Password Grant Client')->accessToken;
                 $response = ['token' => $token];
-                storeApiResponseData($request->api_request_id, [], true);
+                storeApiResponseData($request->api_request_id, [], 200, true);
                 return response()->success($response);
             } else {
-                storeApiResponseData($request->api_request_id, 'Credentials mismatched!', false);
+                storeApiResponseData($request->api_request_id, 'Credentials mismatched!', 401, false);
                 return response()->error('Credentials mismatched!', 401);
             }
         } catch (\Exception $e) {

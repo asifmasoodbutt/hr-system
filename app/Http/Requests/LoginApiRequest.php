@@ -34,9 +34,9 @@ class LoginApiRequest extends FormRequest
      */
     protected function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response()->json([
-            'errors'  => true,
-            'message' => $validator->errors()->first(),
-        ], 422));
+        storeApiResponseData($this->request->api_request_id, $validator->errors()->first(), 422, false);
+        throw new HttpResponseException(
+            response()->error($validator->errors()->first(), 422)
+        );
     }
 }

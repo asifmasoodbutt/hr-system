@@ -27,7 +27,7 @@ if (!function_exists('throwException')) {
 }
 
 if (!function_exists('storeApiResponseData')) {
-    function storeApiResponseData($api_request_id, $data, $is_success)
+    function storeApiResponseData($api_request_id, $data, $status_code, $is_success)
     {
         if ($is_success) {
             $errors = false;
@@ -36,6 +36,9 @@ if (!function_exists('storeApiResponseData')) {
             $errors = true;
             $response_data = ['errors' => $errors, 'message' => $data];
         }
-        ApiRequest::where('id', $api_request_id)->update(['response_data' => serialize($response_data)]);
+        ApiRequest::where('id', $api_request_id)->update([
+            'response_data' => serialize($response_data),
+            'status_code' => $status_code
+        ]);
     }
 }

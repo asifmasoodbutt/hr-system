@@ -7,9 +7,15 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 
+<style>
+    #email-error-message,
+    #password-error-message {
+        color: red;
+    }
+</style>
+
 <body>
     <!-- Begin page -->
-    <div class="accountbg"></div>
     <div class="wrapper-page">
         <div class="card card-pages shadow-none">
 
@@ -24,8 +30,12 @@
                     <div class="form-group">
                         <div class="col-12">
                             <label>Email</label>
-                            <input id="email-field" class="form-control" type="text" required placeholder="Email">
+                            <input id="email-field" class="form-control" type="text" placeholder="Email" required>
                         </div>
+                    </div>
+
+                    <div class="col-12" style="display: none;" id="email-validation-div">
+                        <p id="email-error-message"></p>
                     </div>
 
                     <div class="form-group">
@@ -35,9 +45,13 @@
                         </div>
                     </div>
 
+                    <div class="col-12" style="display: none;" id="password-validation-div">
+                        <p id="password-error-message"></p>
+                    </div>
+
                     <div class="form-group text-center m-t-20">
                         <div class="col-12">
-                            <button class="btn btn-primary btn-block btn-lg waves-effect waves-light" type="submit">Log In</button>
+                            <button class="btn btn-primary btn-block btn-lg waves-effect waves-light" id="submit-button" type="submit" disabled>Log In</button>
                         </div>
                     </div>
 
@@ -59,6 +73,38 @@
         </div>
     </div>
     <!-- END wrapper -->
+    <script>
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        let email_error_box = document.getElementById('email-validation-div');
+        let pwd_error_box = document.getElementById('password-validation-div');
+        let email_error_message = document.getElementById('email-error-message');
+        let pwd_error_message = document.getElementById('password-error-message');
+        let submit_button = document.getElementById('submit-button');
+        let email = document.getElementById("email-field");
+        let password = document.getElementById("password-field")
+
+        email.addEventListener("input", checkInputs);
+        password.addEventListener("input", checkInputs);
+
+        function checkInputs() {
+            // Check if the email and password are valid
+            if (regex.test(email.value)) {
+                email_error_box.style.display = "none";
+                if (password.value.length >= 8) {
+                    pwd_error_box.style.display = "none";
+                    submit_button.removeAttribute("disabled");
+                } else {
+                    pwd_error_box.removeAttribute('style');
+                    pwd_error_message.innerHTML = 'Password should have minimum length of 8 digits!';
+                    submit_button.setAttribute("disabled", "");
+                }
+            } else {
+                email_error_box.removeAttribute('style');
+                email_error_message.innerHTML = 'You have entered an invalid email address!';
+                submit_button.setAttribute("disabled", "");
+            }
+        }
+    </script>
     <script>
         const form = document.getElementById('login-form');
         form.addEventListener('submit', (event) => {
@@ -93,7 +139,6 @@
             xhr.setRequestHeader('Accept', 'application/json');
             xhr.send(dataObj);
         });
-
     </script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

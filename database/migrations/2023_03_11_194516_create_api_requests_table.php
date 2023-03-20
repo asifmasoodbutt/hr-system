@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('endpoint');
             $table->longText('request_data');
             $table->longText('response_data')->nullable();
+            $table->integer('status_code');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');

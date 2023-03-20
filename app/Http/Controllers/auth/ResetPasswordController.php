@@ -26,11 +26,11 @@ class ResetPasswordController extends Controller
                 $user->save();
                 DB::table('password_reset_tokens')->where('email', $request->email)->delete();
                 $response = ['message' => 'Password has been reset!'];
-                storeApiResponseData($request->api_request_id, $response, false);
+                storeApiResponseData($request->api_request_id, $response, 200, false);
                 return response()->success($response);
             }
             $response = ['message' => 'Record not found for resetting password!'];
-            storeApiResponseData($request->api_request_id, $response, true);
+            storeApiResponseData($request->api_request_id, $response, 404, true);
             return response()->error('Record not found for resetting password!', 404);
         } catch (\Exception $e) {
             return throwException($e, 'resetPasswordApi', $request->api_request_id);

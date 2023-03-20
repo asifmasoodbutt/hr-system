@@ -5,7 +5,6 @@ namespace App\Http\Controllers\auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ForgotPasswordRequest;
 use App\Mail\SendResetLinkMail;
-use App\Models\ApiRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -32,7 +31,7 @@ class ForgotpasswordController extends Controller
             ];
             Mail::to($request->email)->send(new SendResetLinkMail($data));
             $response = ['message' => 'Reset password email has been sent to your email!'];
-            storeApiResponseData($request->api_request_id, $response, true);
+            storeApiResponseData($request->api_request_id, $response, 200, true);
             return response()->success($response);
         } catch (\Exception $e) {
             return throwException($e, 'sendResetLinkEmail', $request->api_request_id);
