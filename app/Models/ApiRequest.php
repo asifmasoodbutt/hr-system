@@ -15,9 +15,4 @@ class ApiRequest extends Model
     {
         $this->attributes['request_data'] = serialize($value);
     }
-
-    public function setResponseDataAttribute($value)
-    {
-        $this->attributes['response_data'] = serialize($value);
-    }
 }

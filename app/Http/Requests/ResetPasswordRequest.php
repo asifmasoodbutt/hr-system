@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class LoginApiRequest extends FormRequest
+class ResetPasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,7 @@ class LoginApiRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|string|email|max:255|exists:users,email',
-            'password' => 'required|string|min:8'
+            'password' => 'required|string|min:8|confirmed',
         ];
     }
 

@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\auth\ForgotpasswordController;
 use App\Http\Controllers\auth\LoginController;
+use App\Http\Controllers\auth\ResetPasswordController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +21,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['middleware' => 'storeApiRequestData'], function () {
+Route::prefix('auth')->middleware(['storeApiRequestData'])->group(function () {
     Route::post('login', [LoginController::class, 'loginApi']);
+    Route::post('send-reset-link-mail', [ForgotpasswordController::class, 'sendResetLinkEmail']);
+    Route::post('reset-password', [ResetPasswordController::class, 'resetPasswordApi']);
+    Route::post('logout', [ResetPasswordController::class, 'logoutApi']);
 });
