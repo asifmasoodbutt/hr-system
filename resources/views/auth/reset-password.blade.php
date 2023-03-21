@@ -6,98 +6,146 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <title>Reset Password</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        #new-password-error-message,
+        #confirm-password-error-message {
+            color: red;
+        }
+
+        #api-alert-box {
+            top: 20px;
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- Begin page -->
-    <div class="accountbg"></div>
-    <div class="home-btn d-none d-sm-block">
-        <a href="index.html" class="text-white"><i class="fas fa-home h2"></i></a>
-    </div>
-    <div class="wrapper-page">
-        <div class="card card-pages shadow-none">
+    <section class="vh-100" style="background-color: #508bfc;">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                        <div class="card-body p-5 text-center">
+                            <h3 class="mb-5">HR Management System</h3>
+                            <p>Please enter your new password and confirm it!</p>
+                            <form class="form-horizontal m-t-30" id="new-password-form">
 
-            <div class="card-body">
-                <div class="text-center m-t-0 m-b-15">
-                    <a href="index.html" class="logo logo-admin"><img src="assets/images/logo-dark.png" alt="" height="24"></a>
+                                <div class="form-outline mb-4">
+                                    <input type="password" id="new-password" class="form-control form-control-lg" placeholder="New Password" required />
+                                </div>
+
+                                <div class="col-12" style="display: none;" id="new-password-validation-div">
+                                    <p id="new-password-error-message"></p>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <input type="password" id="password-confirmation" class="form-control form-control-lg" placeholder="Confirm Password" required />
+                                </div>
+
+                                <div class="col-12" style="display: none;" id="confirm-password-validation-div">
+                                    <p id="confirm-password-error-message"></p>
+                                </div>
+
+                                <button class="btn btn-primary btn-lg btn-block" id="submit-button" type="submit" disabled>Reset Password</button>
+
+                                <div class="col-12 alert alert-danger" style="display: none;" id="api-alert-box">
+                                    <p id="api-message"></p>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <h5 class="font-18 text-center">New Password</h5>
-
-                <form class="form-horizontal m-t-30" action="index.html">
-
-                    <div class="form-group">
-                        <div class="col-12">
-                            <label>New Password</label>
-                            <input id="new-password" class="form-control" type="password" required placeholder="New Password">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-12">
-                            <label>Confirm Password</label>
-                            <input id="password-confirmation" class="form-control" type="password" required placeholder="Confirm Password">
-                        </div>
-                    </div>
-
-                    <div class="form-group text-center m-t-20">
-                        <div class="col-12">
-                            <button onclick="return sendResetPasswordRequest()" class="btn btn-primary btn-block btn-lg waves-effect waves-light" type="button">Reset Password</button>
-                        </div>
-                    </div>
-
-                    <div class="col-12" style="display: none;" id="error-alert-box">
-                        <div class="alert alert-danger alert-dismissible">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <p id="error-message"></p>
-                        </div>
-                    </div>
-                </form>
             </div>
-
         </div>
-    </div>
-    <!-- END wrapper -->
+    </section>
 
 </body>
+
 <script>
-    function sendResetPasswordRequest() {
-        let new_password = document.getElementById("new-password").value;
-        let password_confirmation = document.getElementById("password-confirmation").value;
-        let error_alert_box = document.getElementById('error-alert-box');
-        let error_message = document.getElementById('error-message');
-        if (new_password != password_confirmation) {
-            error_alert_box.removeAttribute('style');
-            error_message.innerHTML = 'The password does not match!';
-            return false;
-        }
-        const postObj = {
-            password: new_password,
-            password_confirmation: password_confirmation
-        };
-        let post = JSON.stringify(postObj)
-        const url = @json(config('constants.RESET_PASSWORD_ENDPOINT'));
-        let xhr = new XMLHttpRequest()
-        xhr.open('POST', url, true)
-        xhr.setRequestHeader('Content-type', 'application/json; charset=UTF-8')
-        xhr.setRequestHeader('Accept', 'application/json');
-        xhr.send(post);
-        xhr.onload = function() {
-            var response = JSON.parse(xhr.responseText);
-            if (xhr.status === 200) {
-                window.location = "{{ route('dashboard') }}";
+    let new_password = document.getElementById('new-password');
+    let confirm_password = document.getElementById('password-confirmation');
+    let new_password_error_box = document.getElementById('new-password-validation-div');
+    let confirm_password_error_box = document.getElementById('confirm-password-validation-div');
+    let new_password_error_message = document.getElementById('new-password-error-message');
+    let confirm_password_error_message = document.getElementById('confirm-password-error-message');
+    let submit_button = document.getElementById('submit-button');
+    let api_alert_box = document.getElementById('api-alert-box');
+    let api_message = document.getElementById('api-message');
+
+    new_password.addEventListener("input", checkInputs);
+    confirm_password.addEventListener("input", checkInputs);
+
+    function checkInputs() {
+        // Check if the new password and confirm password fields are valid
+        if (new_password.value.length >= 8) {
+            new_password_error_box.style.display = "none";
+            if (new_password.value == confirm_password.value) {
+                confirm_password_error_box.style.display = "none";
+                submit_button.removeAttribute("disabled");
             } else {
-                let error_alert_box = document.getElementById('error-alert-box');
-                let error_message = document.getElementById('error-message');
-                error_alert_box.removeAttribute('style');
-                error_message.innerHTML = response.message;
-                return false;
+                confirm_password_error_box.removeAttribute('style');
+                confirm_password_error_message.innerHTML = 'This password should match the above password!';
+                submit_button.setAttribute("disabled", "");
             }
+        } else {
+            new_password_error_box.removeAttribute('style');
+            new_password_error_message.innerHTML = 'Password should have minimum length of 8 digits!';
+            submit_button.setAttribute("disabled", "");
         }
     }
 </script>
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+<script>
+    let urlObject = new URL(window.location.href);
+    let pathname = urlObject.pathname;
+    let url_array = pathname.split('/');
+    let form = document.getElementById('new-password-form');
+    
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        submit_button.disabled = true;
+        submit_button.innerHTML = 'Reseting Password...';
+        const postObj = {
+            password: new_password.value,
+            password_confirmation: confirm_password.value,
+            token: url_array[2],
+            email: url_array[3]
+        };
+        console.log(postObj);
+        let dataObj = JSON.stringify(postObj)
+        const url = @json(config('constants.RESET_PASSWORD_ENDPOINT'));
+        let xhr = new XMLHttpRequest()
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                submit_button.disabled = false;
+                submit_button.innerHTML = 'Reset Password';
+                if (xhr.status === 200) {
+                    // Successful reset password
+                    const response = JSON.parse(xhr.responseText);
+                    api_alert_box.classList.replace('alert-danger', 'alert-success');
+                    api_message.innerHTML = response.data.message;
+                    api_alert_box.removeAttribute('style');
+                    setTimeout(() => {
+                        api_alert_box.style.display = 'none';
+                        window.location = "{{ route('login') }}";
+                    }, 5000);
+                } else {
+                    // Failed in sending email
+                    const response = JSON.parse(xhr.responseText);
+                    api_alert_box.removeAttribute('style');
+                    api_message.innerHTML = response.message;
+                    setTimeout(() => {
+                        api_alert_box.style.display = 'none';
+                    }, 5000);
+                }
+            }
+        }
+        xhr.open('POST', url);
+        xhr.setRequestHeader('Content-type', 'application/json; charset=UTF-8')
+        xhr.setRequestHeader('Accept', 'application/json');
+        xhr.send(dataObj);
+    });
+</script>
 
 </html>

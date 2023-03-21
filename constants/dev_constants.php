@@ -6,5 +6,6 @@ $base_url = "http://127.0.0.1:8000/";
 $dev_constants = [
     // ENDPOINTS
     'LOGIN_ENDPOINT' => $base_url . 'api/auth/login',
+    'FORGOT_PASSWORD_ENDPOINT' => $base_url . 'api/auth/send-reset-link-mail',
     'RESET_PASSWORD_ENDPOINT' => $base_url . 'api/auth/reset-password',
 ];

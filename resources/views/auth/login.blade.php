@@ -12,73 +12,75 @@
     #password-error-message {
         color: red;
     }
+
+    #error-alert-box {
+        top: 20px;
+    }
+
+    #forgot-password-link {
+        padding-top: 15px;
+        padding-left: 15px;
+    }
 </style>
 
 <body>
-    <!-- Begin page -->
-    <div class="wrapper-page">
-        <div class="card card-pages shadow-none">
 
-            <div class="card-body">
-                <div class="text-center m-t-0 m-b-15">
-                    <h3>HR Management System</h3>
+    <section class="vh-100" style="background-color: #508bfc;">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                        <div class="card-body p-5 text-center">
+                            <h3 class="mb-5">HR Management System</h3>
+                            <p>Please enter your login and password!</p>
+                            <form class="form-horizontal m-t-30" id="login-form">
+                                <div class="form-outline mb-4">
+                                    <input type="email" id="email-field" class="form-control form-control-lg" placeholder="Email" required />
+                                </div>
+
+                                <div class="col-12" style="display: none;" id="email-validation-div">
+                                    <p id="email-error-message"></p>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <input type="password" id="password-field" class="form-control form-control-lg" placeholder="Password" required />
+                                </div>
+
+                                <div class="col-12" style="display: none;" id="password-validation-div">
+                                    <p id="password-error-message"></p>
+                                </div>
+
+                                <!-- Checkbox -->
+                                <!-- <div class="form-check d-flex justify-content-start mb-4">
+                                <input class="form-check-input" type="checkbox" value="" id="form1Example3" />
+                                <label class="form-check-label" for="form1Example3"> Remember password </label>
+                            </div> -->
+
+                                <button class="btn btn-primary btn-lg btn-block" id="submit-button" type="submit" disabled>Login</button>
+
+                                <div class="col-12 alert alert-danger" style="display: none;" id="error-alert-box">
+                                    <p id="error-message"></p>
+                                </div>
+
+                                <div class="form-group row m-t-30 m-b-0" id="forgot-password-link">
+                                    <a href="{{ route('forgotPassword') }}" class="text-muted"> Forgot your password?
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <h5 class="font-18 text-center">Login to the system</h5>
-
-                <form class="form-horizontal m-t-30" id="login-form">
-
-                    <div class="form-group">
-                        <div class="col-12">
-                            <label>Email</label>
-                            <input id="email-field" class="form-control" type="text" placeholder="Email" required>
-                        </div>
-                    </div>
-
-                    <div class="col-12" style="display: none;" id="email-validation-div">
-                        <p id="email-error-message"></p>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-12">
-                            <label>Password</label>
-                            <input id="password-field" class="form-control" type="password" required placeholder="Password">
-                        </div>
-                    </div>
-
-                    <div class="col-12" style="display: none;" id="password-validation-div">
-                        <p id="password-error-message"></p>
-                    </div>
-
-                    <div class="form-group text-center m-t-20">
-                        <div class="col-12">
-                            <button class="btn btn-primary btn-block btn-lg waves-effect waves-light" id="submit-button" type="submit" disabled>Log In</button>
-                        </div>
-                    </div>
-
-                    <div class="col-12" style="display: none;" id="error-alert-box">
-                        <div class="alert alert-danger">
-                            <p id="error-message"></p>
-                        </div>
-                    </div>
-
-                    <div class="form-group row m-t-30 m-b-0">
-                        <div class="col-sm-7">
-                            <a href="{{ route('forgotPassword') }}" class="text-muted"><i class="fa fa-lock m-r-5"></i> Forgot your password?
-                            </a>
-                        </div>
-                    </div>
-                </form>
             </div>
-
         </div>
-    </div>
-    <!-- END wrapper -->
+    </section>
     <script>
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         let email_error_box = document.getElementById('email-validation-div');
         let pwd_error_box = document.getElementById('password-validation-div');
         let email_error_message = document.getElementById('email-error-message');
         let pwd_error_message = document.getElementById('password-error-message');
+        let error_alert_box = document.getElementById('error-alert-box');
+        let error_message = document.getElementById('error-message');
         let submit_button = document.getElementById('submit-button');
         let email = document.getElementById("email-field");
         let password = document.getElementById("password-field")
@@ -110,8 +112,8 @@
         form.addEventListener('submit', (event) => {
             event.preventDefault();
             const postObj = {
-                email: document.getElementById("email-field").value,
-                password: document.getElementById("password-field").value
+                email: email.value,
+                password: password.value
             };
             let dataObj = JSON.stringify(postObj)
             const url = @json(config('constants.LOGIN_ENDPOINT'));
@@ -127,10 +129,11 @@
                     } else {
                         // Failed login
                         const response = JSON.parse(xhr.responseText);
-                        let error_alert_box = document.getElementById('error-alert-box');
-                        let error_message = document.getElementById('error-message');
                         error_alert_box.removeAttribute('style');
                         error_message.innerHTML = response.message;
+                        setTimeout(() => {
+                            error_alert_box.style.display = 'none';
+                        }, 5000);
                     }
                 }
             }
