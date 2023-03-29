@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\auth\ForgotpasswordController;
 use App\Http\Controllers\auth\LoginController;
+use App\Http\Controllers\auth\LogoutController;
 use App\Http\Controllers\auth\ResetPasswordController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,5 +26,5 @@ Route::prefix('auth')->middleware(['storeApiRequestData'])->group(function () {
     Route::post('login', [LoginController::class, 'loginApi']);
     Route::post('send-reset-link-mail', [ForgotpasswordController::class, 'sendResetLinkEmail']);
     Route::post('reset-password', [ResetPasswordController::class, 'resetPasswordApi']);
-    Route::post('logout', [ResetPasswordController::class, 'logoutApi']);
+    Route::get('logout', [LogoutController::class, 'logoutApi']);
 });

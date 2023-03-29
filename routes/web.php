@@ -4,7 +4,6 @@ use App\Http\Controllers\auth\ForgotpasswordController;
 use App\Http\Controllers\auth\LoginController;
 use App\Http\Controllers\auth\ResetPasswordController;
 use App\Http\Controllers\DashboardController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,9 +18,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return (!Auth::check()) ? redirect('/login') : view('main.dashboard');
+    return (!session()->has('logged_in_user')) ? redirect('/login') : redirect('/dashboard');
 });
-Route::get('login', [LoginController::class, 'login'])->name('login');
+
+Route::get('login', [LoginController::class, 'login'])->name('login')->middleware('checkNotAuthenticated');
 Route::get('forget-password', [ForgotpasswordController::class, 'forgotPassword'])->name('forgotPassword');
 Route::get('reset-password/{token}/{email}', [ResetPasswordController::class, 'resetPassword'])->name('resetPassword');
-Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+
+Route::group(['middleware' => ['checkLogin']], function () {
+    Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+});
