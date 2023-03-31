@@ -26,5 +26,5 @@ Route::prefix('auth')->middleware(['storeApiRequestData'])->group(function () {
     Route::post('login', [LoginController::class, 'loginApi']);
     Route::post('send-reset-link-mail', [ForgotpasswordController::class, 'sendResetLinkEmail']);
     Route::post('reset-password', [ResetPasswordController::class, 'resetPasswordApi']);
-    Route::get('logout', [LogoutController::class, 'logoutApi']);
+    Route::get('logout', [LogoutController::class, 'logoutApi'])->middleware('auth:api');
 });
