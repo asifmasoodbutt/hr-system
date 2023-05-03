@@ -4,7 +4,6 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Response;
 
 class CheckLogin
@@ -17,8 +16,12 @@ class CheckLogin
     public function handle(Request $request, Closure $next): Response
     {
         if (!session()->has('logged_in_user')) {
-            return redirect('/login');
+            return redirect('/');
         }
-        return $next($request);
+        $response = $next($request);
+        $response->headers->set('Cache-Control', 'no-cache, no-store, must-revalidate');
+        $response->headers->set('Pragma', 'no-cache');
+        $response->headers->set('Expires', '0');
+        return $response;
     }
 }

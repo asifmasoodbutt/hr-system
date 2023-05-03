@@ -13,14 +13,13 @@ class DepartmentSeeder extends Seeder
     public function run(): void
     {
         Department::insert([
-            ['name' => 'Development'],
-            ['name' => 'Quality Assurance (QA)'],
-            ['name' => 'DevOps'],
-            ['name' => 'Project Management (PM)'],
-            ['name' => 'Customer Support'],
-            ['name' => 'Human Resources (HR)'],
+            ['name' => 'Human Resources'],
             ['name' => 'Finance and Accounting'],
-            ['name' => 'Information Technology (IT)']
+            ['name' => 'Sales and Marketing'],
+            ['name' => 'Information Technology'],
+            ['name' => 'Operations and Production'],
+            ['name' => 'Research and Development'],
+            ['name' => 'Legal']
         ]);
     }
 }

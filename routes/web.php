@@ -27,4 +27,6 @@ Route::get('reset-password/{token}/{email}', [ResetPasswordController::class, 'r
 
 Route::group(['middleware' => ['checkLogin']], function () {
     Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('employees', [DashboardController::class, 'employees'])->name('employees');
+    Route::get('departments', [DashboardController::class, 'departments'])->name('departments');
 });
