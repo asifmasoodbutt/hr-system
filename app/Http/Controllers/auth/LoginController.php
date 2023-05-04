@@ -20,9 +20,13 @@ class LoginController extends Controller
             $user = User::where('email', $request->email)->first();
             if (Hash::check($request->password, $user->password)) {
                 $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-                $request->session()->put('logged_in_user', $user->id);
+                $request->session()->put([
+                    'logged_in_user' => $user->id,
+                    'first_name' => $user->first_name,
+                    'last_name' => $user->last_name
+                ]);
                 $response = ['token' => $token];
-                storeApiResponseData($request->api_request_id, [], 200, true); 
+                storeApiResponseData($request->api_request_id, ['user_data' => $user], 200, true);
                 return response()->success($response);
             } else {
                 storeApiResponseData($request->api_request_id, 'Credentials mismatched!', 401, false);
