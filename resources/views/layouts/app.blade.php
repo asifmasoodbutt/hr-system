@@ -317,7 +317,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">
-                                {{ session('first_name') }} {{ session('last_name') }}
+                                    {{ session('first_name') }} {{ session('last_name') }}
                                 </span>
                                 <img class="img-profile rounded-circle" src="{{asset('assets/img/undraw_profile.svg')}}">
                             </a>
@@ -412,44 +412,38 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('assets/js/sb-admin-2.min.js') }}"></script>
+    <script src="{{ asset('assets/js/sb-admin-2.js') }}"></script>
 
     @yield('scripts')
 
     <!-- Hit Logout API -->
     <script>
-        document.getElementById('logout-button').addEventListener('click', function() {
-            var xhr = new XMLHttpRequest();
+        document.getElementById('logout-button').addEventListener('click', () => {
+            const xhr = new XMLHttpRequest();
             xhr.open('GET', @json(config('constants.LOGOUT_ENDPOINT')));
             xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+            const token = localStorage.getItem('token');
+            if (token) {
+                xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+            }
             xhr.onload = function() {
-                // If the request was successful
                 if (xhr.status === 200) {
-                    localStorage.removeItem("token");
-                    window.location = "{{ route('login') }}";
+                    localStorage.removeItem('token');
+                    location.replace('{{ route("login") }}');
                 } else {
-                    // If the request was unsuccessful
-                    alert('Error:', xhr.statusText)
+                    const response = JSON.parse(xhr.responseText);
+                    console.error(`Request failed with status ${xhr.status}: ${response?.message}`);
                 }
             };
             xhr.onerror = () => {
-                console.log('Error:', xhr.statusText);
+                console.error(`Network error: ${xhr.statusText}`);
             };
-            xhr.send(JSON.stringify({}));
+            xhr.send();
         });
     </script>
     <script>
-        window.onload = function() {
-            if (window.history && window.history.pushState) {
-                window.history.pushState('forward', null, '');
-                window.addEventListener('popstate', function() {
-                    window.history.pushState('forward', null, '');
-                    if (window.localStorage.getItem('token')) {
-                        window.location.href = '{{ route("dashboard") }}';
-                    }
-                });
-            }
-        };
+        // Make sidebar button of white color when clicked
+        
     </script>
 
 </body>

@@ -13,13 +13,13 @@ class DepartmentSeeder extends Seeder
     public function run(): void
     {
         Department::insert([
-            ['name' => 'Human Resources'],
-            ['name' => 'Finance and Accounting'],
-            ['name' => 'Sales and Marketing'],
-            ['name' => 'Information Technology'],
-            ['name' => 'Operations and Production'],
-            ['name' => 'Research and Development'],
-            ['name' => 'Legal']
+            ['name' => 'Human Resources', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Finance and Accounting', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Sales and Marketing', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Information Technology', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Operations and Production', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Research and Development', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Legal', 'created_at' => now(), 'updated_at' => now()]
         ]);
     }
 }

@@ -9,4 +9,5 @@ $dev_constants = [
     'FORGOT_PASSWORD_ENDPOINT' => $base_url . 'api/auth/send-reset-link-mail',
     'RESET_PASSWORD_ENDPOINT' => $base_url . 'api/auth/reset-password',
     'LOGOUT_ENDPOINT' => $base_url . 'api/auth/logout',
+    'GET_DEPARTMENTS_ENDPOINT' => $base_url . 'api/get-departments',
 ];

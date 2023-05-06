@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\admin\DepartmentController;
+use App\Http\Controllers\admin\EmployeeController;
 use App\Http\Controllers\auth\ForgotpasswordController;
 use App\Http\Controllers\auth\LoginController;
 use App\Http\Controllers\auth\ResetPasswordController;
-use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,7 +28,7 @@ Route::get('forget-password', [ForgotpasswordController::class, 'forgotPassword'
 Route::get('reset-password/{token}/{email}', [ResetPasswordController::class, 'resetPassword'])->name('resetPassword');
 
 Route::group(['middleware' => ['checkLogin']], function () {
-    Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
-    Route::get('employees', [DashboardController::class, 'employees'])->name('employees');
-    Route::get('departments', [DashboardController::class, 'departments'])->name('departments');
+    Route::get('dashboard', [AdminDashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('employees', [EmployeeController::class, 'employees'])->name('employees');
+    Route::get('departments', [DepartmentController::class, 'departments'])->name('departments');
 });

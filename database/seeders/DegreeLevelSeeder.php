@@ -13,11 +13,11 @@ class DegreeLevelSeeder extends Seeder
     public function run(): void
     {
         DegreeLevel::insert([
-            ['level' => 'Certificate/Diploma'],
-            ['level' => 'Associate\'s degree'],
-            ['level' => 'Bachelor\'s degree'],
-            ['level' => 'Master\'s degree'],
-            ['level' => 'Doctorate degree']
+            ['level' => 'Certificate/Diploma', 'created_at' => now(), 'updated_at' => now()],
+            ['level' => 'Associate\'s degree', 'created_at' => now(), 'updated_at' => now()],
+            ['level' => 'Bachelor\'s degree', 'created_at' => now(), 'updated_at' => now()],
+            ['level' => 'Master\'s degree', 'created_at' => now(), 'updated_at' => now()],
+            ['level' => 'Doctorate degree', 'created_at' => now(), 'updated_at' => now()]
         ]);
     }
 }

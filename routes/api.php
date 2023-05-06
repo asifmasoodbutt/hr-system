@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\DepartmentController;
 use App\Http\Controllers\auth\ForgotpasswordController;
 use App\Http\Controllers\auth\LoginController;
 use App\Http\Controllers\auth\LogoutController;
@@ -27,4 +28,8 @@ Route::prefix('auth')->middleware(['storeApiRequestData'])->group(function () {
     Route::post('send-reset-link-mail', [ForgotpasswordController::class, 'sendResetLinkEmail']);
     Route::post('reset-password', [ResetPasswordController::class, 'resetPasswordApi']);
     Route::get('logout', [LogoutController::class, 'logoutApi'])->middleware('auth:api');
+});
+
+Route::middleware(['storeApiRequestData', 'auth:api'])->group(function () {
+    Route::get('get-departments', [DepartmentController::class, 'getDepartments']);
 });
