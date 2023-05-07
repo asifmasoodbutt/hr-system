@@ -38,7 +38,7 @@ class PayScaleSeeder extends Seeder
                 'updated_at' => now()
             ],
             [
-                'level' => 'Senior',
+                'level' => 'Expert',
                 'basic_salary' => 150000,
                 'allowances' => 30000,
                 'benefits' => 30000,

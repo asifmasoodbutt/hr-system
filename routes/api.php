@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\admin\ContractTypeController;
+use App\Http\Controllers\admin\DegreeLevelController;
 use App\Http\Controllers\admin\DepartmentController;
+use App\Http\Controllers\admin\PayScaleController;
 use App\Http\Controllers\auth\ForgotpasswordController;
 use App\Http\Controllers\auth\LoginController;
 use App\Http\Controllers\auth\LogoutController;
@@ -32,4 +35,7 @@ Route::prefix('auth')->middleware(['storeApiRequestData'])->group(function () {
 
 Route::middleware(['storeApiRequestData', 'auth:api'])->group(function () {
     Route::get('get-departments', [DepartmentController::class, 'getDepartments']);
+    Route::get('get-degree_levels', [DegreeLevelController::class, 'getDegreeLevels']);
+    Route::get('get-pay-scales', [PayScaleController::class, 'getPayScales']);
+    Route::get('get-contract-types', [ContractTypeController::class, 'getContractTypes']);
 });

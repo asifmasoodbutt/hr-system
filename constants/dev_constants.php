@@ -10,4 +10,7 @@ $dev_constants = [
     'RESET_PASSWORD_ENDPOINT' => $base_url . 'api/auth/reset-password',
     'LOGOUT_ENDPOINT' => $base_url . 'api/auth/logout',
     'GET_DEPARTMENTS_ENDPOINT' => $base_url . 'api/get-departments',
+    'GET_DEGREE_LEVELS_ENDPOINT' => $base_url . 'api/get-degree_levels',
+    'GET_PAY_SCALES_ENDPOINT' => $base_url . 'api/get-pay-scales',
+    'GET_CONTRACT_TYPES_ENDPOINT' => $base_url . 'api/get-contract-types'
 ];

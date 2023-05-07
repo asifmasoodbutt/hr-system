@@ -23,6 +23,7 @@ return new class extends Migration
             $table->text('permanent_address')->nullable();
             $table->string('phone_no', 15)->nullable();
             $table->string('father_name', 50);
+            $table->string('cnic', 15)->nullable();
             $table->unsignedBigInteger('family_detail_id')->nullable();
             $table->unsignedBigInteger('department_id')->nullable();
             $table->unsignedBigInteger('qualification_id')->nullable();

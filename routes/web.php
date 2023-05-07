@@ -31,4 +31,5 @@ Route::group(['middleware' => ['checkLogin']], function () {
     Route::get('dashboard', [AdminDashboardController::class, 'dashboard'])->name('dashboard');
     Route::get('employees', [EmployeeController::class, 'employees'])->name('employees');
     Route::get('departments', [DepartmentController::class, 'departments'])->name('departments');
+    Route::get('register-employee', [EmployeeController::class, 'registerEmployee'])->name('register-employee');
 });

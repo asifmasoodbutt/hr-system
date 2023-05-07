@@ -13,11 +13,11 @@ class ContractTypeSeeder extends Seeder
     public function run(): void
     {
         ContractType::insert([
-            ['type' => 'permanent', 'created_at' => now(), 'updated_at' => now()],
-            ['type' => 'fixed-term', 'created_at' => now(), 'updated_at' => now()],
-            ['type' => 'part-time', 'created_at' => now(), 'updated_at' => now()],
-            ['type' => 'temporary', 'created_at' => now(), 'updated_at' => now()],
-            ['type' => 'freelance', 'created_at' => now(), 'updated_at' => now()]
+            ['type' => 'Permanent', 'created_at' => now(), 'updated_at' => now()],
+            ['type' => 'Fixed-term', 'created_at' => now(), 'updated_at' => now()],
+            ['type' => 'Part-time', 'created_at' => now(), 'updated_at' => now()],
+            ['type' => 'Temporary', 'created_at' => now(), 'updated_at' => now()],
+            ['type' => 'Freelance', 'created_at' => now(), 'updated_at' => now()]
         ]);
     }
 }

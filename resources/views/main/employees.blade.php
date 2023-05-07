@@ -9,9 +9,13 @@ Employees
 @endsection
 
 @section('main-content')
-<p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-    For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>
-
+<div class="d-flex justify-content-between align-items-center">
+    <p class="mb-4">All the employees are listed below.</p>
+    <a href="{{ route('register-employee') }}" class="btn btn-primary btn-icon-split reg-employee-btn">
+        <span class="icon"><i class="fas fa-user-plus"></i></span>
+        <span class="text">Register New Employee</span>
+    </a>
+</div>
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">

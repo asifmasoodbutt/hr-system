@@ -11,4 +11,9 @@ class EmployeeController extends Controller
     {
         return view('main.employees');
     }
+
+    public function registerEmployee()
+    {
+        return view('main.register-employee');
+    }
 }
