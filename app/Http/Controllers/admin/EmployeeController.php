@@ -7,11 +7,9 @@ use App\Models\Contract;
 use App\Models\Experience;
 use App\Models\FamilyDetail;
 use App\Models\Job;
-use App\Models\JobUser;
-use App\Models\PayScale;
 use App\Models\Qualification;
+use App\Models\Role;
 use App\Models\User;
-use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -83,10 +81,39 @@ class EmployeeController extends Controller
                 'end_date'  => $request->company_end_date
             ]);
 
+            $role = Role::where('name', 'employee')->first();
+            $employee->roles()->attach($role->id, ['created_at' => now(), 'updated_at' => now()]);
+
             storeApiResponseData($request->api_request_id, $employee, 200, true);
             return response()->success($employee);
         } catch (\Exception $e) {
             return throwException($e, 'registerEmployeeApi', $request->api_request_id);
+        }
+    }
+
+    public function getEmployees(Request $request)
+    {
+        try {
+            $users = User::whereHas('roles', function ($query) {
+                $query->where('name', 'employee');
+            })
+                ->with([
+                    'roles',
+                    'department' => function ($query) {
+                        $query->select('id', 'name');
+                    },
+                    'jobs.payScale:id,basic_salary,allowances,benefits', 'contract.contractType:id,type'
+                ])->get();
+
+            $response = 'No employee found!';
+            if ($users->isNotEmpty()) {
+                storeApiResponseData($request->api_request_id, ['message' => 'Employees fetched!'], 200, true);
+                return response()->success($users);
+            }
+            storeApiResponseData($request->api_request_id, ['message' => $response], 404, false);
+            return response()->error($response, 404);
+        } catch (\Exception $e) {
+            return throwException($e, 'getEmployees', $request->api_request_id);
         }
     }
 }

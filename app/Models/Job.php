@@ -15,8 +15,8 @@ class Job extends Model
         'job_description'
     ];
 
-    public function users()
+    public function payScale()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsTo(PayScale::class);
     }
 }

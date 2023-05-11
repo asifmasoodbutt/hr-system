@@ -40,4 +40,5 @@ Route::middleware(['storeApiRequestData', 'auth:api'])->group(function () {
     Route::get('get-pay-scales', [PayScaleController::class, 'getPayScales']);
     Route::get('get-contract-types', [ContractTypeController::class, 'getContractTypes']);
     Route::post('register-employee', [EmployeeController::class, 'registerEmployeeApi']);
+    Route::get('get-employees', [EmployeeController::class, 'getEmployees']);
 });

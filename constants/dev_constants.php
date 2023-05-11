@@ -13,5 +13,6 @@ $dev_constants = [
     'GET_DEGREE_LEVELS_ENDPOINT' => $base_url . 'api/get-degree_levels',
     'GET_PAY_SCALES_ENDPOINT' => $base_url . 'api/get-pay-scales',
     'GET_CONTRACT_TYPES_ENDPOINT' => $base_url . 'api/get-contract-types',
-    'REGISTER_EMPLOYEE_ENDPOINT' => $base_url . 'api/register-employee'
+    'REGISTER_EMPLOYEE_ENDPOINT' => $base_url . 'api/register-employee',
+    'GET_EMPLOYEES_ENDPOINT' => $base_url . 'api/get-employees',
 ];

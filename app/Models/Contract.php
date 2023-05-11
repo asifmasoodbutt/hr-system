@@ -14,4 +14,9 @@ class Contract extends Model
         'start_date',
         'end_date'
     ];
+
+    public function contractType()
+    {
+        return $this->belongsTo(ContractType::class);
+    }
 }
