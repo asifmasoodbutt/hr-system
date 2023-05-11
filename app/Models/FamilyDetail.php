@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class FamilyDetail extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'spouse_name',
+        'children'
+    ];
 }

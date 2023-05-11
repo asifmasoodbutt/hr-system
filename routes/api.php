@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin\ContractTypeController;
 use App\Http\Controllers\admin\DegreeLevelController;
 use App\Http\Controllers\admin\DepartmentController;
+use App\Http\Controllers\admin\EmployeeController;
 use App\Http\Controllers\admin\PayScaleController;
 use App\Http\Controllers\auth\ForgotpasswordController;
 use App\Http\Controllers\auth\LoginController;
@@ -38,4 +39,5 @@ Route::middleware(['storeApiRequestData', 'auth:api'])->group(function () {
     Route::get('get-degree_levels', [DegreeLevelController::class, 'getDegreeLevels']);
     Route::get('get-pay-scales', [PayScaleController::class, 'getPayScales']);
     Route::get('get-contract-types', [ContractTypeController::class, 'getContractTypes']);
+    Route::post('register-employee', [EmployeeController::class, 'registerEmployeeApi']);
 });

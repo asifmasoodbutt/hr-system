@@ -12629,5 +12629,12 @@ body.sidebar-toggled footer.sticky-footer {
 .button-container {
   display: flex;
   justify-content: center;
-  gap: 10px; /* adjust as needed for desired spacing */
+  gap: 10px;
+  /* adjust as needed for desired spacing */
+}
+
+.required::before {
+  content: "*";
+  color: red;
+  margin-right: 4px;
 }

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('family_details', function (Blueprint $table) {
             $table->id();
             $table->string('spouse_name', 50);
-            $table->unsignedInteger('children');
+            $table->unsignedInteger('children')->nullable();
             $table->timestamps();
         });
     }

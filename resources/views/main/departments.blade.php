@@ -68,6 +68,8 @@ Departments
     if (token) {
         xhttp.setRequestHeader('Authorization', `Bearer ${token}`);
     }
+    xhttp.setRequestHeader("Accept", "application/json");
+    xhttp.setRequestHeader("Content-Type", "application/json");
     xhttp.send();
 </script>
 

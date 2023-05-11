@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('method_name');
             $table->string('line_no');
-            $table->string('error');
+            $table->text('error');
             $table->integer('status_code');
             $table->unsignedBigInteger('api_request_id')->nullable();
             $table->timestamps();
