@@ -15,4 +15,5 @@ $dev_constants = [
     'GET_CONTRACT_TYPES_ENDPOINT' => $base_url . 'api/get-contract-types',
     'REGISTER_EMPLOYEE_ENDPOINT' => $base_url . 'api/register-employee',
     'GET_EMPLOYEES_ENDPOINT' => $base_url . 'api/get-employees',
+    'SHOW_EMPLOYEE_DETAILS_PAGE' => $base_url . 'employee-details',
 ];

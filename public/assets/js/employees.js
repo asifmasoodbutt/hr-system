@@ -2,13 +2,25 @@
 const token = localStorage.getItem('token');
 $.ajax({
     type: "GET",
-    url: get_demployees_url,
+    url: get_employees_url,
     headers: {
         "Authorization": `Bearer ${token}`
     },
     dataType: "json",
     success: function (response) {
         console.log(response);
+        let tableBody = $('#dataTable tbody');
+        tableBody.empty();
+        $.each(response.data, function (index, employee) {
+            let tableRow = $('<tr/>');
+            tableRow.append($('<td/>').append($('<a/>').attr('href', employee_details_url + '/' + employee.id).text(employee.full_name)));
+            tableRow.append($('<td/>').text(employee.email));
+            tableRow.append($('<td/>').text(employee.department));
+            tableRow.append($('<td/>').text(employee.position));
+            tableRow.append($('<td/>').text(employee.contract));
+            tableRow.append($('<td/>').text('$' + employee.salary));
+            tableBody.append(tableRow);
+        });
     },
     error: function (jqXHR, textStatus, errorThrown) {
         if (jqXHR.status === 401) {

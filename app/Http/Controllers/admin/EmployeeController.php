@@ -94,26 +94,49 @@ class EmployeeController extends Controller
     public function getEmployees(Request $request)
     {
         try {
-            $users = User::whereHas('roles', function ($query) {
-                $query->where('name', 'employee');
-            })
+            $users = User::query()
+                ->select('id', 'first_name', 'last_name', 'email', 'department_id', 'contract_id')
+                ->whereHas('roles', function ($query) {
+                    $query->where('name', 'employee');
+                })
                 ->with([
-                    'roles',
-                    'department' => function ($query) {
-                        $query->select('id', 'name');
-                    },
-                    'jobs.payScale:id,basic_salary,allowances,benefits', 'contract.contractType:id,type'
-                ])->get();
+                    'roles:id,name',
+                    'department:id,name',
+                    'jobs:id,pay_scale_id,position',
+                    'jobs.payScale:id,basic_salary,allowances,benefits',
+                    'contract:id,contract_type_id',
+                    'contract.contractType:id,type'
+                ])
+                ->get();
 
-            $response = 'No employee found!';
-            if ($users->isNotEmpty()) {
-                storeApiResponseData($request->api_request_id, ['message' => 'Employees fetched!'], 200, true);
-                return response()->success($users);
+            if ($users->isEmpty()) {
+                $response = 'No employee found!';
+                storeApiResponseData($request->api_request_id, ['message' => $response], 404, false);
+                return response()->error($response, 404);
             }
-            storeApiResponseData($request->api_request_id, ['message' => $response], 404, false);
-            return response()->error($response, 404);
+            $response = $users->map(function ($user) {
+                $total_salary = $user->jobs->sum(function ($job) {
+                    return $job->payScale->basic_salary + $job->payScale->allowances + $job->payScale->benefits;
+                });
+                return [
+                    'id' => $user->id,
+                    'full_name' => $user->first_name . ' ' . $user->last_name,
+                    'email' => $user->email,
+                    'department' => $user->department->name,
+                    'position' => $user->jobs->isEmpty() ? null : $user->jobs->first()->position,
+                    'salary' => $total_salary,
+                    'contract' => $user->contract->contractType->type
+                ];
+            });
+            storeApiResponseData($request->api_request_id, ['message' => 'Employees fetched!'], 200, true);
+            return response()->success($response);
         } catch (\Exception $e) {
             return throwException($e, 'getEmployees', $request->api_request_id);
         }
+    }
+
+    public function employeeDetails($id)
+    {
+        return view('main.employee-details');
     }
 }
