@@ -22,7 +22,7 @@ class ResetPasswordController extends Controller
                 ->where('email', $request->email)->latest();
             if ($record) {
                 $user = User::where('email', $request->email)->first();
-                $user->password = Hash::make($request->password);
+                $user->password = $request->password;
                 $user->save();
                 DB::table('password_reset_tokens')->where('email', $request->email)->delete();
                 $response = ['message' => 'Password has been reset!'];

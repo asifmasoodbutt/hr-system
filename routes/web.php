@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\EmployeeController;
 use App\Http\Controllers\auth\ForgotpasswordController;
 use App\Http\Controllers\auth\LoginController;
 use App\Http\Controllers\auth\ResetPasswordController;
+use App\Http\Controllers\employee\EmployeeController as EmployeeEmployeeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,4 +34,8 @@ Route::group(['middleware' => ['checkLogin']], function () {
     Route::get('departments', [DepartmentController::class, 'departments'])->name('departments');
     Route::get('register-employee', [EmployeeController::class, 'registerEmployee'])->name('register-employee');
     Route::get('employee-details/{id}', [EmployeeController::class, 'employeeDetails'])->name('employee-details');
+
+    
 });
+
+Route::get('employee-profile', [EmployeeEmployeeController::class, 'employeeProfile'])->name('employee-profile');

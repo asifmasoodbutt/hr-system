@@ -40,6 +40,7 @@
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
+
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                 <a class="nav-link" href="{{ route('dashboard') }}">
@@ -58,6 +59,13 @@
             </li>
 
             <!-- Nav Item - Departments -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('departments') }}">
+                    <i class="fas fa-fw fa-building"></i>
+                    <span>Departments</span></a>
+            </li>
+
+            <!-- Nav Item - Complete Employee Profile Data -->
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('departments') }}">
                     <i class="fas fa-fw fa-building"></i>
@@ -444,7 +452,6 @@
     </script>
     <script>
         // Make sidebar button of white color when clicked
-        
     </script>
 
 </body>
