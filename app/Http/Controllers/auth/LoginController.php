@@ -17,15 +17,19 @@ class LoginController extends Controller
     public function loginApi(LoginApiRequest $request)
     {
         try {
-            $user = User::where('email', $request->email)->first();
+            $user = User::with('roles')->where('email', $request->email)->first();
+            foreach ($user->roles as $role) {
+                $role = $role->name;
+            }
             if (Hash::check($request->password, $user->password)) {
                 $token = $user->createToken('Laravel Password Grant Client')->accessToken;
                 $request->session()->put([
                     'logged_in_user' => $user->id,
                     'first_name' => $user->first_name,
-                    'last_name' => $user->last_name
+                    'last_name' => $user->last_name,
+                    'role' => $role
                 ]);
-                $response = ['token' => $token];
+                $response = ['token' => $token, 'role' => $role];
                 storeApiResponseData($request->api_request_id, ['user_data' => $user], 200, true);
                 return response()->success($response);
             } else {

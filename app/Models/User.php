@@ -67,4 +67,34 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Contract::class);
     }
+
+    public function experiences()
+    {
+        return $this->hasMany(Experience::class);
+    }
+
+    public function gender()
+    {
+        return $this->belongsTo(Gender::class);
+    }
+
+    public function familyDetail()
+    {
+        return $this->belongsTo(FamilyDetail::class);
+    }
+
+    public function qualification()
+    {
+        return $this->belongsTo(Qualification::class);
+    }
+
+    public function hasPermission($slug)
+    {
+        foreach ($this->roles as $role) {
+            if ($role->permissions->contains('slug', $slug)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

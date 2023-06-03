@@ -16,7 +16,11 @@ class CheckNotAuthenticated
     public function handle(Request $request, Closure $next): Response
     {
         if (session()->has('logged_in_user')) {
-            return redirect('/dashboard');
+            if (session()->get('role') == 'admin') {
+                return redirect('/dashboard');
+            } else {
+                return redirect('/profile-details');
+            }
         }
         $response = $next($request);
         $response->headers->set('Cache-Control', 'no-cache, no-store, must-revalidate');

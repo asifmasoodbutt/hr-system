@@ -13,9 +13,9 @@ class GenderSeeder extends Seeder
     public function run(): void
     {
         Gender::insert([
-            ['gender' => 'male', 'created_at' => now(), 'updated_at' => now()],
-            ['gender' => 'female', 'created_at' => now(), 'updated_at' => now()],
-            ['gender' => 'other', 'created_at' => now(), 'updated_at' => now()]
+            ['gender' => 'Male', 'created_at' => now(), 'updated_at' => now()],
+            ['gender' => 'Female', 'created_at' => now(), 'updated_at' => now()],
+            ['gender' => 'Other', 'created_at' => now(), 'updated_at' => now()]
         ]);
     }
 }

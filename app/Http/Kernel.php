@@ -69,6 +69,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'storeApiRequestData' => \App\Http\Middleware\StoreApiRequestData::class,
         'checkLogin' => \App\Http\Middleware\CheckLogin::class,
-        'checkNotAuthenticated' => \App\Http\Middleware\CheckNotAuthenticated::class
+        'checkNotAuthenticated' => \App\Http\Middleware\CheckNotAuthenticated::class,
+        'checkScreenPermission' => \App\Http\Middleware\CheckScreenPermission::class,
     ];
 }

@@ -128,7 +128,9 @@
                         const response = JSON.parse(xhr.responseText);
                         // Store access token in local storage
                         localStorage.setItem('token', response.data.token);
-                        window.location = "{{ route('dashboard') }}"; // Redirect to dashboard page
+                        let route = response.data.role == 'admin' ? "{{ route('dashboard') }}" : "{{ route('profile-details') }}"
+                        localStorage.setItem('activeLink', route);
+                        window.location = route; // Redirect to dashboard page
                     } else {
                         // Failed login
                         const response = JSON.parse(xhr.responseText);

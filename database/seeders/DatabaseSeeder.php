@@ -16,13 +16,13 @@ class DatabaseSeeder extends Seeder
         $this->call(ContractTypeSeeder::class);
         $this->call(DegreeLevelSeeder::class);
         $this->call(DepartmentSeeder::class);
+        $this->call(SectionSeeder::class);
         $this->call(GenderSeeder::class);
         $this->call(PayScaleSeeder::class);
+        $this->call(PermissionSeeder::class);
         $this->call(RoleSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(RoleUserSeeder::class);
-        $this->call(SectionSeeder::class);
-        // $this->call(PermissionSeeder::class);
         // $this->call(LeaveTypeSeeder::class);
     }
 }

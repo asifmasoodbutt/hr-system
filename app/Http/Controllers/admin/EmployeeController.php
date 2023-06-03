@@ -11,6 +11,7 @@ use App\Models\Qualification;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EmployeeController extends Controller
 {
@@ -24,6 +25,21 @@ class EmployeeController extends Controller
         return view('main.register-employee');
     }
 
+    public function getProfileDetails()
+    {
+        return view('main.profile-details');
+    }
+
+    public function employeeDetails($id)
+    {
+        return view('main.employee-details');
+    }
+
+    public function changePassword()
+    {
+        return view('main.change-password');
+    }
+
     public function registerEmployeeApi(Request $request)
     {
         try {
@@ -35,7 +51,7 @@ class EmployeeController extends Controller
 
             $qualification_id = Qualification::create([
                 'degree_level_id' => $request->degree_level_id,
-                'institute' => $request->institute,
+                'institution' => $request->institute,
                 'graduation_year' => $request->graduation_year
             ])->id;
 
@@ -135,8 +151,49 @@ class EmployeeController extends Controller
         }
     }
 
-    public function employeeDetails($id)
+    public function getProfileDetailsApi(Request $request)
     {
-        return view('main.employee-details');
+        try {
+            $user = User::with([
+                'roles:id,name',
+                'gender:id,gender',
+                'jobs:id,pay_scale_id,position,job_description',
+                'jobs.payScale:id,level,basic_salary,allowances,benefits',
+                'familyDetail:id,spouse_name,children',
+                'department:id,name',
+                'qualification:id,degree_level_id,institution,graduation_year',
+                'qualification.degreeLevel:id,level',
+                'contract:id,contract_type_id,start_date,end_date',
+                'contract.contractType:id,type',
+                'experiences:id,user_id,company_name,position,start_date,end_date'
+            ])
+                ->findOrFail(Auth::id());
+            $data = [
+                'id' => $user->id,
+                'first_name' => $user->first_name,
+                'last_name' => $user->last_name,
+                'gender' => $user->gender->gender,
+                'date_of_birth' => $user->date_of_birth,
+                'email' => $user->email,
+                'current_address' => $user->current_address,
+                'permanent_address' => $user->permanent_address,
+                'phone_no' => $user->phone_no,
+                'father_name' => $user->father_name,
+                'cnic' => $user->cnic,
+                'family_details' => $user->familyDetail,
+                'department' => isset($user->department->name) ?? null,
+                'qualification' => $user->qualification,
+                'contract' => $user->contract,
+                'bank_name' => $user->bank_name,
+                'bank_account_no' => $user->bank_account_no,
+                'experiences' => $user->experiences,
+                'jobs' => $user->jobs
+            ];
+
+            storeApiResponseData($request->api_request_id, ['message' => 'Employee\'s profile details fetched!'], 200, true);
+            return response()->success($data);
+        } catch (\Exception $e) {
+            return throwException($e, 'getProfileDetailsApi', $request->api_request_id);
+        }
     }
 }

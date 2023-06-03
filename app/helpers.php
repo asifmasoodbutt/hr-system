@@ -37,7 +37,7 @@ if (!function_exists('storeApiResponseData')) {
             $response_data = ['errors' => $errors, 'message' => $data];
         }
         ApiRequest::where('id', $api_request_id)->update([
-            'response_data' => serialize($response_data),
+            'response_data' => $response_data,
             'status_code' => $status_code
         ]);
     }

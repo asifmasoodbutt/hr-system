@@ -39,13 +39,14 @@
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
-
-
+            @if (session('role') == 'admin')
+            <!-- Code to display if the role is 'employee' -->
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                 <a class="nav-link" href="{{ route('dashboard') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+                    <span>Dashboard</span>
+                </a>
             </li>
 
             <!-- Divider -->
@@ -55,22 +56,34 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('employees') }}">
                     <i class="fas fa-fw fa-users"></i>
-                    <span>Employees</span></a>
+                    <span>Employees</span>
+                </a>
             </li>
 
             <!-- Nav Item - Departments -->
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('departments') }}">
                     <i class="fas fa-fw fa-building"></i>
-                    <span>Departments</span></a>
+                    <span>Departments</span>
+                </a>
             </li>
 
             <!-- Nav Item - Complete Employee Profile Data -->
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('departments') }}">
+                <a class="nav-link" href="{{ route('profile-details') }}">
                     <i class="fas fa-fw fa-building"></i>
-                    <span>Departments</span></a>
+                    <span>Profile</span>
+                </a>
             </li>
+            @else
+            <!-- Nav Item - Complete Employee Profile Data -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('profile-details') }}">
+                    <i class="fas fa-fw fa-building"></i>
+                    <span>Profile</span>
+                </a>
+            </li>
+            @endif
 
             <!-- Heading -->
             <!-- <div class="sidebar-heading">
@@ -328,24 +341,20 @@
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">
                                     {{ session('first_name') }} {{ session('last_name') }}
                                 </span>
-                                <img class="img-profile rounded-circle" src="{{asset('assets/img/undraw_profile.svg')}}">
+                                <img class="img-profile rounded-circle" src="{{asset('assets/img/undraw_profile.svg')}}" />
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
+                                <a class="dropdown-item" href="{{ route('change-password') }}" id="change-password">
+                                    <i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Change Password
                                 </a>
-                                <a class="dropdown-item" href="#">
+                                <!-- <a class="dropdown-item" href="#">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
+                                </a> -->
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal" id="logout-button">
+                                <a class="dropdown-item" href="#" id="logout-button">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -451,7 +460,10 @@
         });
     </script>
     <script>
-        // Make sidebar button of white color when clicked
+        // Handle click event on the "Change Password" link
+        $('#change-password').click(function(e) {
+            location.replace('{{ route("change-password") }}');
+        });
     </script>
 
 </body>

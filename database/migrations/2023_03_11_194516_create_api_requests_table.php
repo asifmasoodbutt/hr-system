@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('api_requests', function (Blueprint $table) {
             $table->id();
             $table->string('endpoint');
-            $table->longText('request_data');
-            $table->longText('response_data')->nullable();
+            $table->json('request_data');
+            $table->json('response_data')->nullable();
             $table->integer('status_code');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();

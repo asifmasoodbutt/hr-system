@@ -8,7 +8,6 @@ $.ajax({
     },
     dataType: "json",
     success: function (response) {
-        console.log(response);
         let tableBody = $('#dataTable tbody');
         tableBody.empty();
         $.each(response.data, function (index, employee) {

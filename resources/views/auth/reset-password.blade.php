@@ -112,7 +112,6 @@
             token: url_array[2],
             email: url_array[3]
         };
-        console.log(postObj);
         let dataObj = JSON.stringify(postObj)
         const url = @json(config('constants.RESET_PASSWORD_ENDPOINT'));
         let xhr = new XMLHttpRequest()

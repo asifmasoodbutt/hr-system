@@ -14,4 +14,9 @@ class Qualification extends Model
         'institution',
         'graduation_year'
     ];
+
+    public function degreeLevel()
+    {
+        return $this->belongsTo(DegreeLevel::class);
+    }
 }

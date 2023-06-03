@@ -13,6 +13,11 @@ class ApiRequest extends Model
     
     public function setRequestDataAttribute($value)
     {
-        $this->attributes['request_data'] = serialize($value);
+        $this->attributes['request_data'] = json_encode($value);
+    }
+
+    public function setResponseDataAttribute($value)
+    {
+        $this->attributes['response_data'] = json_encode($value);
     }
 }

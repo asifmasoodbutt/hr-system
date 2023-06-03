@@ -1,12 +1,11 @@
 <?php
 
-use App\Http\Controllers\admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\DepartmentController;
 use App\Http\Controllers\admin\EmployeeController;
 use App\Http\Controllers\auth\ForgotpasswordController;
 use App\Http\Controllers\auth\LoginController;
 use App\Http\Controllers\auth\ResetPasswordController;
-use App\Http\Controllers\employee\EmployeeController as EmployeeEmployeeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,13 +28,12 @@ Route::get('forget-password', [ForgotpasswordController::class, 'forgotPassword'
 Route::get('reset-password/{token}/{email}', [ResetPasswordController::class, 'resetPassword'])->name('resetPassword');
 
 Route::group(['middleware' => ['checkLogin']], function () {
-    Route::get('dashboard', [AdminDashboardController::class, 'dashboard'])->name('dashboard');
-    Route::get('employees', [EmployeeController::class, 'employees'])->name('employees');
-    Route::get('departments', [DepartmentController::class, 'departments'])->name('departments');
-    Route::get('register-employee', [EmployeeController::class, 'registerEmployee'])->name('register-employee');
-    Route::get('employee-details/{id}', [EmployeeController::class, 'employeeDetails'])->name('employee-details');
-
-    
+    Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard')->middleware('checkScreenPermission:view-admin-dashboard-screen');
+    Route::get('employees', [EmployeeController::class, 'employees'])->name('employees')->middleware('checkScreenPermission:view-employees-screen');
+    Route::get('departments', [DepartmentController::class, 'departments'])->name('departments')->middleware('checkScreenPermission:view-departments-screen');
+    Route::get('register-employee', [EmployeeController::class, 'registerEmployee'])->name('register-employee')->middleware('checkScreenPermission:view-register-employee-screen');
+    Route::get('employee-details/{id}', [EmployeeController::class, 'employeeDetails'])->name('employee-details')->middleware('checkScreenPermission:view-employee-details-screen');
+    Route::get('profile-details', [EmployeeController::class, 'getProfileDetails'])->name('profile-details')->middleware('checkScreenPermission:view-profile-screen');
+    Route::get('change-password', [EmployeeController::class, 'changePassword'])->name('change-password')->middleware('checkScreenPermission:view-change-password-screen');
 });
-
-Route::get('employee-profile', [EmployeeEmployeeController::class, 'employeeProfile'])->name('employee-profile');
+Route::get('forbidden', [DashboardController::class, 'forbidden'])->name('forbidden');

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\ContractTypeController;
+use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\DegreeLevelController;
 use App\Http\Controllers\admin\DepartmentController;
 use App\Http\Controllers\admin\EmployeeController;
@@ -41,4 +42,6 @@ Route::middleware(['storeApiRequestData', 'auth:api'])->group(function () {
     Route::get('get-contract-types', [ContractTypeController::class, 'getContractTypes']);
     Route::post('register-employee', [EmployeeController::class, 'registerEmployeeApi']);
     Route::get('get-employees', [EmployeeController::class, 'getEmployees']);
+    Route::get('get-profile-details', [EmployeeController::class, 'getProfileDetailsApi']);
+    Route::post('change-password', [DashboardController::class, 'changePassword']);
 });
