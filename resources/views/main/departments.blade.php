@@ -4,6 +4,10 @@
 Departments | HRM System
 @endsection
 
+@section('head')
+<link href="{{ asset('assets/css/departments-page.css') }}" rel="stylesheet">
+@endsection
+
 @section('heading')
 Departments
 @endsection
@@ -37,40 +41,13 @@ Departments
 @section('scripts')
 
 <!-- Page level plugins -->
-<script src="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap4.min.css"></script>
-<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script> -->
 <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
 
 <!-- Page level custom scripts -->
-<script src="{{ asset('assets/js/demo/datatables-demo.js') }}"></script>
 <script>
-    const xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState === 4) {
-            if (this.status === 200) {
-                try {
-                    const data = JSON.parse(this.responseText);
-                    const tableBody = document.querySelector('#data-table tbody');
-                    data.data.forEach((item) => {
-                        const row = `<tr><td>${item.id}</td><td>${item.name}</td><td>section</td></tr>`;
-                        tableBody.insertAdjacentHTML('beforeend', row);
-                    });
-                } catch (error) {
-                    console.error(error);
-                }
-            } else {
-                console.error(`Request failed with status ${this.status}`);
-            }
-        }
-    };
-    xhttp.open('GET', @json(config('constants.GET_DEPARTMENTS_ENDPOINT')), true);
-    const token = localStorage.getItem('token');
-    if (token) {
-        xhttp.setRequestHeader('Authorization', `Bearer ${token}`);
-    }
-    xhttp.setRequestHeader("Accept", "application/json");
-    xhttp.setRequestHeader("Content-Type", "application/json");
-    xhttp.send();
+    const get_departments_url = {!!json_encode(config('constants.GET_DEPARTMENTS_ENDPOINT')) !!};
 </script>
+<script src="{{ asset('assets/js/departments.js') }}"></script>
 
 @endsection

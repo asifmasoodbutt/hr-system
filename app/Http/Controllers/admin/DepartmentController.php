@@ -16,7 +16,9 @@ class DepartmentController extends Controller
     public function getDepartments(Request $request)
     {
         try {
-            $departments = Department::get();
+            $departments = Department::select('id', 'name')
+                ->with('sections:id,name,department_id')
+                ->get();
             if ($departments->isNotEmpty()) {
                 storeApiResponseData($request->api_request_id, $departments, 200, true);
                 return response()->success($departments);
