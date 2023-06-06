@@ -17,7 +17,7 @@ $.ajax({
             tableRow.append($('<td/>').text(employee.department));
             tableRow.append($('<td/>').text(employee.position));
             tableRow.append($('<td/>').text(employee.contract));
-            tableRow.append($('<td/>').text('$' + employee.salary));
+            tableRow.append($('<td/>').text(employee.salary + ' PKR'));
             tableBody.append(tableRow);
         });
     },

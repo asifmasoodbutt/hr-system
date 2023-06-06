@@ -18,4 +18,5 @@ $dev_constants = [
     'SHOW_EMPLOYEE_DETAILS_PAGE' => $base_url . 'employee-details',
     'GET_PROFILE_DETAILS_ENDPOINT' => $base_url . 'api/get-profile-details',
     'CHANGE_PASSWORD_ENDPOINT' => $base_url . 'api/change-password',
+    'GET_DASHBOARD_DATA_ENDPOINT' => $base_url . 'api/get-dashboard-data',
 ];

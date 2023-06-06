@@ -36,6 +36,7 @@ Route::prefix('auth')->middleware(['storeApiRequestData'])->group(function () {
 });
 
 Route::middleware(['storeApiRequestData', 'auth:api'])->group(function () {
+    Route::get('get-dashboard-data', [DashboardController::class, 'getDashboardData']);
     Route::get('get-departments', [DepartmentController::class, 'getDepartments']);
     Route::get('get-degree_levels', [DegreeLevelController::class, 'getDegreeLevels']);
     Route::get('get-pay-scales', [PayScaleController::class, 'getPayScales']);

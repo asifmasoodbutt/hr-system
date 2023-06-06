@@ -49,6 +49,5 @@ Employees
     const employee_details_url = {!!json_encode(config('constants.SHOW_EMPLOYEE_DETAILS_PAGE')) !!};
 </script>
 <script src="{{ asset('assets/js/employees.js') }}"></script>
-<script src="{{ asset('assets/js/demo/datatables-demo.js') }}"></script>
 
 @endsection

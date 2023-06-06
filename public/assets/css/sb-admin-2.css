@@ -12638,3 +12638,15 @@ body.sidebar-toggled footer.sticky-footer {
   color: red;
   margin-right: 4px;
 }
+
+#male-color {
+  color: rgba(54, 162, 235, 0.6);
+}
+
+#female-color {
+  color: rgba(255, 99, 132, 0.6);
+}
+
+#others-color {
+  color: rgba(133, 135, 150, 0.6);
+}
