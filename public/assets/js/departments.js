@@ -16,7 +16,7 @@ $(document).ready(function () {
                                     <td>${item.id}</td>
                                     <td>${item.name}</td>
                                     <td>
-                                        <button class="btn btn-primary show-sections-button">Show Section</button>
+                                        <button class="btn btn-primary show-sections-button">Show Sections</button>
                                     </td>
                                  </tr>`;
                     tableBody.append(row);

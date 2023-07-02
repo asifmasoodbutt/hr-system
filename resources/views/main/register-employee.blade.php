@@ -212,37 +212,24 @@ Register Employee
                     </div>
                 </div>
             </div>
-            <h3>Experiences</h3>
+            <div class="row row-cols-md-2 mb-2 text-center">
+                <div class="col themed-grid-col">
+                    <div class="form-group text-left">
+                        <h3>Experiences<span class="required"></span></h3>
+                    </div>
+                </div>
+                <div class="col themed-grid-col">
+                    <div class="text-right">
+                        <a class="btn btn-primary btn-icon-split add-experiences-btn">
+                            <span class="icon"><i class="fas fa-plus"></i></span>
+                            <span class="text">Add Experiences</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
             <br>
-            <div class="row row-cols-md-4 mb-4 text-center">
-                <div class="col themed-grid-col">
-                    <div class="form-group text-left">
-                        <label class="font-weight-bolder">Company Name <span class="required"></span></label>
-                        <input type="text" class="form-control input-field" name="company_name" maxlength="50" required placeholder="Enter employee's company name" />
-                        <div class="validation-error"></div>
-                    </div>
-                </div>
-                <div class="col themed-grid-col">
-                    <div class="form-group text-left">
-                        <label class="font-weight-bolder">Latest Position <span class="required"></span></label>
-                        <input type="text" class="form-control input-field" name="latest_position" maxlength="50" required placeholder="Enter employee's latest position" />
-                        <div class="validation-error"></div>
-                    </div>
-                </div>
-                <div class="col themed-grid-col">
-                    <div class="form-group text-left">
-                        <label class="font-weight-bolder">Start Date <span class="required"></span></label>
-                        <input type="date" class="form-control input-field" name="company_start_date" required placeholder="Enter employee's joining date" />
-                        <div class="validation-error"></div>
-                    </div>
-                </div>
-                <div class="col themed-grid-col">
-                    <div class="form-group text-left">
-                        <label class="font-weight-bolder">End Date <span class="required"></span></label>
-                        <input type="date" class="form-control input-field" name="company_end_date" required placeholder="Enter employee's ending date" />
-                        <div class="validation-error"></div>
-                    </div>
-                </div>
+            <div id="experiencesContainer">
+
             </div>
             <h3>Family Details</h3>
             <br>
@@ -263,14 +250,36 @@ Register Employee
                 </div>
             </div>
             <div class="button-container">
-                <button type="submit" class="btn btn-primary" id="register-employee-btn">
+                <button type="submit" class="btn btn-primary" id="register-employee-btn" disabled>
                     <span class="icon"><i class="fas fa-user-plus"></i></span> Register Employee
                 </button>
-                <button type="reset" class="btn btn-danger">
-                    <span class="icon"><i class="fas fa-times-circle"></i></span> Reset Form
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#formResetConfirmationModal">
+                    <span class="icon"><i class="fas fa-times-circle"></i></span>
+                    <span class="text">Reset Form</span>
                 </button>
             </div>
         </form>
+    </div>
+</div>
+
+<!-- Confirmation dialog modal -->
+<div class="modal fade" id="formResetConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="formResetConfirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="formResetConfirmationModalLabel">Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to reset the form?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmReset">Confirm</button>
+            </div>
+        </div>
     </div>
 </div>
 @endsection
@@ -278,6 +287,18 @@ Register Employee
 @section('scripts')
 
 <!-- Page level custom scripts -->
+<script>
+    $(document).ready(function() {
+        $('#confirmReset').click(function() {
+            // Reset the form
+            $('#register-employee-form')[0].reset();
+
+            // Close the modal
+            $('#formResetConfirmationModal').modal('hide');
+        });
+    });
+</script>
+
 <script>
     const get_departments_url = {!!json_encode(config('constants.GET_DEPARTMENTS_ENDPOINT')) !!};
     const get_degree_levels_url = {!!json_encode(config('constants.GET_DEGREE_LEVELS_ENDPOINT')) !!};

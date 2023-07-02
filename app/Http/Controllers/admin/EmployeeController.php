@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RegisterEmployeeRequest;
 use App\Models\Contract;
 use App\Models\Experience;
 use App\Models\FamilyDetail;
@@ -40,7 +41,7 @@ class EmployeeController extends Controller
         return view('main.change-password');
     }
 
-    public function registerEmployeeApi(Request $request)
+    public function registerEmployeeApi(RegisterEmployeeRequest $request)
     {
         try {
             $family_detail_id = $request->has('spouse_name') ?
@@ -89,13 +90,15 @@ class EmployeeController extends Controller
 
             $employee->jobs()->attach($job_id, ['created_at' => now(), 'updated_at' => now()]);
 
-            Experience::create([
-                'user_id' => $employee->id,
-                'company_name' => $request->company_name,
-                'position' => $request->latest_position,
-                'start_date'  => $request->company_start_date,
-                'end_date'  => $request->company_end_date
-            ]);
+            foreach ($request->experiences as $experience) {
+                Experience::create([
+                    'user_id' => $employee->id,
+                    'company_name' => $experience['company_name'],
+                    'position' => $experience['latest_position'],
+                    'start_date'  => $experience['company_start_date'],
+                    'end_date'  => $experience['company_end_date']
+                ]);
+            }
 
             $role = Role::where('name', 'employee')->first();
             $employee->roles()->attach($role->id, ['created_at' => now(), 'updated_at' => now()]);
