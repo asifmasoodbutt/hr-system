@@ -4,6 +4,10 @@
 Register Employee | HRM System
 @endsection
 
+@section('head')
+<link href="{{ asset('assets/css/register-employee.css') }}" rel="stylesheet">
+endsection
+
 @section('heading')
 Register Employee
 @endsection
@@ -30,14 +34,14 @@ Register Employee
                     <div class="form-group text-left">
                         <label class="font-weight-bolder">First Name <span class="required"></span></label>
                         <input type="text" name="first_name" class="form-control input-field" maxlength="50" required placeholder="Enter employee's first name" />
-                        <div class="validation-error"></div>
+                        <div id="firstNameErrorDiv" style="display: none;" class="message"></div>
                     </div>
                 </div>
                 <div class="col themed-grid-col">
                     <div class="form-group text-left">
                         <label class="font-weight-bolder">Last Name <span class="required"></span></label>
                         <input type="text" name="last_name" class="form-control input-field" maxlength="50" required placeholder="Enter employee's last name" />
-                        <div class="validation-error"></div>
+                        <div id="lastNameErrorDiv" style="display: none;" class="message"></div>
                     </div>
                 </div>
                 <div class="col themed-grid-col">
@@ -48,7 +52,6 @@ Register Employee
                             <option value="2">Female</option>
                             <option value="3">Other</option>
                         </select>
-                        <div class="validation-error"></div>
                     </div>
                 </div>
             </div>
@@ -56,22 +59,22 @@ Register Employee
                 <div class="col themed-grid-col">
                     <div class="form-group text-left">
                         <label class="font-weight-bolder">Date of Birth <span class="required"></span></label>
-                        <input type="date" name="dob" class="form-control input-field" required placeholder="Enter employee's date of birth" />
-                        <div class="validation-error"></div>
+                        <input type="date" name="dob" class="form-control input-field" min="1980-01-01" required placeholder="Enter employee's date of birth" />
+                        <div id="dobErrorDiv" style="display: none;" class="message"></div>
                     </div>
                 </div>
                 <div class="col themed-grid-col">
                     <div class="form-group text-left">
                         <label class="font-weight-bolder">Email <span class="required"></span></label>
                         <input type="email" name="email" class="form-control input-field" maxlength="100" required placeholder="Enter employee's email" />
-                        <div class="validation-error"></div>
+                        <div id="emailErrorDiv" style="display: none;" class="message"></div>
                     </div>
                 </div>
                 <div class="col themed-grid-col">
                     <div class="form-group text-left">
                         <label class="font-weight-bolder">Password <span class="required"></span></label>
                         <input type="password" name="password" class="form-control input-field" maxlength="40" required placeholder="Enter employee's password" />
-                        <div class="validation-error"></div>
+                        <div id="passwordErrorDiv" style="display: none;" class="message"></div>
                     </div>
                 </div>
             </div>
@@ -80,21 +83,21 @@ Register Employee
                     <div class="form-group text-left">
                         <label class="font-weight-bolder">Father Name <span class="required"></span></label>
                         <input type="text" name="father_name" class="form-control input-field" maxlength="50" required placeholder="Enter employee's father name" />
-                        <div class="validation-error"></div>
+                        <div id="fatherNameErrorDiv" style="display: none;" class="message"></div>
                     </div>
                 </div>
                 <div class="col themed-grid-col">
                     <div class="form-group text-left">
                         <label class="font-weight-bolder">CNIC Number <span class="required"></span></label>
-                        <input type="number" maxlength="15" class="form-control input-field" name="cnic_number" required placeholder="Enter employee's cnic number without -" />
-                        <div class="validation-error"></div>
+                        <input type="number" id="cnic" class="form-control input-field no-spinner" name="cnic_number" required placeholder="Enter employee's cnic number without -" />
+                        <div id="cnicErrorDiv" style="display: none;" class="message"></div>
                     </div>
                 </div>
                 <div class="col themed-grid-col">
                     <div class="form-group text-left">
                         <label class="font-weight-bolder">Mobile Number <span class="required"></span></label>
-                        <input type="number" class="form-control input-field" name="mobile_number" maxlength="15" required placeholder="Enter employee's mobile number" />
-                        <div class="validation-error"></div>
+                        <input type="number" class="form-control input-field no-spinner" name="mobile_number" maxlength="15" required placeholder="Enter employee's mobile number" />
+                        <div id="phoneErrorDiv" style="display: none;" class="message"></div>
                     </div>
                 </div>
             </div>
@@ -103,21 +106,20 @@ Register Employee
                     <div class="form-group text-left">
                         <label class="font-weight-bolder">Current Address <span class="required"></span></label>
                         <input type="text" class="form-control input-field" name="current_address" maxlength="255" required placeholder="Enter employee's current address" />
-                        <div class="validation-error"></div>
+                        <div id="currentAddressErrorDiv" style="display: none;" class="message"></div>
                     </div>
                 </div>
                 <div class="col themed-grid-col">
                     <div class="form-group text-left">
                         <label class="font-weight-bolder">Permanent Address <span class="required"></span></label>
                         <input type="text" class="form-control input-field" name="permanent_address" maxlength="255" required placeholder="Enter employee's permanent address" />
-                        <div class="validation-error"></div>
+                        <div id="permanentAddressErrorDiv" style="display: none;" class="message"></div>
                     </div>
                 </div>
                 <div class="col themed-grid-col">
                     <div class="form-group text-left">
                         <label class="font-weight-bolder">Department <span class="required"></span></label>
                         <select class="form-control input-field" id="select-department" name="department_id" required></select>
-                        <div class="validation-error"></div>
                     </div>
                 </div>
             </div>
@@ -126,14 +128,14 @@ Register Employee
                     <div class="form-group text-left">
                         <label class="font-weight-bolder">Bank Name <span class="required"></span></label>
                         <input type="text" class="form-control input-field" name="bank_name" maxlength="50" required placeholder="Enter employee's bank name" />
-                        <div class="validation-error"></div>
+                        <div id="bankNameErrorDiv" style="display: none;" class="message"></div>
                     </div>
                 </div>
                 <div class="col themed-grid-col">
                     <div class="form-group text-left">
                         <label class="font-weight-bolder">Bank Account Number <span class="required"></span></label>
-                        <input type="text" class="form-control input-field" name="bank_account_number" maxlength="50" required placeholder="Enter employee's bank account number" />
-                        <div class="validation-error"></div>
+                        <input type="number" class="form-control input-field no-spinner" name="bank_account_number" required placeholder="Enter employee's bank account number" />
+                        <div id="bankAccountErrorDiv" style="display: none;" class="message"></div>
                     </div>
                 </div>
             </div>
@@ -144,21 +146,20 @@ Register Employee
                     <div class="form-group text-left">
                         <label class="font-weight-bolder">Degree Level <span class="required"></span></label>
                         <select class="form-control input-field" id="select-degree-levels" name="degree_level_id" required></select>
-                        <div class="validation-error"></div>
                     </div>
                 </div>
                 <div class="col themed-grid-col">
                     <div class="form-group text-left">
                         <label class="font-weight-bolder">Institute <span class="required"></span></label>
-                        <input type="text" class="form-control input-field" maxlength="100" required placeholder="Enter employee's institute" name="institute" />
-                        <div class="validation-error"></div>
+                        <input type="text" class="form-control input-field" maxlength="50" required placeholder="Enter employee's institute" name="institute" />
+                        <div id="instituteErrorDiv" style="display: none;" class="message"></div>
                     </div>
                 </div>
                 <div class="col themed-grid-col">
                     <div class="form-group text-left">
                         <label class="font-weight-bolder">Graduation Year <span class="required"></span></label>
-                        <input type="number" class="form-control input-field" maxlength="4" required placeholder="Enter employee's grduation year" name="graduation_year" />
-                        <div class="validation-error"></div>
+                        <input type="number" class="form-control input-field no-spinner" required placeholder="Enter employee's grduation year" name="graduation_year" />
+                        <div id="gradYearErrorDiv" style="display: none;" class="message"></div>
                     </div>
                 </div>
             </div>
@@ -169,21 +170,20 @@ Register Employee
                     <div class="form-group text-left">
                         <label class="font-weight-bolder">Pay Scale <span class="required"></span></label>
                         <select class="form-control input-field" id="select-pay-scales" required name="pay_scale_id"></select>
-                        <div class="validation-error"></div>
                     </div>
                 </div>
                 <div class="col themed-grid-col">
                     <div class="form-group text-left">
                         <label class="font-weight-bolder">Position <span class="required"></span></label>
                         <input type="text" class="form-control input-field" name="position" maxlength="50" required placeholder="Enter employee's position" />
-                        <div class="validation-error"></div>
+                        <div id="positionErrorDiv" style="display: none;" class="message"></div>
                     </div>
                 </div>
                 <div class="col themed-grid-col">
                     <div class="form-group text-left">
                         <label class="font-weight-bolder">Job Description <span class="required"></span></label>
                         <input type="text" class="form-control input-field" name="job_description" maxlength="255" required placeholder="Enter employee's job description" />
-                        <div class="validation-error"></div>
+                        <div id="jobDescErrorDiv" style="display: none;" class="message"></div>
                     </div>
                 </div>
             </div>
@@ -194,21 +194,19 @@ Register Employee
                     <div class="form-group text-left">
                         <label class="font-weight-bolder">Contract Type <span class="required"></span></label>
                         <select class="form-control input-field" name="contract_type_id" id="select-contract-types" required></select>
-                        <div class="validation-error"></div>
                     </div>
                 </div>
                 <div class="col themed-grid-col">
                     <div class="form-group text-left">
                         <label class="font-weight-bolder">Start Date <span class="required"></span></label>
                         <input type="date" class="form-control input-field" name="start_date" required placeholder="Enter employee's joining date" />
-                        <div class="validation-error"></div>
+                        <div id="startDateErrorDiv" style="display: none;" class="message"></div>
                     </div>
                 </div>
                 <div class="col themed-grid-col">
                     <div class="form-group text-left">
                         <label class="font-weight-bolder">End Date</label>
                         <input type="date" class="form-control input-field" name="end_date" placeholder="Enter employee's ending date" />
-                        <div class="validation-error"></div>
                     </div>
                 </div>
             </div>
@@ -238,19 +236,17 @@ Register Employee
                     <div class="form-group text-left">
                         <label class="font-weight-bolder">Spouse Name</label>
                         <input type="text" class="form-control input-field" name="spouse_name" maxlength="50" placeholder="Enter employee's spouse name" />
-                        <div class="validation-error"></div>
                     </div>
                 </div>
                 <div class="col themed-grid-col">
                     <div class="form-group text-left">
                         <label class="font-weight-bolder">Number of children</label>
-                        <input type="number" maxlength="2" class="form-control input-field" name="no_of_children" placeholder="Enter employee's no. of children" />
-                        <div class="validation-error"></div>
+                        <input type="number" class="form-control input-field no-spinner" name="no_of_children" placeholder="Enter employee's no. of children" />
                     </div>
                 </div>
             </div>
             <div class="button-container">
-                <button type="submit" class="btn btn-primary" id="register-employee-btn" disabled>
+                <button type="submit" class="btn btn-primary" id="register-employee-btn">
                     <span class="icon"><i class="fas fa-user-plus"></i></span> Register Employee
                 </button>
                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#formResetConfirmationModal">

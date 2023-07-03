@@ -158,24 +158,202 @@ function getContractTypes() {
     xhttp.send();
 }
 
-function checkInputs() {
-    // Check if the email and password are valid
-    if (regex.test(email.value)) {
-        email_error_box.style.display = "none";
-        if (password.value.length >= 8) {
-            pwd_error_box.style.display = "none";
-            submit_button.removeAttribute("disabled");
-        } else {
-            pwd_error_box.removeAttribute('style');
-            pwd_error_message.innerHTML = 'Password should have minimum length of 8 digits!';
-            submit_button.setAttribute("disabled", "");
+// Check if the form input details are valid
+$(document).ready(function () {
+    $('.input-field').on('keyup', function () {
+        // Handle the change event here
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const nameRegex = /^[a-zA-Z\s]*$/;
+        var currentElement = $(this);
+        var nameAttribute = $(this).attr('name');
+        var inputValue = $(this).val();
+        switch (nameAttribute) {
+            case 'first_name':
+                if (inputValue.length === 0) {
+                    $('#firstNameErrorDiv').removeAttr('style').text('This field is required.');
+                } else if (!nameRegex.test(inputValue)) {
+                    currentElement.val('');
+                } else {
+                    $('#firstNameErrorDiv').css('display', 'none');
+                }
+                break;
+
+            case 'last_name':
+                if (inputValue.length === 0) {
+                    $('#lastNameErrorDiv').removeAttr('style').text('This field is required.');
+                } else if (!nameRegex.test(inputValue)) {
+                    currentElement.val('');
+                } else {
+                    $('#lastNameErrorDiv').css('display', 'none');
+                }
+                break;
+
+            case 'dob':
+                if (inputValue == '' || inputValue == null) {
+                    $('#dobErrorDiv').removeAttr('style').text('This field is required.');
+                } else {
+                    $('#dobErrorDiv').css('display', 'none');
+                }
+                break;
+
+            case 'email':
+                if (inputValue.length === 0) {
+                    $('#emailErrorDiv').removeAttr('style').text('This field is required.');
+                } else if (!emailRegex.test(inputValue)) {
+                    $('#emailErrorDiv').removeAttr('style').text('The email format is not correct.');
+                } else {
+                    $('#emailErrorDiv').css('display', 'none');
+                }
+                break;
+
+            case 'password':
+                if (inputValue.length === 0) {
+                    $('#passwordErrorDiv').removeAttr('style').text('This field is required.');
+                } else if (inputValue.length < 8) {
+                    $('#passwordErrorDiv').removeAttr('style').text('The password should be at least 8 characters long.');
+                } else {
+                    $('#passwordErrorDiv').css('display', 'none');
+                }
+                break;
+
+            case 'father_name':
+                if (inputValue.length === 0) {
+                    $('#fatherNameErrorDiv').removeAttr('style').text('This field is required.');
+                } else if (!nameRegex.test(inputValue)) {
+                    currentElement.val('');
+                } else {
+                    $('#fatherNameErrorDiv').css('display', 'none');
+                }
+                break;
+
+            case 'cnic_number':
+                if (inputValue.length === 0) {
+                    $('#cnicErrorDiv').removeAttr('style').text('This field is required.');
+                } else if (inputValue < 0) {
+                    currentElement.val('');
+                } else if (inputValue.length > 13) {
+                    currentElement.val(inputValue.slice(0, 13));
+                } else {
+                    $('#cnicErrorDiv').css('display', 'none');
+                }
+                break;
+
+            case 'mobile_number':
+                if (inputValue.length === 0) {
+                    $('#phoneErrorDiv').removeAttr('style').text('This field is required.');
+                } else if (inputValue < 0) {
+                    currentElement.val('');
+                } else if (inputValue.length < 11) {
+                    $('#phoneErrorDiv').removeAttr('style').text('The mobile number should be at least 11 digits.');
+                } else if (inputValue.length > 15) {
+                    currentElement.val(inputValue.slice(0, 15));
+                } else {
+                    $('#phoneErrorDiv').css('display', 'none');
+                }
+                break;
+
+            case 'current_address':
+                if (inputValue.length === 0) {
+                    $('#currentAddressErrorDiv').removeAttr('style').text('This field is required.');
+                } else {
+                    $('#currentAddressErrorDiv').css('display', 'none');
+                }
+                break;
+
+            case 'permanent_address':
+                if (inputValue.length === 0) {
+                    $('#permanentAddressErrorDiv').removeAttr('style').text('This field is required.');
+                } else {
+                    $('#permanentAddressErrorDiv').css('display', 'none');
+                }
+                break;
+
+            case 'bank_name':
+                if (inputValue.length === 0) {
+                    $('#bankNameErrorDiv').removeAttr('style').text('This field is required.');
+                } else {
+                    $('#bankNameErrorDiv').css('display', 'none');
+                }
+                break;
+
+            case 'bank_account_number':
+                if (inputValue.length === 0) {
+                    $('#bankAccountErrorDiv').removeAttr('style').text('This field is required.');
+                } else if (inputValue < 0) {
+                    currentElement.val('');
+                } else if (inputValue.length > 20) {
+                    currentElement.val(inputValue.slice(0, 20));
+                } else {
+                    $('#bankAccountErrorDiv').css('display', 'none');
+                }
+                break;
+
+            case 'institute':
+                if (inputValue.length === 0) {
+                    $('#instituteErrorDiv').removeAttr('style').text('This field is required.');
+                } else {
+                    $('#instituteErrorDiv').css('display', 'none');
+                }
+                break;
+
+            case 'graduation_year':
+                if (inputValue.length === 0) {
+                    $('#gradYearErrorDiv').removeAttr('style').text('This field is required.');
+                } else if (inputValue < 0) {
+                    currentElement.val('');
+                } else if (inputValue.length < 4) {
+                    $('#gradYearErrorDiv').removeAttr('style').text('The year should be of 4 digits.');
+                } else if (inputValue.length > 4) {
+                    currentElement.val(inputValue.slice(0, 4));
+                } else {
+                    $('#gradYearErrorDiv').css('display', 'none');
+                }
+                break;
+
+            case 'position':
+                if (inputValue.length === 0) {
+                    $('#positionErrorDiv').removeAttr('style').text('This field is required.');
+                } else {
+                    $('#positionErrorDiv').css('display', 'none');
+                }
+                break;
+
+            case 'job_description':
+                if (inputValue.length === 0) {
+                    $('#jobDescErrorDiv').removeAttr('style').text('This field is required.');
+                } else {
+                    $('#jobDescErrorDiv').css('display', 'none');
+                }
+                break;
+
+            case 'start_date':
+                if (inputValue == '' || inputValue == null) {
+                    $('#startDateErrorDiv').removeAttr('style').text('This field is required.');
+                } else {
+                    $('#startDateErrorDiv').css('display', 'none');
+                }
+                break;
+
+            case 'spouse_name':
+                if (!nameRegex.test(inputValue)) {
+                    currentElement.val('');
+                }
+                break;
+
+            case 'no_of_children':
+                if (inputValue < 0) {
+                    currentElement.val('');
+                } else if (inputValue > 20) {
+                    currentElement.val('');
+                }
+                break;
+
+            default:
+                console.log('Default case executed');
+                break;
         }
-    } else {
-        email_error_box.removeAttribute('style');
-        email_error_message.innerHTML = 'You have entered an invalid email address!';
-        submit_button.setAttribute("disabled", "");
-    }
-}
+    });
+});
 
 $(document).ready(function () {
     let experienceCounter = 1;
@@ -230,6 +408,7 @@ $(document).ready(function () {
         experienceCounter++;
     }
 
+    // Prepare payload for ajax call
     const registerEmployeeForm = $('#register-employee-form');
     $('#register-employee-btn').click(function (event) {
         event.preventDefault(); // prevent default behavior of the link
