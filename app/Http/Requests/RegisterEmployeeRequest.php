@@ -38,16 +38,16 @@ class RegisterEmployeeRequest extends FormRequest
             'permanent_address' => 'required|string|max:255',
             'department_id' => 'required|integer|exists:departments,id',
             'bank_name' => 'required|string|max:50',
-            'bank_account_number' => 'required|string|max:50',
+            'bank_account_number' => 'required|string|min:6|max:50',
             'degree_level_id' => 'required|integer|exists:degree_levels,id',
             'institute' => 'required|string|max:50',
-            'graduation_year' => 'required|date_format:Y',
+            'graduation_year' => 'required|integer|date_format:Y|after:date_of_birth',
             'pay_scale_id' => 'required|integer|exists:pay_scales,id',
             'position' => 'required|string|max:50',
             'job_description' => 'required|string|max:255',
             'contract_type_id' => 'required|integer|exists:contract_types,id',
-            'start_date' => 'required|date|date_format:Y-m-d',
-            'end_date' => 'date|date_format:Y-m-d',
+            'start_date' => 'required|date|date_format:Y-m-d|after:date_of_birth',
+            'end_date' => 'nullable|date_format:Y-m-d|after:start_date',
             // If the user is of Entry level, experiences are not required
             'experiences' => [
                 'array',
@@ -55,8 +55,8 @@ class RegisterEmployeeRequest extends FormRequest
             ],
             'experiences.*.company_name' => 'required|string|max:50',
             'experiences.*.latest_position' => 'required|string|max:50',
-            'experiences.*.company_start_date' => 'required|date|date_format:Y-m-d',
-            'experiences.*.company_end_date' => 'required|date|date_format:Y-m-d',
+            'experiences.*.company_start_date' => 'required|date|date_format:Y-m-d|after:date_of_birth',
+            'experiences.*.company_end_date' => 'required|date|date_format:Y-m-d|after:company_start_date',
             'no_of_children' => 'integer|lt:15',
             'spouse_name' => 'string|max:50'
         ];

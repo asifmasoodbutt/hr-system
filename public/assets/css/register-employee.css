@@ -11,3 +11,7 @@
 .no-spinner {
     -moz-appearance: textfield;
 }
+
+#register-employee-alert {
+    max-width: max-content;
+}

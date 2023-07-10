@@ -6,7 +6,7 @@ Register Employee | HRM System
 
 @section('head')
 <link href="{{ asset('assets/css/register-employee.css') }}" rel="stylesheet">
-endsection
+@endsection
 
 @section('heading')
 Register Employee
@@ -246,7 +246,7 @@ Register Employee
                 </div>
             </div>
             <div class="button-container">
-                <button type="submit" class="btn btn-primary" id="register-employee-btn">
+                <button type="button" class="btn btn-primary" id="register-employee-btn" data-toggle="modal" data-target="#registerEmployeeConfirmationModal">
                     <span class="icon"><i class="fas fa-user-plus"></i></span> Register Employee
                 </button>
                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#formResetConfirmationModal">
@@ -254,11 +254,40 @@ Register Employee
                     <span class="text">Reset Form</span>
                 </button>
             </div>
+            <br>
+            <div class="d-flex justify-content-center">
+                <div class="alert alert-success alert-dismissible fade show text-center" id="register-employee-alert" role="alert" style="display: none;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
         </form>
     </div>
 </div>
 
-<!-- Confirmation dialog modal -->
+<!-- Confirm register employee dialog modal -->
+<div class="modal fade" id="registerEmployeeConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="registerEmployeeConfirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registerEmployeeConfirmationModalLabel">Confirm Register Employee</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to register new employee?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="confirmRegisterEmployee">Confirm Register</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Confirm reset form dialog modal -->
 <div class="modal fade" id="formResetConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="formResetConfirmationModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
