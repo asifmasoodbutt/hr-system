@@ -540,6 +540,16 @@ $(document).ready(function () {
                     $('#registerEmployeeConfirmationModal').modal('hide');
                 },
                 error: function (xhr, status, error) {
+                    // Restore the form data if an error occurs
+                    var $form = $('#register-employee-form');
+                    var formFields = dataObject;
+
+                    for (var field in formFields) {
+                        if (formFields.hasOwnProperty(field)) {
+                            $form.find('[name="' + field + '"]').val(formFields[field]);
+                        }
+                    }
+
                     var $alert = $('#register-employee-alert');
                     $alert.removeClass('alert-success').addClass('alert-danger').prepend(xhr.responseJSON.message).removeAttr('style');
                     $('#registerEmployeeConfirmationModal').modal('hide');
