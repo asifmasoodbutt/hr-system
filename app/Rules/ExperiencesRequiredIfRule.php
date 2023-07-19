@@ -21,7 +21,7 @@ class ExperiencesRequiredIfRule implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if($this->pay_scale_id != 1){
+        if ($this->pay_scale_id != 1  && empty($value)) {
             $fail('The experiences field is required when employee is not of Entry Level.');
         }
     }

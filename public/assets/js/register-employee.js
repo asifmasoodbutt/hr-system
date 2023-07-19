@@ -161,7 +161,6 @@ function getContractTypes() {
 // Check if the form input details are valid
 $(document).ready(function () {
     // Perform validations
-    var isValid = true;
     $('.input-field').on('keyup', function () {
         // Handle the change event here
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -174,10 +173,8 @@ $(document).ready(function () {
             case 'first_name':
                 if (inputValue.length === 0) {
                     $('#firstNameErrorDiv').removeAttr('style').text('This field is required.');
-                    isValid = false;
                 } else if (!nameRegex.test(inputValue)) {
                     currentElement.val('');
-                    isValid = false;
                 } else {
                     $('#firstNameErrorDiv').css('display', 'none');
                 }
@@ -186,10 +183,8 @@ $(document).ready(function () {
             case 'last_name':
                 if (inputValue.length === 0) {
                     $('#lastNameErrorDiv').removeAttr('style').text('This field is required.');
-                    isValid = false;
                 } else if (!nameRegex.test(inputValue)) {
                     currentElement.val('');
-                    isValid = false;
                 } else {
                     $('#lastNameErrorDiv').css('display', 'none');
                 }
@@ -198,7 +193,6 @@ $(document).ready(function () {
             case 'dob':
                 if (inputValue == '' || inputValue == null) {
                     $('#dobErrorDiv').removeAttr('style').text('This field is required.');
-                    isValid = false;
                 } else {
                     $('#dobErrorDiv').css('display', 'none');
                 }
@@ -207,10 +201,8 @@ $(document).ready(function () {
             case 'email':
                 if (inputValue.length === 0) {
                     $('#emailErrorDiv').removeAttr('style').text('This field is required.');
-                    isValid = false;
                 } else if (!emailRegex.test(inputValue)) {
                     $('#emailErrorDiv').removeAttr('style').text('The email format is not correct.');
-                    isValid = false;
                 } else {
                     $('#emailErrorDiv').css('display', 'none');
                 }
@@ -219,10 +211,8 @@ $(document).ready(function () {
             case 'password':
                 if (inputValue.length === 0) {
                     $('#passwordErrorDiv').removeAttr('style').text('This field is required.');
-                    isValid = false;
                 } else if (inputValue.length < 8) {
                     $('#passwordErrorDiv').removeAttr('style').text('The password should be at least 8 characters long.');
-                    isValid = false;
                 } else {
                     $('#passwordErrorDiv').css('display', 'none');
                 }
@@ -231,10 +221,8 @@ $(document).ready(function () {
             case 'father_name':
                 if (inputValue.length === 0) {
                     $('#fatherNameErrorDiv').removeAttr('style').text('This field is required.');
-                    isValid = false;
                 } else if (!nameRegex.test(inputValue)) {
                     currentElement.val('');
-                    isValid = false;
                 } else {
                     $('#fatherNameErrorDiv').css('display', 'none');
                 }
@@ -243,16 +231,12 @@ $(document).ready(function () {
             case 'cnic_number':
                 if (inputValue.length === 0) {
                     $('#cnicErrorDiv').removeAttr('style').text('This field is required.');
-                    isValid = false;
                 } else if (inputValue < 0) {
                     currentElement.val('');
-                    isValid = false;
                 } else if (inputValue.length < 13) {
                     $('#cnicErrorDiv').removeAttr('style').text('The cnic number should be of 13 digits.');
-                    isValid = false;
                 } else if (inputValue.length > 13) {
                     currentElement.val(inputValue.slice(0, 13));
-                    isValid = false;
                 } else {
                     $('#cnicErrorDiv').css('display', 'none');
                 }
@@ -261,16 +245,12 @@ $(document).ready(function () {
             case 'mobile_number':
                 if (inputValue.length === 0) {
                     $('#phoneErrorDiv').removeAttr('style').text('This field is required.');
-                    isValid = false;
                 } else if (inputValue < 0) {
                     currentElement.val('');
-                    isValid = false;
                 } else if (inputValue.length < 11) {
                     $('#phoneErrorDiv').removeAttr('style').text('The mobile number should be at least 11 digits.');
-                    isValid = false;
                 } else if (inputValue.length > 15) {
                     currentElement.val(inputValue.slice(0, 15));
-                    isValid = false;
                 } else {
                     $('#phoneErrorDiv').css('display', 'none');
                 }
@@ -279,7 +259,6 @@ $(document).ready(function () {
             case 'current_address':
                 if (inputValue.length === 0) {
                     $('#currentAddressErrorDiv').removeAttr('style').text('This field is required.');
-                    isValid = false;
                 } else {
                     $('#currentAddressErrorDiv').css('display', 'none');
                 }
@@ -288,7 +267,6 @@ $(document).ready(function () {
             case 'permanent_address':
                 if (inputValue.length === 0) {
                     $('#permanentAddressErrorDiv').removeAttr('style').text('This field is required.');
-                    isValid = false;
                 } else {
                     $('#permanentAddressErrorDiv').css('display', 'none');
                 }
@@ -297,7 +275,6 @@ $(document).ready(function () {
             case 'bank_name':
                 if (inputValue.length === 0) {
                     $('#bankNameErrorDiv').removeAttr('style').text('This field is required.');
-                    isValid = false;
                 } else {
                     $('#bankNameErrorDiv').css('display', 'none');
                 }
@@ -306,16 +283,12 @@ $(document).ready(function () {
             case 'bank_account_number':
                 if (inputValue.length === 0) {
                     $('#bankAccountErrorDiv').removeAttr('style').text('This field is required.');
-                    isValid = false;
                 } else if (inputValue < 0) {
                     currentElement.val('');
-                    isValid = false;
                 } else if (inputValue.length < 6) {
                     $('#bankAccountErrorDiv').removeAttr('style').text('The account number should be at least 6 digits.');
-                    isValid = false;
                 } else if (inputValue.length > 20) {
                     currentElement.val(inputValue.slice(0, 20));
-                    isValid = false;
                 } else {
                     $('#bankAccountErrorDiv').css('display', 'none');
                 }
@@ -324,7 +297,6 @@ $(document).ready(function () {
             case 'institute':
                 if (inputValue.length === 0) {
                     $('#instituteErrorDiv').removeAttr('style').text('This field is required.');
-                    isValid = false;
                 } else {
                     $('#instituteErrorDiv').css('display', 'none');
                 }
@@ -333,16 +305,12 @@ $(document).ready(function () {
             case 'graduation_year':
                 if (inputValue.length === 0) {
                     $('#gradYearErrorDiv').removeAttr('style').text('This field is required.');
-                    isValid = false;
                 } else if (inputValue < 0) {
                     currentElement.val('');
-                    isValid = false;
                 } else if (inputValue.length < 4) {
                     $('#gradYearErrorDiv').removeAttr('style').text('The year should be of 4 digits.');
-                    isValid = false;
                 } else if (inputValue.length > 4) {
                     currentElement.val(inputValue.slice(0, 4));
-                    isValid = false;
                 } else {
                     $('#gradYearErrorDiv').css('display', 'none');
                 }
@@ -351,7 +319,6 @@ $(document).ready(function () {
             case 'position':
                 if (inputValue.length === 0) {
                     $('#positionErrorDiv').removeAttr('style').text('This field is required.');
-                    isValid = false;
                 } else {
                     $('#positionErrorDiv').css('display', 'none');
                 }
@@ -360,7 +327,6 @@ $(document).ready(function () {
             case 'job_description':
                 if (inputValue.length === 0) {
                     $('#jobDescErrorDiv').removeAttr('style').text('This field is required.');
-                    isValid = false;
                 } else {
                     $('#jobDescErrorDiv').css('display', 'none');
                 }
@@ -369,7 +335,6 @@ $(document).ready(function () {
             case 'start_date':
                 if (inputValue == '' || inputValue == null) {
                     $('#startDateErrorDiv').removeAttr('style').text('This field is required.');
-                    isValid = false;
                 } else {
                     $('#startDateErrorDiv').css('display', 'none');
                 }
@@ -378,28 +343,18 @@ $(document).ready(function () {
             case 'spouse_name':
                 if (!nameRegex.test(inputValue)) {
                     currentElement.val('');
-                    isValid = false;
                 }
                 break;
 
             case 'no_of_children':
                 if (inputValue < 0) {
                     currentElement.val('');
-                    isValid = false;
                 } else if (inputValue > 15) {
                     currentElement.val('');
-                    isValid = false;
                 }
                 break;
         }
     });
-
-    // Enable/disable the submit button based on validation result
-    if (isValid) {
-        $('#register-employee-btn').removeAttr('disabled'); // Re-enable submit button
-    } else {
-        $('#register-employee-btn').prop('disabled', true); // Re-disable submit button
-    }
 });
 
 $(document).ready(function () {
@@ -419,41 +374,97 @@ $(document).ready(function () {
 
         // Set the HTML content for the fields
         div.html(`
-      <div class="col themed-grid-col">
-        <div class="form-group text-left">
-          <label class="font-weight-bolder">Company Name <span class="required"></span></label>
-          <input type="text" class="form-control" name="company_name_${experienceCounter}" maxlength="50" required placeholder="Enter employee's company name" />
-          <div class="validation-error"></div>
-        </div>
-      </div>
-      <div class="col themed-grid-col">
-        <div class="form-group text-left">
-          <label class="font-weight-bolder">Latest Position <span class="required"></span></label>
-          <input type="text" class="form-control" name="latest_position_${experienceCounter}" maxlength="50" required placeholder="Enter employee's latest position" />
-          <div class="validation-error"></div>
-        </div>
-      </div>
-      <div class="col themed-grid-col">
-        <div class="form-group text-left">
-          <label class="font-weight-bolder">Start Date <span class="required"></span></label>
-          <input type="date" class="form-control" name="company_start_date_${experienceCounter}" required placeholder="Enter employee's joining date" />
-          <div class="validation-error"></div>
-        </div>
-      </div>
-      <div class="col themed-grid-col">
-        <div class="form-group text-left">
-          <label class="font-weight-bolder">End Date <span class="required"></span></label>
-          <input type="date" class="form-control" name="company_end_date_${experienceCounter}" required placeholder="Enter employee's ending date" />
-          <div class="validation-error"></div>
-        </div>
-      </div>
-    `);
+            <div class="col themed-grid-col">
+                <div class="form-group text-left">
+                <label class="font-weight-bolder">Company Name <span class="required"></span></label>
+                <input type="text" class="form-control experience-field" name="company_name_${experienceCounter}" maxlength="50" required placeholder="Enter employee's company name" />
+                <div id="company_name_${experienceCounter}ErrorDiv"></div>
+                </div>
+            </div>
+            <div class="col themed-grid-col">
+                <div class="form-group text-left">
+                <label class="font-weight-bolder">Latest Position <span class="required"></span></label>
+                <input type="text" class="form-control experience-field" name="latest_position_${experienceCounter}" maxlength="50" required placeholder="Enter employee's latest position" />
+                <div id="latest_position_${experienceCounter}ErrorDiv"></div>
+                </div>
+            </div>
+            <div class="col themed-grid-col">
+                <div class="form-group text-left">
+                <label class="font-weight-bolder">Start Date <span class="required"></span></label>
+                <input type="date" class="form-control experience-field" name="company_start_date_${experienceCounter}" required placeholder="Enter employee's joining date" />
+                <div id="company_start_date_${experienceCounter}ErrorDiv"></div>
+                </div>
+            </div>
+            <div class="col themed-grid-col">
+                <div class="form-group text-left">
+                <label class="font-weight-bolder">End Date <span class="required"></span></label>
+                <input type="date" class="form-control experience-field" name="company_end_date_${experienceCounter}" required placeholder="Enter employee's ending date" />
+                <div id="company_end_date_${experienceCounter}ErrorDiv"></div>
+                </div>
+            </div>
+        `);
         // Append the new fields to the container
         container.append(div);
 
         // Increment the experience counter
         experienceCounter++;
+
+        // Attach keyup event handler for the dynamically added fields
+        div.on('keyup', '.experience-field', function () {
+            validateExperienceField($(this));
+        });
+
+        // Function to validate a specific experience field
+        function validateExperienceField(field) {
+            var fieldValue = field.val().trim();
+            var errorDiv = $('#' + field.attr('name') + 'ErrorDiv');
+
+            if (fieldValue === '') {
+                field.addClass('is-invalid');
+                errorDiv.text('This field is required.').show().css('color', 'red');
+                field.css('border-color', 'red');
+            } else if (fieldValue.length < 3) {
+                field.addClass('is-invalid');
+                errorDiv.text('Field value is too short.').show().css('color', 'red');
+                field.css('border-color', 'red');
+            } else {
+                field.removeClass('is-invalid');
+                errorDiv.text('').hide();
+                field.css('border-color', ''); // reset to default
+            }
+        }
+
+        // Attach event handler for the newly created fields
+        $('input[required]').on('input', function () {
+            var isValid = checkFormValidity();
+            $('#register-employee-btn').prop('disabled', !isValid);
+        });
     }
+
+    // Function to check the validity of all required fields
+    function checkFormValidity() {
+        var requiredFields = $('input[required]');
+        var isValid = true;
+
+        requiredFields.each(function () {
+            var field = $(this);
+            if (field.val().trim() === '') {
+                return false; // Exit the loop early if any required field is empty
+            }
+        });
+
+        return isValid;
+    }
+
+    // Attach event handlers for the input fields, including dynamically added fields
+    $(document).on('input', 'input[required]', function () {
+        var isValid = checkFormValidity();
+        $('#register-employee-btn').prop('disabled', !isValid);
+    });
+
+    // Initial check to set the initial state of the submit button
+    var isValidForm = checkFormValidity();
+    $('#register-employee-btn').prop('disabled', !isValidForm);
 
     // Prepare payload for ajax call
     const registerEmployeeForm = $('#register-employee-form');

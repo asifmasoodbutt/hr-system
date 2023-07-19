@@ -246,7 +246,7 @@ Register Employee
                 </div>
             </div>
             <div class="button-container">
-                <button type="button" class="btn btn-primary" id="register-employee-btn" data-toggle="modal" data-target="#registerEmployeeConfirmationModal">
+                <button type="button" class="btn btn-primary" id="register-employee-btn" data-toggle="modal" data-target="#registerEmployeeConfirmationModal" disabled>
                     <span class="icon"><i class="fas fa-user-plus"></i></span> Register Employee
                 </button>
                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#formResetConfirmationModal">
