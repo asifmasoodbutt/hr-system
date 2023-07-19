@@ -45,13 +45,43 @@ $.ajax({
 });
 
 function populateExperiences(experiences) {
-    // Iterate over the array of objects
-    $.each(experiences, function (index, experience) {
-        // Populate the data into the respective <p> tags using their IDs
-        $('#company_name').text(experience.company_name);
-        $('#latest_position').text(experience.position);
-        $('#company_start_date').text(experience.start_date);
-        $('#company_end_date').text(experience.end_date);
+    var container = $('#experiences-container');
+
+    // Clear the container before populating the experiences
+    container.empty();
+
+    // Iterate over the experiences array and generate the HTML code
+    experiences.forEach(function (experience) {
+        var div = $('<div class="row row-cols-md-4 mb-4 text-center"></div>');
+
+        div.html(`
+            <div class="col themed-grid-col">
+                <div class="form-group text-left">
+                    <label class="font-weight-bolder">Company Name</label>
+                    <p>${experience.company_name}</p>
+                </div>
+            </div>
+            <div class="col themed-grid-col">
+                <div class="form-group text-left">
+                    <label class="font-weight-bolder">Latest Position</label>
+                    <p>${experience.position}</p>
+                </div>
+            </div>
+            <div class="col themed-grid-col">
+                <div class="form-group text-left">
+                    <label class="font-weight-bolder">Start Date</label>
+                    <p>${experience.start_date}</p>
+                </div>
+            </div>
+            <div class="col themed-grid-col">
+                <div class="form-group text-left">
+                    <label class="font-weight-bolder">End Date</label>
+                    <p>${experience.end_date}</p>
+                </div>
+            </div>
+        `);
+
+        container.append(div);
     });
 }
 

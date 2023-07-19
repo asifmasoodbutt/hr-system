@@ -190,32 +190,7 @@ Employee Profile
             <hr>
             <h3>Experiences</h3>
             <br>
-            <div class="row row-cols-md-4 mb-4 text-center">
-                <div class="col themed-grid-col">
-                    <div class="form-group text-left">
-                        <label class="font-weight-bolder">Company Name</label>
-                        <p id="company_name"></p>
-                    </div>
-                </div>
-                <div class="col themed-grid-col">
-                    <div class="form-group text-left">
-                        <label class="font-weight-bolder">Latest Position</label>
-                        <p id="latest_position"></p>
-                    </div>
-                </div>
-                <div class="col themed-grid-col">
-                    <div class="form-group text-left">
-                        <label class="font-weight-bolder">Start Date</label>
-                        <p id="company_start_date"></p>
-                    </div>
-                </div>
-                <div class="col themed-grid-col">
-                    <div class="form-group text-left">
-                        <label class="font-weight-bolder">End Date</label>
-                        <p id="company_end_date"></p>
-                    </div>
-                </div>
-            </div>
+            <div id="experiences-container"></div>
             <hr>
             <h3>Family Details</h3>
             <br>
