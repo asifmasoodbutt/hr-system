@@ -11,8 +11,10 @@ $.ajax({
         let tableBody = $('#dataTable tbody');
         tableBody.empty();
         $.each(response.data, function (index, employee) {
+            const employeeId = btoa(employee.id);
+
             let tableRow = $('<tr/>');
-            tableRow.append($('<td/>').append($('<a/>').attr('href', employee_details_url + '/' + employee.id).text(employee.full_name)));
+            tableRow.append($('<td/>').append($('<a/>').attr('href', employee_details_url + '/' + employeeId).text(employee.full_name)));
             tableRow.append($('<td/>').text(employee.email));
             tableRow.append($('<td/>').text(employee.department));
             tableRow.append($('<td/>').text(employee.position));

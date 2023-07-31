@@ -44,5 +44,6 @@ Route::middleware(['storeApiRequestData', 'auth:api'])->group(function () {
     Route::post('register-employee', [EmployeeController::class, 'registerEmployeeApi']);
     Route::get('get-employees', [EmployeeController::class, 'getEmployees']);
     Route::get('get-profile-details', [EmployeeController::class, 'getProfileDetailsApi']);
+    Route::post('get-employee-details', [EmployeeController::class, 'getEmployeeDetailsApi']);
     Route::post('change-password', [DashboardController::class, 'changePassword']);
 });

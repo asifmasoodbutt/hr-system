@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\GetEmployeeDetailsRequest;
 use App\Http\Requests\RegisterEmployeeRequest;
 use App\Models\Contract;
 use App\Models\Experience;
@@ -193,10 +194,58 @@ class EmployeeController extends Controller
                 'jobs' => $user->jobs
             ];
 
-            storeApiResponseData($request->api_request_id, ['message' => 'Employee\'s profile details fetched!'], 200, true);
+            storeApiResponseData($request->api_request_id, ['message' => 'Profile\'s details fetched!'], 200, true);
             return response()->success($data);
         } catch (\Exception $e) {
             return throwException($e, 'getProfileDetailsApi', $request->api_request_id);
+        }
+    }
+
+    public function getEmployeeDetailsApi(GetEmployeeDetailsRequest $request)
+    {
+        try {
+            $employee_id = (int)base64_decode($request->employee_id);
+
+            $user = User::with([
+                'roles:id,name',
+                'gender:id,gender',
+                'jobs:id,pay_scale_id,position,job_description',
+                'jobs.payScale:id,level,basic_salary,allowances,benefits',
+                'familyDetail:id,spouse_name,children',
+                'department:id,name',
+                'qualification:id,degree_level_id,institution,graduation_year',
+                'qualification.degreeLevel:id,level',
+                'contract:id,contract_type_id,start_date,end_date',
+                'contract.contractType:id,type',
+                'experiences:id,user_id,company_name,position,start_date,end_date'
+            ])
+                ->findOrFail($employee_id);
+            $data = [
+                'id' => $user->id,
+                'first_name' => $user->first_name,
+                'last_name' => $user->last_name,
+                'gender' => $user->gender->gender,
+                'date_of_birth' => $user->date_of_birth,
+                'email' => $user->email,
+                'current_address' => $user->current_address,
+                'permanent_address' => $user->permanent_address,
+                'phone_no' => $user->phone_no,
+                'father_name' => $user->father_name,
+                'cnic' => $user->cnic,
+                'family_details' => $user->familyDetail,
+                'department' => isset($user->department->name) ?? null,
+                'qualification' => $user->qualification,
+                'contract' => $user->contract,
+                'bank_name' => $user->bank_name,
+                'bank_account_no' => $user->bank_account_no,
+                'experiences' => $user->experiences,
+                'jobs' => $user->jobs
+            ];
+
+            storeApiResponseData($request->api_request_id, ['message' => 'Employee\'s details fetched!'], 200, true);
+            return response()->success($data);
+        } catch (\Exception $e) {
+            return throwException($e, 'getEmployeeDetailsApi', $request->api_request_id);
         }
     }
 }
