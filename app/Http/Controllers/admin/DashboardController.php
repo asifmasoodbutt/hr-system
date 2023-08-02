@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ChangePasswordRequest;
+use App\Models\Job;
 use App\Models\PayScale;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -21,6 +22,10 @@ class DashboardController extends Controller
     public function getDashboardData(Request $request)
     {
         try {
+            $sumOfSalaries = Job::join('pay_scales', 'jobs.pay_scale_id', '=', 'pay_scales.id')
+                ->selectRaw('CAST(SUM(pay_scales.basic_salary + pay_scales.allowances + pay_scales.benefits) AS UNSIGNED) AS total_salary')
+                ->value('total_salary');
+
             $gender_counts = User::selectRaw('COUNT(*) as count, genders.gender as gender')
                 ->join('genders', 'users.gender_id', '=', 'genders.id')
                 ->join('role_user', 'users.id', '=', 'role_user.user_id')
@@ -65,6 +70,7 @@ class DashboardController extends Controller
             ];
 
             $data = [
+                'salaries_sum' => number_format($sumOfSalaries, 0, '.', ','),
                 'piechart_data' => [$gender_counts['male'], $gender_counts['female'], $gender_counts['other']],
                 'barchart_data' => $barchart_data
             ];

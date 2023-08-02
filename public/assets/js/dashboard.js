@@ -6,7 +6,8 @@ $(document).ready(function () {
         },
         dataType: 'json',
         success: function (data) {
-            // Process the fetched data and update the charts
+            // Process the fetched data and update the data
+            $('#monthly-salaries-sum').text(data.data.salaries_sum + ' PKR');
             updatePieChart(data.data.piechart_data);
             updateBarChart(data.data.barchart_data);
         },
