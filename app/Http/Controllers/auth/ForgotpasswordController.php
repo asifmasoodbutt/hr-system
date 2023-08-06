@@ -30,9 +30,9 @@ class ForgotpasswordController extends Controller
                 'email' => $request->email
             ];
             Mail::to($request->email)->send(new SendResetLinkMail($data));
-            $response = ['message' => 'Reset password email has been sent to your email!'];
-            storeApiResponseData($request->api_request_id, $response, 200, true);
-            return response()->success($response);
+            $message = 'Reset password email has been sent to your email!';
+            storeApiResponseData($request->api_request_id, ['message' => $message], 200, true);
+            return response()->success([], $message);
         } catch (\Exception $e) {
             return throwException($e, 'sendResetLinkEmail', $request->api_request_id);
         }

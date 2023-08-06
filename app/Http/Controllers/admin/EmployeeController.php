@@ -105,7 +105,7 @@ class EmployeeController extends Controller
             $employee->roles()->attach($role->id, ['created_at' => now(), 'updated_at' => now()]);
 
             storeApiResponseData($request->api_request_id, $employee, 200, true);
-            return response()->success($employee);
+            return response()->success($employee, 'New employee registered successfully!');
         } catch (\Exception $e) {
             return throwException($e, 'registerEmployeeApi', $request->api_request_id);
         }
@@ -130,9 +130,9 @@ class EmployeeController extends Controller
                 ->get();
 
             if ($users->isEmpty()) {
-                $response = 'No employee found!';
-                storeApiResponseData($request->api_request_id, ['message' => $response], 404, false);
-                return response()->error($response, 404);
+                $message = 'No employee found!';
+                storeApiResponseData($request->api_request_id, ['message' => $message], 404, false);
+                return response()->error($message, 404);
             }
             $response = $users->map(function ($user) {
                 $total_salary = $user->jobs->sum(function ($job) {
@@ -148,8 +148,9 @@ class EmployeeController extends Controller
                     'contract' => $user->contract->contractType->type
                 ];
             });
-            storeApiResponseData($request->api_request_id, ['message' => 'Employees fetched!'], 200, true);
-            return response()->success($response);
+            $message = 'Employees fetched successfully!';
+            storeApiResponseData($request->api_request_id, ['message' => $message], 200, true);
+            return response()->success($response, $message);
         } catch (\Exception $e) {
             return throwException($e, 'getEmployees', $request->api_request_id);
         }
@@ -193,9 +194,9 @@ class EmployeeController extends Controller
                 'experiences' => $user->experiences,
                 'jobs' => $user->jobs
             ];
-
-            storeApiResponseData($request->api_request_id, ['message' => 'Profile\'s details fetched!'], 200, true);
-            return response()->success($data);
+            $message = 'Profile\'s details fetched!';
+            storeApiResponseData($request->api_request_id, ['message' => $message], 200, true);
+            return response()->success($data, $message);
         } catch (\Exception $e) {
             return throwException($e, 'getProfileDetailsApi', $request->api_request_id);
         }
@@ -241,9 +242,9 @@ class EmployeeController extends Controller
                 'experiences' => $user->experiences,
                 'jobs' => $user->jobs
             ];
-
-            storeApiResponseData($request->api_request_id, ['message' => 'Employee\'s details fetched!'], 200, true);
-            return response()->success($data);
+            $message = 'Employee\'s details fetched!';
+            storeApiResponseData($request->api_request_id, ['message' => $message], 200, true);
+            return response()->success($data, $message);
         } catch (\Exception $e) {
             return throwException($e, 'getEmployeeDetailsApi', $request->api_request_id);
         }

@@ -30,11 +30,13 @@ class LoginController extends Controller
                     'role' => $role
                 ]);
                 $response = ['token' => $token, 'role' => $role];
-                storeApiResponseData($request->api_request_id, ['user_data' => $user], 200, true);
-                return response()->success($response);
+                $message = 'Logged in successfully!';
+                storeApiResponseData($request->api_request_id, ['message' => $message], 200, true);
+                return response()->success($response, $message);
             } else {
-                storeApiResponseData($request->api_request_id, 'Credentials mismatched!', 401, false);
-                return response()->error('Credentials mismatched!', 401);
+                $message = 'Credentials mismatched!';
+                storeApiResponseData($request->api_request_id, $message, 401, false);
+                return response()->error($message, 401);
             }
         } catch (\Exception $e) {
             return throwException($e, 'loginApi', $request->api_request_id);

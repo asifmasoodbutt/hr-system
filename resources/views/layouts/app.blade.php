@@ -75,6 +75,14 @@
                     <span>Profile</span>
                 </a>
             </li>
+
+            <!-- Nav Item - Complete Employee Profile Data -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('roles-permissions') }}">
+                    <i class="fa-solid fa-user-gear"></i>
+                    <span>Roles and Permissions</span>
+                </a>
+            </li>
             @else
             <!-- Nav Item - Complete Employee Profile Data -->
             <li class="nav-item">
@@ -393,6 +401,31 @@
 
         </div>
         <!-- End of Content Wrapper -->
+
+        <!-- Side Notification -->
+        <div class="notification">
+            <div class="notification__message">
+                <h1></h1>
+                <p></p>
+
+                <!-- x icon through a path element -->
+                <button aria-labelledby="button-dismiss">
+                    <span id="button-dismiss" hidden>Dismiss</span>
+                    <svg viewBox="0 0 100 100" width="10" height="10">
+                        <!-- group to style the path -->
+                        <g stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none">
+                            <!-- group to center and rotate the + sign to show an x sign instead -->
+                            <g transform="translate(50 50) rotate(45)">
+                                <!-- path describing two perpendicular lines -->
+                                <path d="M 0 -30 v 60 z M -30 0 h 60">
+                                </path>
+                            </g>
+                        </g>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <!-- End of Side Notification -->
 
     </div>
     <!-- End of Page Wrapper -->

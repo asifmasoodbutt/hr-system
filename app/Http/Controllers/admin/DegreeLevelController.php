@@ -12,12 +12,14 @@ class DegreeLevelController extends Controller
     {
         try {
             $degree_levels = DegreeLevel::get();
+            $message = 'No degree levels found!';
             if ($degree_levels->isNotEmpty()) {
-                storeApiResponseData($request->api_request_id, $degree_levels, 200, true);
-                return response()->success($degree_levels);
+                $message = 'Degree levels fetched successfully!';
+                storeApiResponseData($request->api_request_id, ['message' => $message], 200, true);
+                return response()->success($degree_levels, $message);
             }
-            storeApiResponseData($request->api_request_id, 'No degree levels found!', 404, false);
-            return response()->error('No degree levels found!', 404);
+            storeApiResponseData($request->api_request_id, ['message' => $message], 404, false);
+            return response()->error($message, 404);
         } catch (\Exception $e) {
             return throwException($e, 'getDegreeLevels', $request->api_request_id);
         }

@@ -12,12 +12,14 @@ class ContractTypeController extends Controller
     {
         try {
             $contract_types = ContractType::get();
+            $message = 'No contract types found!';
             if ($contract_types->isNotEmpty()) {
-                storeApiResponseData($request->api_request_id, $contract_types, 200, true);
-                return response()->success($contract_types);
+                $message = 'Contract types fetched successfully!';
+                storeApiResponseData($request->api_request_id, ['message' => $message], 200, true);
+                return response()->success($contract_types, $message);
             }
-            storeApiResponseData($request->api_request_id, 'No contract types found!', 404, false);
-            return response()->error('No contract types found!', 404);
+            storeApiResponseData($request->api_request_id, ['message' => $message], 404, false);
+            return response()->error($message, 404);
         } catch (\Exception $e) {
             return throwException($e, 'getContractTypes', $request->api_request_id);
         }

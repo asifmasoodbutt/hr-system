@@ -20,4 +20,7 @@ $dev_constants = [
     'CHANGE_PASSWORD_ENDPOINT' => $base_url . 'api/change-password',
     'GET_DASHBOARD_DATA_ENDPOINT' => $base_url . 'api/get-dashboard-data',
     'GET_EMPLOYEE_DETAILS_ENDPOINT' => $base_url . 'api/get-employee-details',
+    'GET_ROLES_ENDPOINT' => $base_url . 'api/get-roles',
+    'CREATE_ROLE_ENDPOINT' => $base_url . 'api/create-role',
+    'DELETE_ROLE_ENDPOINT' => $base_url . 'api/delete-role'
 ];

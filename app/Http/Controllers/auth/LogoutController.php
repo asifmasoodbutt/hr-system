@@ -13,8 +13,9 @@ class LogoutController extends Controller
             $token = $request->user()->token();
             $token->revoke();
             session()->pull('logged_in_user');
-            $response = ['message' => 'User have been successfully logged out!'];
-            return response()->success($response);
+            $message = 'Logged out successfully!';
+            storeApiResponseData($request->api_request_id, ['message' => $message], 200, true);
+            return response()->success([], $message);
         } catch (\Exception $e) {
             return throwException($e, 'logoutApi', $request->api_request_id);
         }

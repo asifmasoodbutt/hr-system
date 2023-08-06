@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\DepartmentController;
 use App\Http\Controllers\admin\EmployeeController;
+use App\Http\Controllers\admin\RolePermissionController;
 use App\Http\Controllers\auth\ForgotpasswordController;
 use App\Http\Controllers\auth\LoginController;
 use App\Http\Controllers\auth\ResetPasswordController;
@@ -35,5 +36,6 @@ Route::group(['middleware' => ['checkLogin']], function () {
     Route::get('employee-details/{id}', [EmployeeController::class, 'employeeDetails'])->name('employee-details')->middleware('checkScreenPermission:view-employee-details-screen');
     Route::get('profile-details', [EmployeeController::class, 'getProfileDetails'])->name('profile-details')->middleware('checkScreenPermission:view-profile-screen');
     Route::get('change-password', [EmployeeController::class, 'changePassword'])->name('change-password')->middleware('checkScreenPermission:view-change-password-screen');
+    Route::get('roles-permissions', [RolePermissionController::class, 'rolesPermissions'])->name('roles-permissions');
 });
 Route::get('forbidden', [DashboardController::class, 'forbidden'])->name('forbidden');

@@ -76,7 +76,7 @@ class DashboardController extends Controller
             ];
 
             storeApiResponseData($request->api_request_id, $data, 200, true);
-            return response()->success($data);
+            return response()->success($data, 'Dashboard data fetched successfully!');
         } catch (\Exception $e) {
             return throwException($e, 'getDashboardData', $request->api_request_id);
         }
@@ -94,12 +94,13 @@ class DashboardController extends Controller
             if (Hash::check($request->current_password, $user->password)) {
                 $user->password = $request->password;
                 $user->save();
-                $response = ['message' => 'Your password has been changed!'];
-                storeApiResponseData($request->api_request_id, $response, 200, true);
-                return response()->success($response);
+                $message = 'Your password has been changed successfully!';
+                storeApiResponseData($request->api_request_id, ['message' => $message], 200, true);
+                return response()->success([], $message);
             } else {
-                storeApiResponseData($request->api_request_id, 'Current password is incorrect!', 422, false);
-                return response()->error('Current password is incorrect!', 422);
+                $message = 'Current password is incorrect!';
+                storeApiResponseData($request->api_request_id, ['message' => $message], 422, false);
+                return response()->error($message, 422);
             }
         } catch (\Exception $e) {
             return throwException($e, 'changePassword', $request->api_request_id);

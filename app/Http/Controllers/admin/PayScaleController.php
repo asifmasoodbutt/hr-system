@@ -12,12 +12,14 @@ class PayScaleController extends Controller
     {
         try {
             $pay_scales = PayScale::get();
+            $message = 'No pay scales found!';
             if ($pay_scales->isNotEmpty()) {
-                storeApiResponseData($request->api_request_id, $pay_scales, 200, true);
-                return response()->success($pay_scales);
+                $message = 'Pay scales fetched successfully!';
+                storeApiResponseData($request->api_request_id, ['message' => $message], 200, true);
+                return response()->success($pay_scales, $message);
             }
-            storeApiResponseData($request->api_request_id, 'No pay scales found!', 404, false);
-            return response()->error('No pay scales found!', 404);
+            storeApiResponseData($request->api_request_id, $message, 404, false);
+            return response()->error($message, 404);
         } catch (\Exception $e) {
             return throwException($e, 'getPayScales', $request->api_request_id);
         }

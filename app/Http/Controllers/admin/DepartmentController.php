@@ -19,12 +19,14 @@ class DepartmentController extends Controller
             $departments = Department::select('id', 'name')
                 ->with('sections:id,name,department_id')
                 ->get();
+            $message = 'No departments found!';   
             if ($departments->isNotEmpty()) {
-                storeApiResponseData($request->api_request_id, $departments, 200, true);
-                return response()->success($departments);
+                $message = 'Departments fetched successfully!';
+                storeApiResponseData($request->api_request_id, ['message' => $message], 200, true);
+                return response()->success($departments, $message);
             }
-            storeApiResponseData($request->api_request_id, 'No departments found!', 404, false);
-            return response()->error('No departments found!', 404);
+            storeApiResponseData($request->api_request_id, ['message' => $message], 404, false);
+            return response()->error($message, 404);
         } catch (\Exception $e) {
             return throwException($e, 'getDepartments', $request->api_request_id);
         }
