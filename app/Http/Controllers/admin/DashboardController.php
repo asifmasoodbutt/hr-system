@@ -68,6 +68,14 @@ class DashboardController extends Controller
                 'labels' => $salaryRanges,
                 'data' => $userCounts,
             ];
+            
+            $default_genders = ['male', 'female', 'other'];
+
+            foreach ($default_genders as $gender) {
+                if (!isset($gender_counts[$gender])) {
+                    $gender_counts[$gender] = 0;
+                }
+            }
 
             $data = [
                 'salaries_sum' => number_format($sumOfSalaries, 0, '.', ','),
