@@ -13,11 +13,15 @@ $(document).ready(function () {
         }
     });
 
-    // Create role ajax call
+    // Add event listener for edit button in data table
     $('#modal-create-btn').on('click', function () {
-
         var roleName = $('.input-field').val().trim();
         var lowerCasedRoleName = roleName.toLowerCase();
+        createRoleApiCall(lowerCasedRoleName);
+    });
+
+    // Create role ajax call
+    function createRoleApiCall(lowerCasedRoleName) {
         const dataObject = {
             name: lowerCasedRoleName,
         };
@@ -50,7 +54,7 @@ $(document).ready(function () {
                 }
             }
         });
-    });
+    }
 
     // Get roles ajax call
     function getRolesApiCall() {
@@ -72,11 +76,29 @@ $(document).ready(function () {
                                     <td>${item.id}</td>
                                     <td>${item.name}</td>
                                     <td>
-                                        <button class="btn btn-primary btn-sm edit-role-button" data-id="${item.id}">Edit</button>
+                                        <button class="btn btn-primary btn-sm edit-role-button" data-role-name="${item.name}" data-id="${item.id}">Edit</button>
                                         <button class="btn btn-danger btn-sm delete-role-button" data-id="${item.id}">Delete</button>
+                                        <button class="btn btn-success btn-sm show-permissions-button" data-id="${item.id}">Show Permissions</button>
                                     </td>
                                  </tr>`;
                         tableBody.append(row);
+                    });
+
+                    // Add event listener for edit button
+                    $('.edit-role-button').on('click', function () {
+                        var roleId = $(this).data('id');
+                        var roleName = $(this).data('role-name');
+                        // Populate modal input field
+                        $('#role_name').val(roleName);
+                        // Show modal
+                        $('#editRoleModal').modal('show');
+                        // Unbind any previous event listener
+                        $('#modal-edit-btn').off('click');
+                        // Event listener for modal edit button click
+                        $('#modal-edit-btn').on('click', function () {
+                            var updatedRoleName = $('#role_name').val();
+                            editRoleApiCall(roleId, updatedRoleName);
+                        });
                     });
 
                     // Add event listener for delete button
@@ -93,20 +115,6 @@ $(document).ready(function () {
                         });
                     });
 
-                    // Add event listener for edit button
-                    $('.edit-role-button').on('click', function () {
-                        const roleId = $(this).data('id');
-                        console.log(roleId);
-                        // Show the consent modal
-                        $('#deleteRoleModal').modal('show');
-                        // Add an event listener for the "Delete" button in the consent modal
-                        $('#modal-delete-btn').on('click', function () {
-                            // Perform the delete action here using the roleId variable
-                            deleteRoleApiCall(roleId);
-                            // Close the consent modal
-                            $('#deleteRoleModal').modal('hide');
-                        });
-                    });
                 } catch (error) {
                     generateMessage('danger', 'Error', 'Something went wrong!');
                 }
@@ -138,6 +146,41 @@ $(document).ready(function () {
                 'Content-Type': 'application/json'
             },
             success: function (response) {
+                // Generate success notification
+                generateMessage('success', 'Success', response.message);
+                // Get roles API call
+                getRolesApiCall();
+            },
+            error: function (xhr, status, error) {
+                // Display the error message to the user
+                var responseJSON = xhr.responseJSON;
+                if (responseJSON && responseJSON.errors && responseJSON.message) {
+                    generateMessage('danger', 'Error', responseJSON.message);
+                } else {
+                    generateMessage('danger', 'Error', 'Something went wrong!');
+                }
+            }
+        });
+    }
+
+    // Edit role ajax call
+    function editRoleApiCall(roleId, newRoleName) {
+        const dataObject = {
+            role_id: roleId,
+            updated_role_name: newRoleName
+        };
+        $.ajax({
+            url: edit_role_url,
+            method: 'POST',
+            data: JSON.stringify(dataObject),
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token'),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            success: function (response) {
+                // Close modal
+                $('#editRoleModal').modal('hide');
                 // Generate success notification
                 generateMessage('success', 'Success', response.message);
                 // Get roles API call

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Roles\CreateRoleRequest;
 use App\Http\Requests\Roles\DeleteRoleRequest;
+use App\Http\Requests\Roles\EditRoleRequest;
+use App\Http\Requests\Roles\ShowRolePermissionsRequest;
 use App\Models\Role;
 use Illuminate\Http\Request;
 
@@ -54,6 +56,31 @@ class RolePermissionController extends Controller
             return response()->success([], $message);
         } catch (\Exception $e) {
             return throwException($e, 'deleteRole', $request->api_request_id);
+        }
+    }
+
+    public function editRole(EditRoleRequest $request)
+    {
+        try {
+            Role::where('id', $request->role_id)->update(['name' => $request->updated_role_name]);
+            $message = 'Role edited successfully!';
+            storeApiResponseData($request->api_request_id, ['message' => $message], 200, true);
+            return response()->success([], $message);
+        } catch (\Exception $e) {
+            return throwException($e, 'editRole', $request->api_request_id);
+        }
+    }
+
+    // To display permissions against a specific role
+    public function getRoleWithPermissions(ShowRolePermissionsRequest $request)
+    {
+        try {
+            $role_with_permissions = Role::with('permissions:id,name,slug')->select('id', 'name')->where('id', $request->role_id)->first();
+            $message = 'Role with permissions fetched successfully!';
+            storeApiResponseData($request->api_request_id, ['message' => $message], 200, true);
+            return response()->success($role_with_permissions, $message);
+        } catch (\Exception $e) {
+            return throwException($e, 'showRolePermissions', $request->api_request_id);
         }
     }
 }

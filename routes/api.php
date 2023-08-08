@@ -66,4 +66,6 @@ Route::middleware(['storeApiRequestData', 'auth:api'])->group(function () {
     Route::get('get-roles', [RolePermissionController::class, 'getRoles']);
     Route::post('create-role', [RolePermissionController::class, 'createRole']);
     Route::post('delete-role', [RolePermissionController::class, 'deleteRole']);
+    Route::post('edit-role', [RolePermissionController::class, 'editRole']);
+    Route::post('get-role-with-permissions', [RolePermissionController::class, 'getRoleWithPermissions']);
 });

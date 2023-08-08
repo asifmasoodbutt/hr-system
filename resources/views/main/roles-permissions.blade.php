@@ -100,17 +100,25 @@ Role and Permissions
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editRoleModalLabel">Edit Role Name</h5>
+                <h5 class="modal-title" id="editRoleModalLabel">Edit Role</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                
+                <div class="row row-cols-md-12 mb-12 text-center">
+                    <div class="col themed-grid-col">
+                        <div class="form-group text-left">
+                            <label class="font-weight-bolder">Role Name <span class="required"></span></label>
+                            <input type="text" name="role_name" id="role_name" class="form-control input-field" maxlength="20" required placeholder="Enter role's name" />
+                            <div id="roleNameErrorDiv" style="display: none;" class="message"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="modal-edit-btn">Delete</button>
+                <button type="button" class="btn btn-primary" id="modal-edit-btn">Edit</button>
             </div>
         </div>
     </div>
@@ -125,6 +133,7 @@ Role and Permissions
     const get_roles_url = {!!json_encode(config('constants.GET_ROLES_ENDPOINT')) !!};
     const create_role_url = {!!json_encode(config('constants.CREATE_ROLE_ENDPOINT')) !!};
     const delete_role_url = {!!json_encode(config('constants.DELETE_ROLE_ENDPOINT')) !!};
+    const edit_role_url = {!!json_encode(config('constants.EDIT_ROLE_ENDPOINT')) !!};
 </script>
 <script src="{{ asset('assets/js/roles.js') }}"></script>
 <script src="{{ asset('assets/js/side-notification.js') }}"></script>

@@ -22,5 +22,7 @@ $dev_constants = [
     'GET_EMPLOYEE_DETAILS_ENDPOINT' => $base_url . 'api/get-employee-details',
     'GET_ROLES_ENDPOINT' => $base_url . 'api/get-roles',
     'CREATE_ROLE_ENDPOINT' => $base_url . 'api/create-role',
-    'DELETE_ROLE_ENDPOINT' => $base_url . 'api/delete-role'
+    'DELETE_ROLE_ENDPOINT' => $base_url . 'api/delete-role',
+    'EDIT_ROLE_ENDPOINT' => $base_url . 'api/edit-role',
+    'GET_ROLE_WITH_PERMISSIONS_ENDPOINT' => $base_url . 'api/get-role-with-permissions',
 ];
