@@ -50,7 +50,7 @@
  /* Side Notification Styling */
 .notification {
   position: fixed;
-  top: 0.5rem;
+  top: 3.5rem;
   right: 1rem;
   display: flex;
   flex-direction: column;

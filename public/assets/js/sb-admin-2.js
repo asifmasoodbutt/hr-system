@@ -54,8 +54,38 @@
   });
 
   $(document).ready(function () {
-    // Add active class to first item initially
-    $(".nav-item:first").addClass("active");
+    // Add event listener to items
+    $(".nav-link").click(function (event) {
+      // Check if the clicked link has data-toggle attribute
+      var hasDataToggle = $(this).attr("data-toggle");
+
+      // Check if the clicked link has data-target attribute
+      var dataTarget = $(this).attr("data-target");
+
+      // If the link has data-toggle and data-target attributes (i.e., it's a collapse trigger)
+      if (hasDataToggle === "collapse" && dataTarget) {
+        // Don't prevent default behavior for collapse triggers
+        return;
+      }
+
+      // Prevent default link behavior
+      event.preventDefault();
+
+      // Remove active class from all items
+      $(".nav-item").removeClass("active");
+
+      // Add active class to clicked item
+      $(this).closest('.nav-item').addClass('active');
+
+      // Get the URL of the clicked link
+      var url = $(this).attr("href");
+
+      // Store the active link in local storage
+      localStorage.setItem('activeLink', url);
+
+      // Redirect to the appropriate page
+      window.location.href = url;
+    });
 
     // Check if there is an active link in local storage
     var activeLink = localStorage.getItem('activeLink');
@@ -65,26 +95,15 @@
       // Add active class to stored link
       $('a[href="' + activeLink + '"]').closest('.nav-item').addClass('active');
     }
-
-    // Add event listener to items
-    $(".nav-item").click(function (event) {
-      // Prevent default link behavior
-      event.preventDefault();
-
-      // Remove active class from all items
-      $(".nav-item").removeClass("active");
-      // Add active class to clicked item
-      $(this).addClass("active");
-
-      // Get the URL of the clicked link
-      var url = $(this).find('a').attr("href");
-
-      // Store the active link in local storage
-      localStorage.setItem('activeLink', url);
-
-      // Redirect to the appropriate page
-      window.location.href = url;
-    });
   });
 
+  // Scroll to top button appear
+  $(document).on('scroll', function () {
+    var scrollDistance = $(this).scrollTop();
+    if (scrollDistance > 100) {
+      $('.scroll-to-top').fadeIn();
+    } else {
+      $('.scroll-to-top').fadeOut();
+    }
+  });
 })(jQuery); // End of use strict

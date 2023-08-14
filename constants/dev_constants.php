@@ -25,4 +25,9 @@ $dev_constants = [
     'DELETE_ROLE_ENDPOINT' => $base_url . 'api/delete-role',
     'EDIT_ROLE_ENDPOINT' => $base_url . 'api/edit-role',
     'GET_ROLE_WITH_PERMISSIONS_ENDPOINT' => $base_url . 'api/get-role-with-permissions',
+    'GET_PERMISSIONS_ENDPOINT' => $base_url . 'api/get-permissions',
+    'CREATE_PERMISSION_ENDPOINT' => $base_url . 'api/create-permission',
+    'DELETE_PERMISSION_ENDPOINT' => $base_url . 'api/delete-permission',
+    'EDIT_PERMISSION_ENDPOINT' => $base_url . 'api/edit-permission',
+    'GET_PERMISSION_WITH_ROLES_ENDPOINT' => $base_url . 'api/get-permission-with-roles'
 ];

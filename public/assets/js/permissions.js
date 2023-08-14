@@ -3,30 +3,29 @@ $(document).ready(function () {
     // Perform validations
     $('.input-field').on('keyup', function () {
         // Handle the change event here
-        var roleName = $(this).val().trim();
-        if (roleName.length === 0) {
+        var permissionName = $(this).val().trim();
+        if (permissionName.length === 0) {
             $(this).addClass('is-invalid');
-            $('#roleNameErrorDiv').text("Role Name is required.").show().css('color', 'red');;
+            $('#permissionNameErrorDiv').text("Permission Name is required.").show().css('color', 'red');;
         } else {
             $(this).removeClass('is-invalid');
-            $('#roleNameErrorDiv').hide();
+            $('#permissionNameErrorDiv').hide();
         }
     });
 
-    // Add event listener for create role button
+    // Add event listener for create permission button
     $('#modal-create-btn').on('click', function () {
-        var roleName = $('.input-field').val().trim();
-        var lowerCasedRoleName = roleName.toLowerCase();
-        createRoleApiCall(lowerCasedRoleName);
+        var permissionName = $('.input-field').val().trim();
+        createPermissionApiCall(permissionName);
     });
 
-    // Create role ajax call
-    function createRoleApiCall(lowerCasedRoleName) {
+    // Create permission ajax call
+    function createPermissionApiCall(permissionName) {
         const dataObject = {
-            name: lowerCasedRoleName,
+            name: permissionName,
         };
         $.ajax({
-            url: create_role_url,
+            url: create_permission_url,
             method: 'POST',
             data: JSON.stringify(dataObject),
             headers: {
@@ -36,15 +35,15 @@ $(document).ready(function () {
             },
             success: function (response) {
                 // Close the modal on error
-                $('#createRoleModal').modal('hide');
+                $('#createPermissionModal').modal('hide');
                 // Generate success notification
                 generateMessage('success', 'Success', response.message);
                 // Get roles API call
-                getRolesApiCall();
+                getPermissionsApiCall();
             },
             error: function (xhr, status, error) {
                 // Close the modal on error
-                $('#createRoleModal').modal('hide');
+                $('#createPermissionModal').modal('hide');
                 // Display the error message to the user
                 var responseJSON = xhr.responseJSON;
                 if (responseJSON && responseJSON.errors && responseJSON.message) {
@@ -57,9 +56,9 @@ $(document).ready(function () {
     }
 
     // Get roles ajax call
-    function getRolesApiCall() {
+    function getPermissionsApiCall() {
         $.ajax({
-            url: get_roles_url,
+            url: get_permissions_url,
             type: 'GET',
             dataType: 'json',
             headers: {
@@ -69,58 +68,58 @@ $(document).ready(function () {
             },
             success: function (data) {
                 try {
-                    const tableBody = $('#data-table tbody');
+                    const tableBody = $('#permissions-table tbody');
                     tableBody.empty(); // Clear the table body before appending new rows
                     data.data.forEach(function (item) {
                         const row = `<tr>
                                     <td>${item.id}</td>
                                     <td>${item.name}</td>
                                     <td>
-                                        <button class="btn btn-primary btn-sm edit-role-button" data-role-name="${item.name}" data-id="${item.id}">Edit</button>
-                                        <button class="btn btn-danger btn-sm delete-role-button" data-id="${item.id}">Delete</button>
-                                        <button class="btn btn-success btn-sm show-permissions-button" data-id="${item.id}">Show Permissions</button>
+                                        <button class="btn btn-primary btn-sm edit-permission-button" data-permission-name="${item.name}" data-id="${item.id}">Edit</button>
+                                        <button class="btn btn-danger btn-sm delete-permission-button" data-id="${item.id}">Delete</button>
+                                        <button class="btn btn-success btn-sm show-roles-button" data-id="${item.id}">Show Roles</button>
                                     </td>
                                  </tr>`;
                         tableBody.append(row);
                     });
 
                     // Add event listener for edit button
-                    $('.edit-role-button').on('click', function () {
-                        var roleId = $(this).data('id');
-                        var roleName = $(this).data('role-name');
+                    $('.edit-permission-button').on('click', function () {
+                        var permissionId = $(this).data('id');
+                        var permissionName = $(this).data('permission-name');
                         // Populate modal input field
-                        $('#role_name').val(roleName);
+                        $('#permission_name').val(permissionName);
                         // Show modal
-                        $('#editRoleModal').modal('show');
+                        $('#editPermissionModal').modal('show');
                         // Unbind any previous event listener
                         $('#modal-edit-btn').off('click');
                         // Event listener for modal edit button click
                         $('#modal-edit-btn').on('click', function () {
-                            var updatedRoleName = $('#role_name').val();
-                            editRoleApiCall(roleId, updatedRoleName);
+                            var updatedPermissionName = $('#permission_name').val();
+                            editPermissionApiCall(permissionId, updatedPermissionName);
                         });
                     });
 
                     // Add event listener for delete button
-                    $('.delete-role-button').on('click', function () {
-                        const roleId = $(this).data('id');
+                    $('.delete-permission-button').on('click', function () {
+                        const permissionId = $(this).data('id');
                         // Show the consent modal
-                        $('#deleteRoleModal').modal('show');
+                        $('#deletePermissionModal').modal('show');
                         // Add an event listener for the "Delete" button in the consent modal
                         $('#modal-delete-btn').off('click').on('click', function () {
                             // Perform the delete action here using the roleId variable
-                            deleteRoleApiCall(roleId);
+                            deletePermissionApiCall(permissionId);
                             // Close the consent modal
-                            $('#deleteRoleModal').modal('hide');
+                            $('#deletePermissionModal').modal('hide');
                         });
                     });
 
                     // Add event listener for show permissions button
-                    $('.show-permissions-button').on('click', function () {
-                        const roleId = $(this).data('id');
+                    $('.show-roles-button').on('click', function () {
+                        const permissionId = $(this).data('id');
                         // Show the consent modal
-                        $('#showPermissionsModal').modal('show');
-                        getRoleWithPermissionsApiCall(roleId);
+                        $('#showRolesModal').modal('show');
+                        getPermissionWithRolesApiCall(permissionId);
                     });
 
                 } catch (error) {
@@ -139,13 +138,13 @@ $(document).ready(function () {
         });
     }
 
-    // Delete role ajax call
-    function deleteRoleApiCall(roleId) {
+    // Delete permission ajax call
+    function deletePermissionApiCall(permissionId) {
         const dataObject = {
-            role_id: roleId,
+            permission_id: permissionId,
         };
         $.ajax({
-            url: delete_role_url,
+            url: delete_permission_url,
             method: 'POST',
             data: JSON.stringify(dataObject),
             headers: {
@@ -157,7 +156,7 @@ $(document).ready(function () {
                 // Generate success notification
                 generateMessage('success', 'Success', response.message);
                 // Get roles API call
-                getRolesApiCall();
+                getPermissionsApiCall();
             },
             error: function (xhr, status, error) {
                 // Display the error message to the user
@@ -171,14 +170,14 @@ $(document).ready(function () {
         });
     }
 
-    // Edit role ajax call
-    function editRoleApiCall(roleId, newRoleName) {
+    // Edit permission ajax call
+    function editPermissionApiCall(permissionId, newPermissionName) {
         const dataObject = {
-            role_id: roleId,
-            updated_role_name: newRoleName
+            permission_id: permissionId,
+            updated_permission_name: newPermissionName
         };
         $.ajax({
-            url: edit_role_url,
+            url: edit_permission_url,
             method: 'POST',
             data: JSON.stringify(dataObject),
             headers: {
@@ -188,11 +187,11 @@ $(document).ready(function () {
             },
             success: function (response) {
                 // Close modal
-                $('#editRoleModal').modal('hide');
+                $('#editPermissionModal').modal('hide');
                 // Generate success notification
                 generateMessage('success', 'Success', response.message);
                 // Get roles API call
-                getRolesApiCall();
+                getPermissionsApiCall();
             },
             error: function (xhr, status, error) {
                 // Display the error message to the user
@@ -206,13 +205,13 @@ $(document).ready(function () {
         });
     }
 
-    // Get role's permissions ajax call
-    function getRoleWithPermissionsApiCall(roleId) {
+    // Get permission's roles ajax call
+    function getPermissionWithRolesApiCall(permissionId) {
         const dataObject = {
-            role_id: roleId
+            permission_id: permissionId
         };
         $.ajax({
-            url: get_role_with_permissions_url,
+            url: get_permission_with_roles_url,
             method: 'POST',
             data: JSON.stringify(dataObject),
             headers: {
@@ -222,9 +221,9 @@ $(document).ready(function () {
             },
             success: function (response) {
                 try {
-                    const tableBody = $('#permissions-table tbody');
+                    const tableBody = $('#roles-table tbody');
                     tableBody.empty(); // Clear the table body before appending new rows
-                    response.data.permissions.forEach(function (item) {
+                    response.data.roles.forEach(function (item) {
                         const row = `<tr>
                                         <td>${item.id}</td>
                                         <td>${item.name}</td>
@@ -247,5 +246,5 @@ $(document).ready(function () {
         });
     }
 
-    getRolesApiCall();
+    getPermissionsApiCall();
 });

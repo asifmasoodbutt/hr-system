@@ -76,13 +76,20 @@
                 </a>
             </li>
 
-            <!-- Nav Item - Complete Employee Profile Data -->
+            <!-- Nav Item - Role and Permissions Pages -->
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('roles-permissions') }}">
+                <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fa-solid fa-user-gear"></i>
                     <span>Roles and Permissions</span>
                 </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{ route('roles') }}">Roles</a>
+                        <a class="collapse-item" href="{{ route('permissions') }}">Permissions</a>
+                    </div>
+                </div>
             </li>
+
             @else
             <!-- Nav Item - Complete Employee Profile Data -->
             <li class="nav-item">
@@ -496,6 +503,22 @@
         // Handle click event on the "Change Password" link
         $('#change-password').click(function(e) {
             location.replace('{{ route("change-password") }}');
+        });
+    </script>
+    <script>
+        // Smooth scrolling using jQuery easing
+        $(document).on('click', 'a.scroll-to-top', function(e) {
+            // $('.nav-link.collapsed').on('click', function(e) {
+            //     e.preventDefault(); // Prevent default anchor behavior
+            //     var targetCollapse = $(this).data('target');
+            //     var collapseElement = $(targetCollapse);
+
+            //     if (collapseElement.hasClass('show')) {
+            //         collapseElement.collapse('hide'); // Hide if already open
+            //     } else {
+            //         collapseElement.collapse('show'); // Show if closed
+            //     }
+            // });
         });
     </script>
 

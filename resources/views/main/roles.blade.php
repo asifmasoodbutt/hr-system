@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-Role and Permissions | HRM System
+Role | HRM System
 @endsection
 
 @section('head')
@@ -9,13 +9,13 @@ Role and Permissions | HRM System
 @endsection
 
 @section('heading')
-Role and Permissions
+Role
 @endsection
 
 @section('main-content')
 
 <div class="d-flex justify-content-between align-items-center">
-    <p class="mb-4">Here is the roles and permissions management section.</p>
+    <p class="mb-4">Here is the roles management section.</p>
 
     <button type="button" class="btn btn-primary" id="create-role-btn" data-toggle="modal" data-target="#createRoleModal">
         <span class="icon"><i class="fas fa-user-gear"></i></span> Create Role
@@ -124,6 +124,39 @@ Role and Permissions
     </div>
 </div>
 
+<!-- Show Permissions dialog modal -->
+<div class="modal fade" id="showPermissionsModal" tabindex="-1" role="dialog" aria-labelledby="showPermissionsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="showPermissionsModalLabel">Has Permissions</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="permissions-table" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Permission Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="modal-edit-btn">Assign More Permissions</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
 
 @section('scripts')
@@ -134,6 +167,7 @@ Role and Permissions
     const create_role_url = {!!json_encode(config('constants.CREATE_ROLE_ENDPOINT')) !!};
     const delete_role_url = {!!json_encode(config('constants.DELETE_ROLE_ENDPOINT')) !!};
     const edit_role_url = {!!json_encode(config('constants.EDIT_ROLE_ENDPOINT')) !!};
+    const get_role_with_permissions_url = {!!json_encode(config('constants.GET_ROLE_WITH_PERMISSIONS_ENDPOINT')) !!};
 </script>
 <script src="{{ asset('assets/js/roles.js') }}"></script>
 <script src="{{ asset('assets/js/side-notification.js') }}"></script>

@@ -3,18 +3,29 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Permissions\CreatePermissionRequest;
+use App\Http\Requests\Permissions\DeletePermissionRequest;
+use App\Http\Requests\Permissions\EditPermissionRequest;
+use App\Http\Requests\Permissions\GetPermissionRolesRequest;
 use App\Http\Requests\Roles\CreateRoleRequest;
 use App\Http\Requests\Roles\DeleteRoleRequest;
 use App\Http\Requests\Roles\EditRoleRequest;
 use App\Http\Requests\Roles\ShowRolePermissionsRequest;
+use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class RolePermissionController extends Controller
 {
-    public function rolesPermissions()
+    public function roles()
     {
-        return view('main.roles-permissions');
+        return view('main.roles');
+    }
+
+    public function permissions()
+    {
+        return view('main.permissions');
     }
 
     public function getRoles(Request $request)
@@ -81,6 +92,80 @@ class RolePermissionController extends Controller
             return response()->success($role_with_permissions, $message);
         } catch (\Exception $e) {
             return throwException($e, 'showRolePermissions', $request->api_request_id);
+        }
+    }
+
+    public function getPermissions(Request $request)
+    {
+        try {
+            $permissions = Permission::get();
+            $message = 'No permissions found!';
+            if ($permissions->isNotEmpty()) {
+                $message = 'Permissions fetched successfully!';
+                storeApiResponseData($request->api_request_id, ['message' => $message], 200, true);
+                return response()->success($permissions, $message);
+            }
+            storeApiResponseData($request->api_request_id, $message, 404, false);
+            return response()->error($message, 404);
+        } catch (\Exception $e) {
+            return throwException($e, 'getPermissions', $request->api_request_id);
+        }
+    }
+
+    public function createPermission(CreatePermissionRequest $request)
+    {
+        try {
+            // Convert to lowercase and replace spaces with hyphens
+            $slug = Str::slug(strtolower($request->name), '-');
+            $permission = Permission::create([
+                'name' => $request->name,
+                'slug' => $slug
+            ]);
+            storeApiResponseData($request->api_request_id, $permission, 200, true);
+            return response()->success($permission, 'New permission created successfully!');
+        } catch (\Exception $e) {
+            return throwException($e, 'createPermission', $request->api_request_id);
+        }
+    }
+
+    public function editPermission(EditPermissionRequest $request)
+    {
+        try {
+            $permission = Permission::where('id', $request->permission_id)->first();
+            $updated_slug = Str::slug(strtolower($request->updated_permission_name), '-');
+            $permission->update([
+                'name' => $request->updated_permission_name,
+                'slug' => $updated_slug,
+            ]);
+            $message = 'Permission edited successfully!';
+            storeApiResponseData($request->api_request_id, ['message' => $message], 200, true);
+            return response()->success([], $message);
+        } catch (\Exception $e) {
+            return throwException($e, 'editPermission', $request->api_request_id);
+        }
+    }
+
+    public function deletePermission(DeletePermissionRequest $request)
+    {
+        try {
+            Permission::where('id', $request->permission_id)->delete();
+            $message = 'Permission deleted successfully!';
+            storeApiResponseData($request->api_request_id, ['message' => $message], 200, true);
+            return response()->success([], $message);
+        } catch (\Exception $e) {
+            return throwException($e, 'deletePermission', $request->api_request_id);
+        }
+    }
+
+    public function getPermissionWithRole(GetPermissionRolesRequest $request)
+    {
+        try {
+            $permission_with_roles = Permission::with('roles:id,name')->select('id', 'name')->where('id', $request->permission_id)->first();
+            $message = 'Permission with roles fetched successfully!';
+            storeApiResponseData($request->api_request_id, ['message' => $message], 200, true);
+            return response()->success($permission_with_roles, $message);
+        } catch (\Exception $e) {
+            return throwException($e, 'getPermissionWithRole', $request->api_request_id);
         }
     }
 }
