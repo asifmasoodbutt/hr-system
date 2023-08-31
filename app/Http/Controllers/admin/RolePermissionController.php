@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Permissions\CreatePermissionRequest;
 use App\Http\Requests\Permissions\DeletePermissionRequest;
 use App\Http\Requests\Permissions\EditPermissionRequest;
+use App\Http\Requests\Permissions\GetAssignedUnassignedPermissionsRequest;
 use App\Http\Requests\Permissions\GetPermissionRolesRequest;
 use App\Http\Requests\Roles\CreateRoleRequest;
 use App\Http\Requests\Roles\DeleteRoleRequest;
@@ -26,6 +27,12 @@ class RolePermissionController extends Controller
     public function permissions()
     {
         return view('main.permissions');
+    }
+
+    public function assignPermissionsToRole(Request $request)
+    {
+        $roleName = $request->input('role_name');
+        return view('main.assign-permissions-to-role')->with(['roleName' => $roleName]);
     }
 
     public function getRoles(Request $request)
@@ -166,6 +173,40 @@ class RolePermissionController extends Controller
             return response()->success($permission_with_roles, $message);
         } catch (\Exception $e) {
             return throwException($e, 'getPermissionWithRole', $request->api_request_id);
+        }
+    }
+
+    public function getAssignedUnassignedPermissions(GetAssignedUnassignedPermissionsRequest $request)
+    {
+        try {
+            $role_id = base64_decode($request->role_id);
+            $role = Role::find($role_id);
+            $assignedPermissions = $role->permissions()
+                ->select('permissions.id', 'permissions.name')
+                ->get();
+
+            $unassignedPermissions = Permission::whereNotIn('permissions.id', $assignedPermissions->pluck('id'))
+                ->select('permissions.id', 'permissions.name')
+                ->get();
+
+            $response = [
+                'assigned_permissions' => $assignedPermissions,
+                'unassigned_permissions' => $unassignedPermissions,
+            ];
+
+            $message = 'Assigned and unassigned permissions of a role fetched successfully!';
+            storeApiResponseData($request->api_request_id, ['message' => $message], 200, true);
+            return response()->success($response, $message);
+        } catch (\Exception $e) {
+            return throwException($e, 'getAssignedUnassignedPermissions', $request->api_request_id);
+        }
+    }
+
+    public function assignPermissionsToRoleApi(Request $request)
+    {
+        try {
+        } catch (\Exception $e) {
+            return throwException($e, 'assignPermissionToRoleApi', $request->api_request_id);
         }
     }
 }

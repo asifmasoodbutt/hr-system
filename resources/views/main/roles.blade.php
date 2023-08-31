@@ -151,7 +151,7 @@ Role
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="modal-edit-btn">Assign More Permissions</button>
+                <button type="button" class="btn btn-primary" id="assign-permission-btn">Assign More Permissions</button>
             </div>
         </div>
     </div>
@@ -168,6 +168,7 @@ Role
     const delete_role_url = {!!json_encode(config('constants.DELETE_ROLE_ENDPOINT')) !!};
     const edit_role_url = {!!json_encode(config('constants.EDIT_ROLE_ENDPOINT')) !!};
     const get_role_with_permissions_url = {!!json_encode(config('constants.GET_ROLE_WITH_PERMISSIONS_ENDPOINT')) !!};
+    const assign_permission_to_role_web_url = "{{ route('assign-permissions-to-role', ['id' => ':id']) }}";
 </script>
 <script src="{{ asset('assets/js/roles.js') }}"></script>
 <script src="{{ asset('assets/js/side-notification.js') }}"></script>

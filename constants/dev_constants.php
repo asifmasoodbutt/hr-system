@@ -15,7 +15,6 @@ $dev_constants = [
     'GET_CONTRACT_TYPES_ENDPOINT' => $base_url . 'api/get-contract-types',
     'REGISTER_EMPLOYEE_ENDPOINT' => $base_url . 'api/register-employee',
     'GET_EMPLOYEES_ENDPOINT' => $base_url . 'api/get-employees',
-    'SHOW_EMPLOYEE_DETAILS_PAGE' => $base_url . 'employee-details',
     'GET_PROFILE_DETAILS_ENDPOINT' => $base_url . 'api/get-profile-details',
     'CHANGE_PASSWORD_ENDPOINT' => $base_url . 'api/change-password',
     'GET_DASHBOARD_DATA_ENDPOINT' => $base_url . 'api/get-dashboard-data',
@@ -29,5 +28,10 @@ $dev_constants = [
     'CREATE_PERMISSION_ENDPOINT' => $base_url . 'api/create-permission',
     'DELETE_PERMISSION_ENDPOINT' => $base_url . 'api/delete-permission',
     'EDIT_PERMISSION_ENDPOINT' => $base_url . 'api/edit-permission',
-    'GET_PERMISSION_WITH_ROLES_ENDPOINT' => $base_url . 'api/get-permission-with-roles'
+    'GET_PERMISSION_WITH_ROLES_ENDPOINT' => $base_url . 'api/get-permission-with-roles',
+    'GET_ASSIGNED_UNASSIGNED_PERMISSIONS_ENDPOINT' => $base_url . 'api/get-assigned-unassigned-permissions',
+    'ASSIGN_PERMISSIONS_TO_ROLE_ENDPOINT' => $base_url . 'api/assign-permissions-to-role',
+
+    // WEB PAGES
+    'SHOW_EMPLOYEE_DETAILS_PAGE' => $base_url . 'employee-details',
 ];

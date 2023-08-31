@@ -103,7 +103,7 @@ $(document).ready(function () {
 
                     // Add event listener for delete button
                     $('.delete-role-button').on('click', function () {
-                        const roleId = $(this).data('id');
+                        var roleId = $(this).data('id');
                         // Show the consent modal
                         $('#deleteRoleModal').modal('show');
                         // Add an event listener for the "Delete" button in the consent modal
@@ -117,7 +117,9 @@ $(document).ready(function () {
 
                     // Add event listener for show permissions button
                     $('.show-permissions-button').on('click', function () {
-                        const roleId = $(this).data('id');
+                        var roleId = $(this).data('id');
+                        // Set the role id as a data attribute on the "Assign More Permissions" button
+                        $('#assign-permission-btn').attr('data-role-id', roleId);
                         // Show the consent modal
                         $('#showPermissionsModal').modal('show');
                         getRoleWithPermissionsApiCall(roleId);
@@ -248,4 +250,11 @@ $(document).ready(function () {
     }
 
     getRolesApiCall();
+
+    // Capture click event on the "Assign More Permissions" button in the modal
+    $('#assign-permission-btn').click(function () {
+        let roleId = $(this).data('role-id'); // Get the role name from the data attribute
+        let url = assign_permission_to_role_web_url.replace(':id', btoa(roleId));
+        window.location = url; // Redirect to page
+    });
 });

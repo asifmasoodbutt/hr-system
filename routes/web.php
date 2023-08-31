@@ -40,6 +40,6 @@ Route::group(['middleware' => ['checkLogin']], function () {
     // Role and Permissions
     Route::get('roles', [RolePermissionController::class, 'roles'])->name('roles');
     Route::get('permissions', [RolePermissionController::class, 'permissions'])->name('permissions');
-
+    Route::get('assign-permissions-to-role/{id}', [RolePermissionController::class, 'assignPermissionsToRole'])->name('assign-permissions-to-role');
 });
 Route::get('forbidden', [DashboardController::class, 'forbidden'])->name('forbidden');

@@ -32,7 +32,7 @@ class EmployeeController extends Controller
         return view('main.profile-details');
     }
 
-    public function employeeDetails($id)
+    public function employeeDetails()
     {
         return view('main.employee-details');
     }
