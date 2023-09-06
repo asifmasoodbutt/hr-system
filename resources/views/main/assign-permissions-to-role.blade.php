@@ -74,7 +74,8 @@ Assign Permissions to Role
 <!-- Page level custom scripts -->
 <script>
     const get_assigned_unassigned_permissions_url = {!!json_encode(config('constants.GET_ASSIGNED_UNASSIGNED_PERMISSIONS_ENDPOINT')) !!};
-    const assign_permissions_to_role_url = {!!json_encode(config('constants.ASSIGN_PERMISSIONS_TO_ROLE_ENDPOINT')) !!};
+    const assign_permission_to_role_url = {!!json_encode(config('constants.ASSIGN_PERMISSION_TO_ROLE_ENDPOINT')) !!};
+    const unassign_permission_from_role_url = {!!json_encode(config('constants.UNASSIGN_PERMISSION_FROM_ROLE_ENDPOINT')) !!};
 </script>
 <script src="{{ asset('assets/js/assign-permissions-to-role.js') }}"></script>
 <script src="{{ asset('assets/js/side-notification.js') }}"></script>

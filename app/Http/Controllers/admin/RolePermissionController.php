@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Permissions\AssignPermissionToRole;
 use App\Http\Requests\Permissions\CreatePermissionRequest;
 use App\Http\Requests\Permissions\DeletePermissionRequest;
 use App\Http\Requests\Permissions\EditPermissionRequest;
@@ -29,10 +30,10 @@ class RolePermissionController extends Controller
         return view('main.permissions');
     }
 
-    public function assignPermissionsToRole(Request $request)
+    public function assignPermissionsToRole($id)
     {
-        $roleName = $request->input('role_name');
-        return view('main.assign-permissions-to-role')->with(['roleName' => $roleName]);
+        $role = Role::find(base64_decode($id));
+        return view('main.assign-permissions-to-role')->with(['roleName' => $role->name]);
     }
 
     public function getRoles(Request $request)
@@ -202,11 +203,49 @@ class RolePermissionController extends Controller
         }
     }
 
-    public function assignPermissionsToRoleApi(Request $request)
+    public function assignPermissionToRole(AssignPermissionToRole $request)
     {
         try {
+            $role = Role::find($request->role_id);
+            $permission_id = $request->permission_id;
+            $message = 'Permission has been assigned to the role successfully!';
+
+            // Check if the role already has the permission
+            if ($role->permissions()->where('permissions.id', $permission_id)->exists()) {
+                $message = 'Permission is already assigned to the role!';
+                storeApiResponseData($request->api_request_id, $message, 422, false);
+                return response()->error($message, 422);
+            }
+
+            // Attach the permission to the role without detaching
+            $role->permissions()->syncWithoutDetaching([$permission_id]);
+            storeApiResponseData($request->api_request_id, ['message' => $message], 200, true);
+            return response()->success([], $message);
         } catch (\Exception $e) {
-            return throwException($e, 'assignPermissionToRoleApi', $request->api_request_id);
+            return throwException($e, 'assignPermissionToRole', $request->api_request_id);
+        }
+    }
+
+    public function unassignPermissionFromRole(AssignPermissionToRole $request)
+    {
+        try {
+            $role = Role::find($request->role_id);
+            $permission_id = $request->permission_id;
+            $message = 'Permission has been removed from the role successfully!';
+
+            // Check if the role has the permission
+            if (!$role->permissions()->where('permissions.id', $permission_id)->exists()) {
+                $message = 'Permission is not assigned to the role!';
+                storeApiResponseData($request->api_request_id, $message, 422, false);
+                return response()->error($message, 422);
+            }
+
+            // Detach the permission from the role
+            $role->permissions()->detach([$permission_id]);
+            storeApiResponseData($request->api_request_id, ['message' => $message], 200, true);
+            return response()->success([], $message);
+        } catch (\Exception $e) {
+            return throwException($e, 'unassignPermissionFromRole', $request->api_request_id);
         }
     }
 }

@@ -30,7 +30,8 @@ $dev_constants = [
     'EDIT_PERMISSION_ENDPOINT' => $base_url . 'api/edit-permission',
     'GET_PERMISSION_WITH_ROLES_ENDPOINT' => $base_url . 'api/get-permission-with-roles',
     'GET_ASSIGNED_UNASSIGNED_PERMISSIONS_ENDPOINT' => $base_url . 'api/get-assigned-unassigned-permissions',
-    'ASSIGN_PERMISSIONS_TO_ROLE_ENDPOINT' => $base_url . 'api/assign-permissions-to-role',
+    'ASSIGN_PERMISSION_TO_ROLE_ENDPOINT' => $base_url . 'api/assign-permission-to-role',
+    'UNASSIGN_PERMISSION_FROM_ROLE_ENDPOINT' => $base_url . 'api/unassign-permission-from-role',
 
     // WEB PAGES
     'SHOW_EMPLOYEE_DETAILS_PAGE' => $base_url . 'employee-details',
