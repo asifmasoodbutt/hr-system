@@ -24,6 +24,9 @@ $(document).ready(function () {
                 try {
                     const assignedPermissionsTableBody = $('#assignedPermissionsDataTable tbody');
                     const unassignedPermissionsTableBody = $('#unassignedPermissionsDataTable tbody');
+                    assignedPermissionsTableBody.empty();
+                    unassignedPermissionsTableBody.empty();
+
                     data.data.assigned_permissions.forEach(function (item) {
                         const row = `<tr>
                                         <td>
@@ -38,14 +41,15 @@ $(document).ready(function () {
                         assignedPermissionsTableBody.append(row);
                     });
 
-                    // Add event listener for remove permission button
-                    $('.remove-permission-btn').on('click', function () {
+                    // Remove old event listeners and add new ones to remove permission button
+                    $('.remove-permission-btn').off('click').on('click', function (event) {
+                        event.stopPropagation(); // Stop event propagation
+
                         let roleId = $(this).data('role-id');
                         let permissionId = $(this).data('permission-id');
                         let row = $(this).closest('tr');
 
                         unassignPermissionApiCall(roleId, permissionId, row);
-                        $(this).off('click');
                     });
 
                     data.data.unassigned_permissions.forEach(function (item) {
@@ -61,15 +65,16 @@ $(document).ready(function () {
                                      </tr>`;
                         unassignedPermissionsTableBody.append(row);
                     });
+                    
+                    // Remove old event listeners and add new ones to assign permission button
+                    $('.assign-permission-btn').off('click').on('click', function (event) {
+                        event.stopPropagation(); // Stop event propagation
 
-                    // Add event listener for remove permission button
-                    $('.assign-permission-btn').on('click', function () {
                         let roleId = $(this).data('role-id');
                         let permissionId = $(this).data('permission-id');
                         let row = $(this).closest('tr');
 
                         assignPermissionApiCall(roleId, permissionId, row);
-                        $(this).off('click');
                     });
                 } catch (error) {
                     generateMessage('danger', 'Error', error);
@@ -128,13 +133,15 @@ $(document).ready(function () {
                     // Generate success notification
                     generateMessage('success', 'Success', response.message);
 
-                    // Add event listener for remove permission button
-                    $('.assign-permission-btn').on('click', function () {
+                    // Remove old event listeners and add new ones to assign permission button
+                    $('.assign-permission-btn').off('click').on('click', function (event) {
+                        event.stopPropagation(); // Stop event propagation
+
                         let roleId = $(this).data('role-id');
                         let permissionId = $(this).data('permission-id');
+                        let row = $(this).closest('tr');
 
-                        assignPermissionApiCall(roleId, permissionId);
-                        $(this).off('click');
+                        assignPermissionApiCall(roleId, permissionId, row);
                     });
                 } catch (error) {
                     generateMessage('danger', 'Error', error);
@@ -190,14 +197,15 @@ $(document).ready(function () {
                     // Generate success notification
                     generateMessage('success', 'Success', response.message);
 
-                    // Add event listener for remove permission button
-                    $('.remove-permission-btn').on('click', function () {
+                    // Remove old event listeners and add new ones for remove permission button
+                    $('.remove-permission-btn').off('click').on('click', function (event) {
+                        event.stopPropagation(); // Stop event propagation
+
                         let roleId = $(this).data('role-id');
                         let permissionId = $(this).data('permission-id');
                         let row = $(this).closest('tr');
 
                         unassignPermissionApiCall(roleId, permissionId, row);
-                        $(this).off('click');
                     });
                 } catch (error) {
                     generateMessage('danger', 'Error', error);
