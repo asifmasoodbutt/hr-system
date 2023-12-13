@@ -58,7 +58,7 @@ class RegisterEmployeeRequest extends FormRequest
             'experiences.*.company_start_date' => 'required|date|date_format:Y-m-d|after:date_of_birth',
             'experiences.*.company_end_date' => 'required|date|date_format:Y-m-d|after:company_start_date',
             'no_of_children' => 'nullable|integer|lt:15',
-            'spouse_name' => 'string|max:50'
+            'spouse_name' => 'nullable|string|max:50'
         ];
     }
 
