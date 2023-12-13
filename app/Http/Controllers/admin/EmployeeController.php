@@ -45,11 +45,19 @@ class EmployeeController extends Controller
     public function registerEmployeeApi(RegisterEmployeeRequest $request)
     {
         try {
-            $family_detail_id = $request->has('spouse_name') ?
-                FamilyDetail::create([
+
+            if ($request->has('spouse_name') && $request->spouse_name != "") {
+                $family_detail_id = FamilyDetail::create([
                     'spouse_name' => $request->spouse_name,
                     'children' => $request->has('no_of_children') ? $request->no_of_children : null
-                ])->id : null;
+                ])->id;
+            }
+
+            // $family_detail_id = $request->has('spouse_name') ?
+            //     FamilyDetail::create([
+            //         'spouse_name' => $request->spouse_name,
+            //         'children' => $request->has('no_of_children') ? $request->no_of_children : null
+            //     ])->id : null;
 
             $qualification_id = Qualification::create([
                 'degree_level_id' => $request->degree_level_id,
@@ -81,7 +89,7 @@ class EmployeeController extends Controller
             $employee->phone_no = $request->mobile_number;
             $employee->father_name = $request->father_name;
             $employee->cnic = $request->cnic_number;
-            $employee->family_detail_id = $family_detail_id;
+            $employee->family_detail_id = isset($family_detail_id) ? $family_detail_id : null;
             $employee->department_id = $request->department_id;
             $employee->qualification_id = $qualification_id;
             $employee->contract_id = $contract_id;
