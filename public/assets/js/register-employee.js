@@ -547,7 +547,12 @@ $(document).ready(function () {
                 },
                 success: function (response) {
                     var $alert = $('#register-employee-alert');
-                    $alert.prepend("New employee has been registered!").removeAttr('style');
+                    $alert.html("New employee has been registered!").removeAttr('style');
+                    // Set a timeout to remove the success message after 5 seconds
+                    setTimeout(function() {
+                        $alert.fadeOut(500);
+                    }, 5000);  // 5000 milliseconds (5 seconds)
+
                     $('#registerEmployeeConfirmationModal').modal('hide');
                 },
                 error: function (xhr, status, error) {
@@ -562,7 +567,16 @@ $(document).ready(function () {
                     }
 
                     var $alert = $('#register-employee-alert');
-                    $alert.removeClass('alert-success').addClass('alert-danger').prepend(xhr.responseJSON.message).removeAttr('style');
+                    // Remove existing error messages before displaying new ones
+                    $alert.find('.alert-success, .alert-danger').hide();
+
+                    $alert.removeClass('alert-success').addClass('alert-danger').html(xhr.responseJSON.message).removeAttr('style');
+                    // Set a timeout to remove the error message after 5 seconds
+                    setTimeout(function() {
+                        $alert.fadeOut(500);
+                        $alert.addClass('alert-success').removeClass('alert-danger');
+                    }, 5000); // 5000 milliseconds (5 seconds)
+
                     $('#registerEmployeeConfirmationModal').modal('hide');
                 }
             });
