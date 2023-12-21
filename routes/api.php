@@ -11,6 +11,7 @@ use App\Http\Controllers\auth\ForgotpasswordController;
 use App\Http\Controllers\auth\LoginController;
 use App\Http\Controllers\auth\LogoutController;
 use App\Http\Controllers\auth\ResetPasswordController;
+use App\Http\Controllers\employee\LeaveController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -78,4 +79,8 @@ Route::middleware(['storeApiRequestData', 'auth:api'])->group(function () {
     Route::post('get-assigned-unassigned-permissions', [RolePermissionController::class, 'getAssignedUnassignedPermissions']);
     Route::post('assign-permission-to-role', [RolePermissionController::class, 'assignPermissionToRole']);
     Route::post('unassign-permission-from-role', [RolePermissionController::class, 'unassignPermissionFromRole']);
+
+    // Employee side routes
+    Route::get('get-leave-types', [LeaveController::class, 'getLeaveTypes']);
+    Route::post('apply-leave', [LeaveController::class,'applyLeave']);
 });
