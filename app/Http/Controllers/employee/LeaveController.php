@@ -4,6 +4,7 @@ namespace App\Http\Controllers\employee;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Leave\ApplyLeaveRequest;
+use App\Http\Requests\Leave\CancelLeaveRequest;
 use App\Models\LeaveRequest;
 use App\Models\LeaveType;
 use Auth;
@@ -14,6 +15,11 @@ class LeaveController extends Controller
     public function employeeLeaveRequests()
     {
         return view("employee.leave-requests");
+    }
+
+    public function applyLeaveRequest()
+    {
+        return view("employee.apply-leave-request");
     }
 
     public function getEmployeeLeaveRequestsApi(Request $request)
@@ -50,7 +56,7 @@ class LeaveController extends Controller
         }
     }
 
-    public function cancelLeaveRequest(ApplyLeaveRequest $request)
+    public function cancelLeaveRequest(CancelLeaveRequest $request)
     {
         try {
             LeaveRequest::where('employee_id', Auth::id())
@@ -65,7 +71,7 @@ class LeaveController extends Controller
         }
     }
 
-    public function applyLeaveApi(ApplyLeaveRequest $request)
+    public function applyLeaveRequestApi(ApplyLeaveRequest $request)
     {
         try {
             $leave_created = LeaveRequest::create([

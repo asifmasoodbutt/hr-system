@@ -45,5 +45,6 @@ Route::group(['middleware' => ['checkLogin']], function () {
 
     // Leave Routes
     Route::get('employee-leave-requests', [LeaveController::class, 'employeeLeaveRequests'])->name('employee-leave-requests');
+    Route::get('apply-leave-request', [LeaveController::class, 'applyLeaveRequest'])->name('apply-leave-request');
 });
 Route::get('forbidden', [DashboardController::class, 'forbidden'])->name('forbidden');

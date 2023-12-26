@@ -41,10 +41,13 @@ Leaves Requests
 <div class="d-flex justify-content-between align-items-center">
     <p class="mb-4">Here is your leaves details.</p>
 
-    <button type="button" class="btn btn-primary" id="create-role-btn" data-toggle="modal"
-        data-target="#createRoleModal">
+    <!-- <button type="button" class="btn btn-primary">
         <span class="icon"><i class="fas fa-umbrella-beach"></i> </span>Apply Leave
-    </button>
+    </button> -->
+    <a href="{{ route('apply-leave-request') }}" class="btn btn-primary btn-icon-split">
+        <span class="icon"><i class="fas fa-umbrella-beach"></i></span>
+        <span class="text">Apply Leave</span>
+    </a>
 </div>
 
 <!-- Roles DataTale -->

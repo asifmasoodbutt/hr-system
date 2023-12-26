@@ -24,7 +24,7 @@ class CancelLeaveRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'leave_type_id' => 'required|integer|exists:leave_types,id'
+            'leave_request_id' => 'required|integer|exists:leave_requests,id'
         ];
     }
 
