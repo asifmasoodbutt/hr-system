@@ -18,7 +18,10 @@ class LeaveController extends Controller
     public function getEmployeesLeaveRequests(Request $request)
     {
         try {
-            $leave_requests = LeaveRequest::with(['employee:id,first_name,last_name', 'leaveType:id,leave_type'])->get();
+            $leave_requests = LeaveRequest::with(['employee:id,first_name,last_name', 'leaveType:id,leave_type'])
+                ->orderByRaw("FIELD(status, 'pending') DESC")
+                ->orderBy('created_at', 'desc')
+                ->get();
             $message = 'No leave requests found!';
             if ($leave_requests->isNotEmpty()) {
                 $message = 'Leave requests fetched successfully!';
