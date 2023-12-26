@@ -4,18 +4,40 @@ namespace App\Http\Controllers\employee;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Leave\ApplyLeaveRequest;
-use App\Models\LeaveApply;
+use App\Models\LeaveRequest;
 use App\Models\LeaveType;
 use Auth;
 use Illuminate\Http\Request;
 
 class LeaveController extends Controller
 {
+    public function employeeLeaveRequests()
+    {
+        return view("employee.leave-requests");
+    }
+
+    public function getEmployeeLeaveRequestsApi(Request $request)
+    {
+        try {
+            $leave_requests = LeaveRequest::with('leaveType')->where('employee_id', Auth::id())->get();
+            $message = 'No leave requests found!';
+            if ($leave_requests->isNotEmpty()) {
+                $message = 'Leave requests fetched successfully!';
+                storeApiResponseData($request->api_request_id, ['message' => $message], 200, true);
+                return response()->success($leave_requests, $message);
+            }
+            storeApiResponseData($request->api_request_id, ['message' => $message], 200, true);
+            return response()->success([], $message);
+        } catch (\Exception $e) {
+            return throwException($e, 'getEmployeeLeaves', $request->api_request_id);
+        }
+    }
+
     public function getLeaveTypes(Request $request)
     {
         try {
             $leave_types = LeaveType::select('id', 'leave_type')->get();
-            $message = 'No leave types found!';   
+            $message = 'No leave types found!';
             if ($leave_types->isNotEmpty()) {
                 $message = 'Leave types fetched successfully!';
                 storeApiResponseData($request->api_request_id, ['message' => $message], 200, true);
@@ -28,10 +50,25 @@ class LeaveController extends Controller
         }
     }
 
-    public function applyLeave(ApplyLeaveRequest $request)
+    public function cancelLeaveRequest(ApplyLeaveRequest $request)
     {
         try {
-            $leave_created = LeaveApply::create([
+            LeaveRequest::where('employee_id', Auth::id())
+                ->where('id', $request->leave_request_id)->update([
+                        'status' => 'cancelled'
+                    ]);
+            $message = 'Leave request cancelled successfully!';
+            storeApiResponseData($request->api_request_id, ['message' => $message], 200, true);
+            return response()->success([], $message);
+        } catch (\Exception $e) {
+            return throwException($e, 'cancelLeaveRequest', $request->api_request_id);
+        }
+    }
+
+    public function applyLeaveApi(ApplyLeaveRequest $request)
+    {
+        try {
+            $leave_created = LeaveRequest::create([
                 'employee_id' => Auth::id(),
                 'leave_type_id' => $request->leave_type_id,
                 'from_date' => $request->from_date,

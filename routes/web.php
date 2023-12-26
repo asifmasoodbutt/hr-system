@@ -7,6 +7,7 @@ use App\Http\Controllers\admin\RolePermissionController;
 use App\Http\Controllers\auth\ForgotpasswordController;
 use App\Http\Controllers\auth\LoginController;
 use App\Http\Controllers\auth\ResetPasswordController;
+use App\Http\Controllers\employee\LeaveController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,5 +42,8 @@ Route::group(['middleware' => ['checkLogin']], function () {
     Route::get('roles', [RolePermissionController::class, 'roles'])->name('roles');
     Route::get('permissions', [RolePermissionController::class, 'permissions'])->name('permissions');
     Route::get('assign-permissions-to-role/{id}', [RolePermissionController::class, 'assignPermissionsToRole'])->name('assign-permissions-to-role');
+
+    // Leave Routes
+    Route::get('employee-leave-requests', [LeaveController::class, 'employeeLeaveRequests'])->name('employee-leave-requests');
 });
 Route::get('forbidden', [DashboardController::class, 'forbidden'])->name('forbidden');

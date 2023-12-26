@@ -32,6 +32,8 @@ $dev_constants = [
     'GET_ASSIGNED_UNASSIGNED_PERMISSIONS_ENDPOINT' => $base_url . 'api/get-assigned-unassigned-permissions',
     'ASSIGN_PERMISSION_TO_ROLE_ENDPOINT' => $base_url . 'api/assign-permission-to-role',
     'UNASSIGN_PERMISSION_FROM_ROLE_ENDPOINT' => $base_url . 'api/unassign-permission-from-role',
+    'GET_EMPLOYEE_LEAVE_REQUESTS_ENDPOINT' => $base_url . 'api/get-employee-leave-requests',
+    'CANCEL_LEAVE_REQUEST_ENDPOINT' => $base_url . 'api/cancel-leave-request',
 
     // WEB PAGES
     'SHOW_EMPLOYEE_DETAILS_PAGE' => $base_url . 'employee-details',

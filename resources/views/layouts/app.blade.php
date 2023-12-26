@@ -98,6 +98,13 @@
                     <span>Profile</span>
                 </a>
             </li>
+            <!-- Nav Item - Complete Employee Profile Data -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('employee-leave-requests') }}">
+                    <i class="fas fa-umbrella-beach"></i>
+                    <span>Leave Requests</span>
+                </a>
+            </li>
             @endif
 
             <!-- Heading -->

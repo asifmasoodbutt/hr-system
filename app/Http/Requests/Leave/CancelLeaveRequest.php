@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class ApplyLeaveRequest extends FormRequest
+class CancelLeaveRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,7 @@ class ApplyLeaveRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'leave_type_id' => 'required|integer|exists:leave_types,id',
-            'from_date' => 'required|date|date_format:Y-m-d',
-            'to_date' => 'required|date|date_format:Y-m-d',
-            'description' => 'required|string|max:255'
+            'leave_type_id' => 'required|integer|exists:leave_types,id'
         ];
     }
 

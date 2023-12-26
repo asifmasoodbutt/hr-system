@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class LeaveApply extends Model
+class LeaveRequest extends Model
 {
     use HasFactory;
 
@@ -16,4 +16,9 @@ class LeaveApply extends Model
         'to_date',
         'description'
     ];
+
+    public function leaveType()
+    {
+        return $this->belongsTo(LeaveType::class);
+    }
 }

@@ -82,5 +82,7 @@ Route::middleware(['storeApiRequestData', 'auth:api'])->group(function () {
 
     // Employee side routes
     Route::get('get-leave-types', [LeaveController::class, 'getLeaveTypes']);
-    Route::post('apply-leave', [LeaveController::class,'applyLeave']);
+    Route::get('get-employee-leave-requests', [LeaveController::class, 'getEmployeeLeaveRequestsApi']);
+    Route::post('cancel-leave-request', [LeaveController::class, 'cancelLeaveRequest']);
+    Route::post('apply-leave', [LeaveController::class,'applyLeaveApi']);
 });
