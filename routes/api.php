@@ -38,6 +38,7 @@ Route::prefix('auth')->middleware(['storeApiRequestData'])->group(function () {
 });
 
 Route::middleware(['storeApiRequestData', 'auth:api'])->group(function () {
+    // Admin side routes
 
     // dashboard routes
     Route::get('get-dashboard-data', [DashboardController::class, 'getDashboardData']);
@@ -80,7 +81,16 @@ Route::middleware(['storeApiRequestData', 'auth:api'])->group(function () {
     Route::post('assign-permission-to-role', [RolePermissionController::class, 'assignPermissionToRole']);
     Route::post('unassign-permission-from-role', [RolePermissionController::class, 'unassignPermissionFromRole']);
 
+    // Leave routes
+    Route::get('get-employees-leave-requests', [\App\Http\Controllers\admin\LeaveController::class, 'getEmployeesLeaveRequests']);
+    Route::post('approve-disapprove-leave-request', [\App\Http\Controllers\admin\LeaveController::class, 'approveDisapproveLeaveRequest']);
+
+
+
+
     // Employee side routes
+
+    // Leave routes
     Route::get('get-leave-types', [LeaveController::class, 'getLeaveTypes']);
     Route::get('get-employee-leave-requests', [LeaveController::class, 'getEmployeeLeaveRequestsApi']);
     Route::post('cancel-leave-request', [LeaveController::class, 'cancelLeaveRequest']);

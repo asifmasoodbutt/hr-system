@@ -43,8 +43,11 @@ Route::group(['middleware' => ['checkLogin']], function () {
     Route::get('permissions', [RolePermissionController::class, 'permissions'])->name('permissions');
     Route::get('assign-permissions-to-role/{id}', [RolePermissionController::class, 'assignPermissionsToRole'])->name('assign-permissions-to-role');
 
-    // Leave Routes
+    // Employee Leave Routes
     Route::get('employee-leave-requests', [LeaveController::class, 'employeeLeaveRequests'])->name('employee-leave-requests');
     Route::get('apply-leave-request', [LeaveController::class, 'applyLeaveRequest'])->name('apply-leave-request');
+
+    // Admin Leave Routes
+    Route::get('get-leave-requests', [\App\Http\Controllers\admin\LeaveController::class, 'getLeaveRequests'])->name('get-leave-requests');
 });
 Route::get('forbidden', [DashboardController::class, 'forbidden'])->name('forbidden');

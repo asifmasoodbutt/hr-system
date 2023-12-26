@@ -21,4 +21,9 @@ class LeaveRequest extends Model
     {
         return $this->belongsTo(LeaveType::class);
     }
+
+    public function employee()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

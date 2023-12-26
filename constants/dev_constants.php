@@ -36,6 +36,8 @@ $dev_constants = [
     'CANCEL_LEAVE_REQUEST_ENDPOINT' => $base_url . 'api/cancel-leave-request',
     'APPLY_LEAVE_REQUEST_ENDPOINT' => $base_url . 'api/apply-leave-request',
     'GET_LEAVE_TYPES_ENDPOINT' => $base_url . 'api/get-leave-types',
+    'GET_EMPLOYEES_LEAVE_REQUESTS_ENDPOINT' => $base_url . 'api/get-employees-leave-requests',
+    'APPROVE_DISAPPROVE_LEAVE_REQUEST_ENDPOINT' => $base_url . 'api/approve-disapprove-leave-request',
 
     // WEB PAGES
     'SHOW_EMPLOYEE_DETAILS_PAGE' => $base_url . 'employee-details',
