@@ -29,6 +29,10 @@ Leaves Requests | HRM System
         color: white;
         border-radius: 5px;
     }
+
+    .font-size-14 {
+        font-size: 14px;
+    }
 </style>
 @endsection
 

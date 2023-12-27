@@ -34,14 +34,14 @@ $(document).ready(function () {
                         }
 
                         const row = `<tr>
-                                    <td>${index}</td>
-                                    <td>${item.employee.first_name + ' ' + item.employee.last_name}</td>
-                                    <td>${item.leave_type.leave_type}</td>
-                                    <td><span style="width:30px" class='${statusClass}'>${item.status}</td>
-                                    <td>${new Date(item.from_date).toLocaleDateString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric' })}</td>
-                                    <td>${new Date(item.to_date).toLocaleDateString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric' })}</td>
-                                    <td>${item.description}</td>
-                                    <td>${new Date(item.created_at).toLocaleDateString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric' })}</td>
+                                    <td class="font-size-14">${index}</td>
+                                    <td class="font-size-14">${item.employee.first_name + ' ' + item.employee.last_name}</td>
+                                    <td class="font-size-14">${item.leave_type.leave_type}</td>
+                                    <td class="font-size-14"><span style="width:30px" class='${statusClass}'>${item.status}</td>
+                                    <td class="font-size-14">${new Date(item.from_date).toLocaleDateString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric' })}</td>
+                                    <td class="font-size-14">${new Date(item.to_date).toLocaleDateString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric' })}</td>
+                                    <td class="font-size-14">${item.description}</td>
+                                    <td class="font-size-14">${new Date(item.created_at).toLocaleDateString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric' })}</td>
                                     <td>
                                         <button class="btn btn-success btn-sm approve-request-btn" data-id="${item.id}" ${!isPending ? 'disabled' : ''}>Approve</button>
                                         <br>

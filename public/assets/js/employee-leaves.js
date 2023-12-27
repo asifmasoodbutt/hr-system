@@ -20,34 +20,34 @@ $(document).ready(function () {
                     tableBody.empty(); // Clear the table body before appending new rows
 
                     data.data.forEach(function (item) {
-                        isCancelled = false;
+                        isPending = false;
 
                         if (item.status.toLowerCase() === 'cancelled') {
-                            isCancelled = true;
                             statusClass = 'cancelled';
                             approvedBy = 'Cancelled';
                         } else if (item.status.toLowerCase() === 'pending') {
+                            isPending = true;
                             statusClass = 'pending';
                             approvedBy = 'Not Approved Yet';
                         } else if (item.status.toLowerCase() === 'approved') {
                             statusClass = 'approved';
-                            approvedBy = item.approved_by;
+                            approvedBy = item.approver.first_name + ' ' + item.approver.last_name;
                         } else if (item.status.toLowerCase() === 'not-approved') {
                             statusClass = 'not-approved';
-                            approvedBy = item.approved_by;
+                            approvedBy = item.approver.first_name + ' ' + item.approver.last_name;
                         }
 
                         const row = `<tr>
-                                    <td>${index}</td>
-                                    <td>${item.leave_type.leave_type}</td>
-                                    <td><span class='${statusClass}'>${item.status}</td>
-                                    <td>${approvedBy}</td>
-                                    <td>${new Date(item.from_date).toLocaleDateString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric' })}</td>
-                                    <td>${new Date(item.to_date).toLocaleDateString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric' })}</td>
-                                    <td>${item.description}</td>
-                                    <td>${new Date(item.created_at).toLocaleDateString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric' })}</td>
+                                    <td class="font-size-14">${index}</td>
+                                    <td class="font-size-14">${item.leave_type.leave_type}</td>
+                                    <td class="font-size-14"><span class='${statusClass}'>${item.status}</td>
+                                    <td class="font-size-14">${approvedBy}</td>
+                                    <td class="font-size-14">${new Date(item.from_date).toLocaleDateString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric' })}</td>
+                                    <td class="font-size-14">${new Date(item.to_date).toLocaleDateString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric' })}</td>
+                                    <td class="font-size-14">${item.description}</td>
+                                    <td class="font-size-14">${new Date(item.created_at).toLocaleDateString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric' })}</td>
                                     <td>
-                                        <button class="btn btn-danger btn-sm cancel-request-btn" data-id="${item.id}" ${isCancelled ? 'disabled' : ''}>Cancel Request</button>
+                                        <button class="btn btn-danger btn-sm cancel-request-btn" data-id="${item.id}" ${!isPending ? 'disabled' : ''}>Cancel Request</button>
                                     </td>
                                 </tr>`;
                         tableBody.append(row);

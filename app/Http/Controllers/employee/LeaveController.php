@@ -25,7 +25,10 @@ class LeaveController extends Controller
     public function getEmployeeLeaveRequestsApi(Request $request)
     {
         try {
-            $leave_requests = LeaveRequest::with('leaveType')->where('employee_id', Auth::id())->get();
+            $leave_requests = LeaveRequest::with(['approver:id,first_name,last_name', 'leaveType'])
+                ->where('employee_id', Auth::id())
+                ->orderBy('created_at', 'desc')
+                ->get();
             $message = 'No leave requests found!';
             if ($leave_requests->isNotEmpty()) {
                 $message = 'Leave requests fetched successfully!';
