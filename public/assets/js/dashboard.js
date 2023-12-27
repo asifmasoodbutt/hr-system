@@ -8,6 +8,7 @@ $(document).ready(function () {
         success: function (data) {
             // Process the fetched data and update the data
             $('#monthly-salaries-sum').text(data.data.salaries_sum + ' PKR');
+            $('#pending-leave-requests-sum').text(data.data.pending_leave_requests_sum);
             updatePieChart(data.data.piechart_data);
             updateBarChart(data.data.barchart_data);
         },
