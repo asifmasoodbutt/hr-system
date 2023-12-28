@@ -73,9 +73,17 @@
 
             <!-- Nav Item - Leave Requests Data -->
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('get-leave-requests') }}">
+                <a class="nav-link" href="{{ route('leave-requests') }}">
                     <i class="fas fa-umbrella-beach"></i>
                     <span>Leave Requests</span>
+                </a>
+            </li>
+
+            <!-- Nav Item - Leave Requests Data -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('events') }}">
+                    <i class="fas fa-calendar"></i>
+                    <span>Events</span>
                 </a>
             </li>
 

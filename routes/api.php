@@ -85,6 +85,12 @@ Route::middleware(['storeApiRequestData', 'auth:api'])->group(function () {
     Route::get('get-employees-leave-requests', [\App\Http\Controllers\admin\LeaveController::class, 'getEmployeesLeaveRequests']);
     Route::post('approve-disapprove-leave-request', [\App\Http\Controllers\admin\LeaveController::class, 'approveDisapproveLeaveRequest']);
 
+    Route::prefix('admin')->group(function () {
+        // Event routes
+        Route::get('get-events', [\App\Http\Controllers\admin\EventController::class, 'getEvents']);
+        Route::post('add-event', [\App\Http\Controllers\admin\EventController::class, 'addEvent']);
+    });
+
 
 
 
@@ -94,5 +100,5 @@ Route::middleware(['storeApiRequestData', 'auth:api'])->group(function () {
     Route::get('get-leave-types', [LeaveController::class, 'getLeaveTypes']);
     Route::get('get-employee-leave-requests', [LeaveController::class, 'getEmployeeLeaveRequestsApi']);
     Route::post('cancel-leave-request', [LeaveController::class, 'cancelLeaveRequest']);
-    Route::post('apply-leave-request', [LeaveController::class,'applyLeaveRequestApi']);
+    Route::post('apply-leave-request', [LeaveController::class, 'applyLeaveRequestApi']);
 });
