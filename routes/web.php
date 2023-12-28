@@ -53,7 +53,7 @@ Route::group(['middleware' => ['checkLogin']], function () {
     // Admin Web Page Routes
 
     // Leave Routes
-    Route::get('get-leave-requests', [\App\Http\Controllers\admin\LeaveController::class, 'getLeaveRequests'])->name('leave-requests');
+    Route::get('leave-requests', [\App\Http\Controllers\admin\LeaveController::class, 'getLeaveRequests'])->name('leave-requests');
 
     // Event Routes
     Route::get('events', [EventController::class, 'events'])->name('events');
