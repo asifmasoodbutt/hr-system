@@ -31,10 +31,10 @@ $(document).ready(function () {
 
                         const row = `<tr>
                                     <td class="font-size-14">${item.title}</td>
-                                    <td class="font-size-14">${item.event_type_id}</td>
+                                    <td class="font-size-14">${item.event_type.name}</td>
                                     <td class="font-size-14">${item.from_date}</td>
                                     <td class="font-size-14">${item.to_date}</td>
-                                    <td class="font-size-14">${item.manager_id}</td>
+                                    <td class="font-size-14">${item.manager.first_name + ' ' + item.manager.last_name}</td>
                                     <td class="font-size-14"><span class='${statusClass}'>${eventStatus}</td>
                                 </tr>`;
                         tableBody.append(row);

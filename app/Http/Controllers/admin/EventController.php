@@ -20,7 +20,8 @@ class EventController extends Controller
             $perPage = $request->input('perPage', 10); // Default: 10 items per page
             $page = $request->input('page', 1); // Default: Page 1
 
-            $events = Event::orderByRaw("FIELD(is_active, 'true') DESC")
+            $events = Event::with(['eventType:id,name', 'manager:id,first_name,last_name'])
+                ->orderByRaw("FIELD(is_active, 'true') DESC")
                 ->orderBy("created_at", "desc")
                 ->paginate($perPage, ['*'], 'page', $page);
 

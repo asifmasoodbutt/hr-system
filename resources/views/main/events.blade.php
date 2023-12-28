@@ -31,7 +31,7 @@ Events
 @section('main-content')
 <div class="d-flex justify-content-between align-items-center">
     <p class="mb-4">All the events are listed below.</p>
-    <a href="{{ route('register-employee') }}" class="btn btn-primary btn-icon-split reg-employee-btn">
+    <a href="#" class="btn btn-primary btn-icon-split reg-employee-btn">
         <span class="icon"><i class="fas fa-calendar-plus"></i></span>
         <span class="text">Add New Event</span>
     </a>
@@ -50,7 +50,7 @@ Events
                         <th>Title</th>
                         <th>Type</th>
                         <th>From Time</th>
-                        <th>From Time</th>
+                        <th>To Time</th>
                         <th>Manager</th>
                         <th>Status</th>
                     </tr>
