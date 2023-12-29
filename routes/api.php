@@ -89,6 +89,8 @@ Route::middleware(['storeApiRequestData', 'auth:api'])->group(function () {
         // Event routes
         Route::get('get-events', [\App\Http\Controllers\admin\EventController::class, 'getEvents']);
         Route::post('add-event', [\App\Http\Controllers\admin\EventController::class, 'addEvent']);
+        Route::post('inactive-event', [\App\Http\Controllers\admin\EventController::class, 'inactiveEvent']);
+        Route::post('delete-event', [\App\Http\Controllers\admin\EventController::class, 'deleteEvent']);
     });
 
 

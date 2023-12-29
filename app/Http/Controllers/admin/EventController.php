@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Events\AddEventRequest;
+use App\Http\Requests\Events\InactiveEventRequest;
 use App\Models\Event;
 use Illuminate\Http\Request;
 
@@ -21,7 +22,7 @@ class EventController extends Controller
             $page = $request->input('page', 1); // Default: Page 1
 
             $events = Event::with(['eventType:id,name', 'manager:id,first_name,last_name'])
-                ->orderByRaw("FIELD(is_active, 'true') DESC")
+                ->orderByRaw("FIELD(is_active, '1') DESC")
                 ->orderBy("created_at", "desc")
                 ->paginate($perPage, ['*'], 'page', $page);
 
@@ -58,4 +59,44 @@ class EventController extends Controller
             return throwException($e, 'addEvent', $request->api_request_id);
         }
     }
+    public function inactiveEvent(InactiveEventRequest $request)
+    {
+        try {
+            \DB::beginTransaction();
+            $query = Event::where('id', $request->event_id);
+            $event = $query->first();
+            $query->update(['is_active' => false]);
+
+            $message = $event->title . ' event has been inactivated!';
+            storeApiResponseData($request->api_request_id, ['message' => $message], 200, true);
+            \DB::commit();
+
+            return response()->success([], $message);
+
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            return throwException($e, 'inactiveEvent', $request->api_request_id);
+        }
+    }
+
+    public function deleteEvent(InactiveEventRequest $request)
+    {
+        try {
+            \DB::beginTransaction();
+            $query = Event::where('id', $request->event_id);
+            $event = $query->first();
+            $query->delete();
+
+            $message = $event->title . ' event has been deleted!';
+            storeApiResponseData($request->api_request_id, ['message' => $message], 200, true);
+            \DB::commit();
+
+            return response()->success([], $message);
+
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            return throwException($e, 'deleteEvent', $request->api_request_id);
+        }
+    }
+
 }
