@@ -9,6 +9,10 @@ function generateMessage(title, heading, successMessage) {
 
     // call the function to show the message
     showMessage();
+
+    setTimeout(() => {
+        dismissMessage();
+    }, 3000);
 }
 
 const notification = document.querySelector('.notification');

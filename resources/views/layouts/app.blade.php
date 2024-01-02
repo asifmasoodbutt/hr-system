@@ -125,6 +125,13 @@
                     <span>Leave Requests</span>
                 </a>
             </li>
+            <!-- Nav Item - Events Data -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('employee-events') }}">
+                    <i class="fas fa-calendar"></i>
+                    <span>Events</span>
+                </a>
+            </li>
             @endif
 
             <!-- Heading -->

@@ -93,6 +93,12 @@ Route::middleware(['storeApiRequestData', 'auth:api'])->group(function () {
         Route::post('delete-event', [\App\Http\Controllers\admin\EventController::class, 'deleteEvent']);
     });
 
+    Route::prefix('employee')->group(function () {
+        // Event routes
+        Route::get('get-events', [\App\Http\Controllers\employee\EventController::class, 'getEvents']);
+        Route::post('participate-event', [\App\Http\Controllers\employee\EventController::class, 'participateEvent']);
+    });
+
 
 
 

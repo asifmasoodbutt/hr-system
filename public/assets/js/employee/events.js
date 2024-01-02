@@ -53,56 +53,30 @@ $(document).ready(function () {
                             to_time = to_date;
                         }
 
-                        if (item.is_active === 1) {
-                            statusClass = 'status-active';
-                            eventStatus = 'Active';
-                        } else {
-                            statusClass = 'status-inactive';
-                            eventStatus = 'Inactive';
-                        }
-
                         const row = `<tr>
                                     <td class="font-size-14">${item.title}</td>
                                     <td class="font-size-14">${item.event_type.name}</td>
                                     <td class="font-size-14">${from_time}</td>
                                     <td class="font-size-14">${to_time}</td>
                                     <td class="font-size-14">${item.manager.first_name + ' ' + item.manager.last_name}</td>
-                                    <td class="font-size-14"><span class='${statusClass}'>${eventStatus}</td>
-                                    <td class="font-size-14">${new Date(item.created_at).toLocaleDateString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric' })}</td>
                                     <td>
-                                    <i class="fa fa-info-circle" aria-hidden="true" data-id="${item.id}" title="Click to see event details"></i>
-                                    <i class="fa fa-ban inactive-event-icon ${item.is_active !== 1 ? 'disabled' : ''}" aria-hidden="true" data-id="${item.id}" title="Inactive"></i>
-                                    <i class="fa fa-trash delete-event-icon" aria-hidden="true" data-id="${item.id}" title="Delete"></i>
+                                    <button class="btn btn-success btn-sm participate-btn" data-id="${item.id}">Participate</button>
                                     </td>
                                 </tr>`;
                         tableBody.append(row);
                     });
 
-                    // Add event listener for inactive event icon
-                    $('.inactive-event-icon').on('click', function () {
+                    // Add event listener for participate event button
+                    $('.participate-btn').on('click', function () {
                         var eventId = $(this).data('id');
                         // Show the consent modal
-                        $('#inactiveEventModal').modal('show');
+                        $('#participateEventModal').modal('show');
                         // Add an event listener for the "Yes" button in the consent modal
-                        $('#inactive-yes-modal-btn').off('click').on('click', function () {
+                        $('#participate-yes-modal-btn').off('click').on('click', function () {
                             // Perform the cancel action here using the eventId variable
-                            inactiveEventApiCall(eventId);
+                            participateEventApiCall(eventId);
                             // Close the consent modal
-                            $('#inactiveEventModal').modal('hide');
-                        });
-                    });
-
-                    // Add event listener for delete event icon
-                    $('.delete-event-icon').on('click', function () {
-                        var eventId = $(this).data('id');
-                        // Show the consent modal
-                        $('#deleteEventModal').modal('show');
-                        // Add an event listener for the "Yes" button in the consent modal
-                        $('#delete-yes-modal-btn').off('click').on('click', function () {
-                            // Perform the cancel action here using the eventId variable
-                            deleteEventApiCall(eventId);
-                            // Close the consent modal
-                            $('#deleteEventModal').modal('hide');
+                            $('#participateEventModal').modal('hide');
                         });
                     });
 
@@ -151,13 +125,13 @@ $(document).ready(function () {
     });
 
     // Inactive event ajax call
-    function inactiveEventApiCall(eventId) {
-        let currentPageNumber = localStorage.getItem('currentPageNumber') || 1;
+    function participateEventApiCall(eventId) {
+        currentPageNumber = localStorage.getItem('currentPageNumber') || 1;
         const dataObject = {
             event_id: eventId,
         };
         $.ajax({
-            url: inactive_event_url,
+            url: participate_event_url,
             method: 'POST',
             data: JSON.stringify(dataObject),
             headers: {
@@ -168,40 +142,11 @@ $(document).ready(function () {
             success: function (response) {
                 // Generate success notification
                 generateMessage('success', 'Success', response.message);
-                // Get events API call
-                getEventsApiCall(currentPageNumber);
-            },
-            error: function (xhr, status, error) {
-                // Display the error message to the user
-                var responseJSON = xhr.responseJSON;
-                if (responseJSON && responseJSON.errors && responseJSON.message) {
-                    generateMessage('danger', 'Error', responseJSON.message);
-                } else {
-                    generateMessage('danger', 'Error', 'Something went wrong!');
-                }
-            }
-        });
-    }
 
-    function deleteEventApiCall(eventId) {
-        let currentPageNumber = localStorage.getItem('currentPageNumber') || 1;
-        const dataObject = {
-            event_id: eventId,
-        };
-        $.ajax({
-            url: delete_event_url,
-            method: 'POST',
-            data: JSON.stringify(dataObject),
-            headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token'),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            success: function (response) {
-                // Generate success notification
-                generateMessage('success', 'Success', response.message);
                 // Get events API call
-                getEventsApiCall(currentPageNumber);
+                setTimeout(() => {
+                    getEventsApiCall(currentPageNumber)
+                }, 4000);
             },
             error: function (xhr, status, error) {
                 // Display the error message to the user
