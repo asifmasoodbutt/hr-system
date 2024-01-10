@@ -50,9 +50,9 @@ Route::group(['middleware' => ['checkLogin']], function () {
     Route::get('employee-leave-requests', [LeaveController::class, 'employeeLeaveRequests'])->name('employee-leave-requests');
     Route::get('apply-leave-request', [LeaveController::class, 'applyLeaveRequest'])->name('apply-leave-request');
 
-    Route::get('employee/events', [\App\Http\Controllers\employee\EventController::class, 'events'])->name('employee-events');
-
     // Event Routes
+    Route::get('employee/events', [\App\Http\Controllers\employee\EventController::class, 'events'])->name('employee-events');
+    Route::get('employee/participated-events', [\App\Http\Controllers\employee\EventController::class, 'participatedEvents'])->name('participated-events');
 
     // Admin Web Page Routes
 

@@ -17,6 +17,11 @@ class EventController extends Controller
         return view("employee.events");
     }
 
+    public function participatedEvents()
+    {
+        return view("employee.participated-events");
+    }
+
     public function getEvents(Request $request)
     {
         try {

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-Events | HRM System
+Participated Events | HRM System
 @endsection
 
 @section('head')
@@ -30,16 +30,12 @@ Events | HRM System
 @endsection
 
 @section('heading')
-Events
+Participated Events
 @endsection
 
 @section('main-content')
 <div class="d-flex justify-content-between align-items-center">
-    <p class="mb-4">All the events are listed below.</p>
-    <a href="{{ route('participated-events') }}" class="btn btn-primary btn-icon-split">
-        <span class="icon"><i class="fas fa-calendar"></i></span>
-        <span class="text">Participated Events</span>
-    </a>
+    <p class="mb-4">Your participated events are listed below.</p>
 </div>
 
 <!-- Events DataTale -->
@@ -57,7 +53,6 @@ Events
                         <th>From Time</th>
                         <th>To Time</th>
                         <th>Manager</th>
-                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -70,27 +65,6 @@ Events
     </div>
 </div>
 
-<!-- Delete event consent dialog modal -->
-<div class="modal fade" id="participateEventModal" tabindex="-1" role="dialog" aria-labelledby="participateEventModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="participateEventModalLabel">Participate Event</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to participate in this event?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                <button type="button" class="btn btn-success" id="participate-yes-modal-btn">Yes</button>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection
 
 @section('scripts')
@@ -100,7 +74,7 @@ Events
     const get_events_url = {!!json_encode(config('constants.GET_EMPLOYEE_EVENTS_ENDPOINT'))!!};
     const participate_event_url = {!!json_encode(config('constants.EMPLOYEE_PARTICIPATE_EVENT_ENDPOINT'))!!};
 </script>
-<script src="{{ asset('assets/js/employee/events.js') }}"></script>
+<script src="{{ asset('assets/js/employee/participated-events.js') }}"></script>
 <script src="{{ asset('assets/js/side-notification.js') }}"></script>
 
 @endsection
