@@ -97,6 +97,7 @@ Route::middleware(['storeApiRequestData', 'auth:api'])->group(function () {
         // Event routes
         Route::get('get-events', [\App\Http\Controllers\employee\EventController::class, 'getEvents']);
         Route::post('participate-event', [\App\Http\Controllers\employee\EventController::class, 'participateEvent']);
+        Route::get('get-participated-events', [\App\Http\Controllers\employee\EventController::class, 'getParticipatedEvents']);
     });
 
 

@@ -43,6 +43,7 @@ $dev_constants = [
     'DELETE_EVENT_ENDPOINT' => $base_url . 'api/admin/delete-event',
     'GET_EMPLOYEE_EVENTS_ENDPOINT' => $base_url . 'api/employee/get-events',
     'EMPLOYEE_PARTICIPATE_EVENT_ENDPOINT' => $base_url . 'api/employee/participate-event',
+    'GET_EMPLOYEE_PARTICIPATED_EVENTS_ENDPOINT' => $base_url . 'api/employee/participated-events',
 
     // WEB PAGES
     'SHOW_EMPLOYEE_DETAILS_PAGE' => $base_url . 'employee-details',

@@ -5,8 +5,10 @@ namespace App\Http\Controllers\employee;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Events\ParticipateEventRequest;
 use App\Models\Event;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
@@ -75,6 +77,33 @@ class EventController extends Controller
 
         } catch (\Exception $e) {
             return throwException($e, 'participateEvent', $request->api_request_id);
+        }
+    }
+
+    public function getParticipatedEvents(Request $request)
+    {
+        try {
+            $perPage = $request->input('perPage', 10); // Default: 10 items per page
+            $page = $request->input('page', 1); // Default: Page 1
+
+            $events = DB::table('event_participant')
+                ->where('participant_id', Auth::id())
+                ->leftJoin('events', 'events.id', '=', 'event_participant.event_id')
+                ->where('events.is_active', 1)
+                ->orderBy("events.created_at", "desc")
+                ->paginate($perPage, ['*'], 'page', $page);
+
+            $message = 'No events found!';
+            if ($events->isNotEmpty()) {
+                $message = 'Your participated events fetched successfully!';
+                storeApiResponseData($request->api_request_id, ['message' => $message], 200, true);
+                return response()->success($events, $message);
+            }
+            storeApiResponseData($request->api_request_id, ['message' => $message], 200, true);
+            return response()->success([], $message);
+
+        } catch (\Exception $e) {
+            return throwException($e, 'getParticipatedEvents', $request->api_request_id);
         }
     }
 }
