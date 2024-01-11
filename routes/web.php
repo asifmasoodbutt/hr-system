@@ -61,5 +61,6 @@ Route::group(['middleware' => ['checkLogin']], function () {
 
     // Event Routes
     Route::get('events', [EventController::class, 'events'])->name('events');
+    Route::get('add-event', [EventController::class,'getNewEvent'])->name('add-new-event');
 });
 Route::get('forbidden', [DashboardController::class, 'forbidden'])->name('forbidden');

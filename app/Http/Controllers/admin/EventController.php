@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Events\AddEventRequest;
 use App\Http\Requests\Events\InactiveEventRequest;
 use App\Models\Event;
+use App\Models\EventType;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -13,6 +15,45 @@ class EventController extends Controller
     public function events()
     {
         return view("main.events");
+    }
+
+    public function getNewEvent()
+    {
+        return view("main.add-new-event");
+    }
+
+    public function getEventTypes(Request $request)
+    {
+        try {
+            $event_types = EventType::get(['id', 'name']);
+            $message = 'No event types found!';
+            if ($event_types->isNotEmpty()) {
+                $message = 'Event types fetched successfully!';
+                storeApiResponseData($request->api_request_id, ['message' => $message], 200, true);
+                return response()->success($event_types, $message);
+            }
+            storeApiResponseData($request->api_request_id, ['message' => $message], 200, false);
+            return response()->success([], $message);
+        } catch (\Exception $e) {
+            return throwException($e, 'getEventTypes', $request->api_request_id);
+        }
+    }
+
+    public function getUsers(Request $request)
+    {
+        try {
+            $users = User::get(['id', 'first_name', 'last_name']);
+            $message = 'No users found!';
+            if ($users->isNotEmpty()) {
+                $message = 'Users fetched successfully!';
+                storeApiResponseData($request->api_request_id, ['message' => $message], 200, true);
+                return response()->success($users, $message);
+            }
+            storeApiResponseData($request->api_request_id, ['message' => $message], 200, false);
+            return response()->success([], $message);
+        } catch (\Exception $e) {
+            return throwException($e, 'getUsers', $request->api_request_id);
+        } 
     }
 
     public function getEvents(Request $request)
@@ -98,5 +139,4 @@ class EventController extends Controller
             return throwException($e, 'deleteEvent', $request->api_request_id);
         }
     }
-
 }
