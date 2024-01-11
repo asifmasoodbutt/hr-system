@@ -5,7 +5,7 @@ $(document).ready(function () {
     // Get employee leave requests ajax call
     function getEventsApiCall(pageNumber) {
         $.ajax({
-            url: get_events_url + '?page=' + pageNumber,
+            url: get_participated_events_url + '?page=' + pageNumber,
             type: 'GET',
             dataType: 'json',
             headers: {
@@ -16,7 +16,6 @@ $(document).ready(function () {
             success: function (data) {
                 try {
                     const tableBody = $('#dataTable tbody');
-                    let statusClass = '';
 
                     tableBody.empty(); // Clear the table body before appending new rows
                     data.data.data.forEach(function (item) {
@@ -55,34 +54,18 @@ $(document).ready(function () {
 
                         const row = `<tr>
                                     <td class="font-size-14">${item.title}</td>
-                                    <td class="font-size-14">${item.event_type.name}</td>
+                                    <td class="font-size-14">${item.name}</td>
                                     <td class="font-size-14">${from_time}</td>
                                     <td class="font-size-14">${to_time}</td>
-                                    <td class="font-size-14">${item.manager.first_name + ' ' + item.manager.last_name}</td>
-                                    <td>
-                                    <button class="btn btn-success btn-sm participate-btn" data-id="${item.id}">Participate</button>
-                                    </td>
+                                    <td class="font-size-14">${item.first_name + ' ' + item.last_name}</td>
                                 </tr>`;
                         tableBody.append(row);
-                    });
-
-                    // Add event listener for participate event button
-                    $('.participate-btn').on('click', function () {
-                        var eventId = $(this).data('id');
-                        // Show the consent modal
-                        $('#participateEventModal').modal('show');
-                        // Add an event listener for the "Yes" button in the consent modal
-                        $('#participate-yes-modal-btn').off('click').on('click', function () {
-                            // Perform the cancel action here using the eventId variable
-                            participateEventApiCall(eventId);
-                            // Close the consent modal
-                            $('#participateEventModal').modal('hide');
-                        });
                     });
 
                     // Append Bootstrap pagination buttons
                     $('#pagination-links').empty();
                     $('#pagination-links').append('<ul class="pagination">');
+                    
                     data.data.links.forEach(function (link) {
                         const liClass = link.active ? 'page-item active' : 'page-item';
                         const buttonHtml = `<li class="${liClass}">
@@ -123,42 +106,6 @@ $(document).ready(function () {
         // Call the API with the new page number
         getEventsApiCall(pageNumber);
     });
-
-    // Inactive event ajax call
-    function participateEventApiCall(eventId) {
-        currentPageNumber = localStorage.getItem('currentPageNumber') || 1;
-        const dataObject = {
-            event_id: eventId,
-        };
-        $.ajax({
-            url: participate_event_url,
-            method: 'POST',
-            data: JSON.stringify(dataObject),
-            headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token'),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            success: function (response) {
-                // Generate success notification
-                generateMessage('success', 'Success', response.message);
-
-                // Get events API call
-                setTimeout(() => {
-                    getEventsApiCall(currentPageNumber)
-                }, 4000);
-            },
-            error: function (xhr, status, error) {
-                // Display the error message to the user
-                var responseJSON = xhr.responseJSON;
-                if (responseJSON && responseJSON.errors && responseJSON.message) {
-                    generateMessage('danger', 'Error', responseJSON.message);
-                } else {
-                    generateMessage('danger', 'Error', 'Something went wrong!');
-                }
-            }
-        });
-    }
 
     getEventsApiCall(initialPageNumber);
 });

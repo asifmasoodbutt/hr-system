@@ -71,8 +71,7 @@ Participated Events
 
 <!-- Page level custom scripts -->
 <script>
-    const get_events_url = {!!json_encode(config('constants.GET_EMPLOYEE_EVENTS_ENDPOINT'))!!};
-    const participate_event_url = {!!json_encode(config('constants.EMPLOYEE_PARTICIPATE_EVENT_ENDPOINT'))!!};
+    const get_participated_events_url = {!!json_encode(config('constants.GET_EMPLOYEE_PARTICIPATED_EVENTS_ENDPOINT'))!!};
 </script>
 <script src="{{ asset('assets/js/employee/participated-events.js') }}"></script>
 <script src="{{ asset('assets/js/side-notification.js') }}"></script>

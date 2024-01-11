@@ -92,8 +92,11 @@ class EventController extends Controller
             $page = $request->input('page', 1); // Default: Page 1
 
             $events = DB::table('event_participant')
+                ->select('events.title', 'event_types.name', 'events.from_date', 'events.to_date', 'managers.first_name', 'managers.last_name')
                 ->where('participant_id', Auth::id())
                 ->leftJoin('events', 'events.id', '=', 'event_participant.event_id')
+                ->leftJoin('event_types', 'event_types.id', '=', 'events.event_type_id')
+                ->leftJoin('users as managers', 'managers.id', '=', 'events.manager_id')
                 ->where('events.is_active', 1)
                 ->orderBy("events.created_at", "desc")
                 ->paginate($perPage, ['*'], 'page', $page);
